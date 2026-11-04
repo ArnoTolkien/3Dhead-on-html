@@ -2,605 +2,811 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>{Title}{block:PostSummary} - {PostSummary}{/block:PostSummary}</title>
-<link rel="shortcut icon" href="{Favicon}"/>
-<link rel="alternate" type="application/rss+xml" href="{RSS}"/>
-{block:Description}<meta name="description" content="{MetaDescription}"/>{/block:Description}
-
-<!-- ===== CUSTOMIZE PANEL OPTIONS (you change these on Tumblr, no code needed) ===== -->
-<meta name="image:Logo" content=""/>
-<meta name="image:Button 1" content=""/>
-<meta name="text:Button 1 Link" content=""/>
-<meta name="image:Button 2" content=""/>
-<meta name="text:Button 2 Link" content=""/>
-<meta name="image:Button 3" content=""/>
-<meta name="text:Button 3 Link" content=""/>
-<meta name="image:Button 4" content=""/>
-<meta name="text:Button 4 Link" content=""/>
-<meta name="image:Button 5" content=""/>
-<meta name="text:Button 5 Link" content=""/>
-<meta name="image:Button 6" content=""/>
-<meta name="text:Button 6 Link" content=""/>
-<meta name="text:Link 1 Name" content=""/>
-<meta name="text:Link 1 URL" content=""/>
-<meta name="text:Link 2 Name" content=""/>
-<meta name="text:Link 2 URL" content=""/>
-<meta name="text:Link 3 Name" content=""/>
-<meta name="text:Link 3 URL" content=""/>
-<meta name="image:Background" content=""/>
-<meta name="color:Background" content="#b9d2ee"/>
-<meta name="color:Dots" content="#cfe0f4"/>
-<meta name="color:Boxes" content="#e3eefa"/>
-<meta name="color:Title Bars" content="#2f5d9e"/>
-<meta name="color:Text" content="#1c2f4d"/>
-<meta name="color:Links" content="#1f58c9"/>
-<meta name="color:Link Hover" content="#e0558a"/>
-<meta name="text:Welcome Text" content="Welcome to my Sims 1 diary! Households, build mode, and lots of Simlish."/>
-<meta name="text:Now Playing" content="Buy Mode theme (on loop)"/>
-<meta name="text:Footer Text" content="Fan blog. Not affiliated with Maxis or EA."/>
-<meta name="if:Dot Pattern" content="1"/>
-<meta name="if:Stretch Background Image" content="1"/>
-<meta name="text:Builds Tag" content="builds"/>
-<meta name="text:Tag 1" content="builds"/>
-<meta name="text:Tag 2" content="households"/>
-<meta name="text:Tag 3" content="stories"/>
-<meta name="text:Tag 4" content="screenshots"/>
-<meta name="text:Tag 5" content="downloads"/>
-<meta name="text:Tag 6" content="challenges"/>
-<meta name="if:Show Tags Box" content="1"/>
-<meta name="if:Use 3D Head" content="1"/>
-<meta name="if:Show Welcome Ticker" content="1"/>
-<meta name="if:Show Now Playing" content="1"/>
-<meta name="if:Show Need Bars" content="1"/>
-<meta name="if:Show Notes" content="1"/>
-<meta name="if:Show Tags" content="1"/>
-
-<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet"/>
-
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Head Kit: add a 3D head to any website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:{color:Background};
-  --dots:{color:Dots};
-  --panel:{color:Boxes};
-  --bar:{color:Title Bars};
-  --text:{color:Text};
-  --link:{color:Links};
-  --hover:{color:Link Hover};
-  --bob:#3fcf4a;
-  --dark:#1f4478;
-  --lite:#ffffff;
-  --shade:#6f90bb;
-  --pix:"DotGothic16","MS Gothic",monospace;
-  --ui:Verdana,Tahoma,Geneva,sans-serif;
+  --bg:#f5f6f8;--card:#ffffff;--field:#f1f3f6;--ink:#0f172a;--muted:#5b6475;--line:#e2e6ed;
+  --accent:#2563eb;--accent-ink:#ffffff;--accent-soft:#e8efff;--ok:#15803d;--bad:#b91c1c;
+  --code-bg:#0f172a;--code-ink:#e2e8f0;--hl:#fde68a;--hl-ink:#422006;
+  --radius:14px;--shadow:0 1px 2px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.06);
+  --ui:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 }
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0a0e16;--card:#121826;--field:#0c111c;--ink:#e8ecf4;--muted:#9aa4b8;--line:#232c3f;
+  --accent:#6ea0ff;--accent-ink:#0a0e16;--accent-soft:#17233d;--ok:#4ade80;--bad:#f87171;
+  --code-bg:#070a11;--hl:#4a3a08;--hl-ink:#fde68a;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35)}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-body{
-  margin:0;padding:18px 10px 150px;color:var(--text);
-  font:13px/1.65 var(--ui);
-  background-color:var(--bg);
-}
-{block:IfDotPattern}
-body{
-  background-image:radial-gradient(var(--dots) 22%,transparent 24%),radial-gradient(var(--dots) 22%,transparent 24%);
-  background-size:22px 22px;background-position:0 0,11px 11px;
-}
-{/block:IfDotPattern}
-{block:IfBackgroundImage}
-body{background-image:url("{image:Background}");background-size:auto;background-position:0 0;background-repeat:repeat}
-{block:IfStretchBackgroundImage}
-body{background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed}
-{/block:IfStretchBackgroundImage}
-{/block:IfBackgroundImage}
+body{margin:0;padding:32px 16px 56px;background:var(--bg);color:var(--ink);font:15px/1.65 var(--ui);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:760px;margin:0 auto}
 
-a{color:var(--link)}
-a:hover{color:var(--hover)}
-a:focus-visible,input:focus-visible{outline:2px dashed var(--hover);outline-offset:2px}
-img,video,iframe{max-width:100%;height:auto;display:block}
-.page{max-width:900px;margin:0 auto}
+.hero{padding:8px 4px 28px}
+.eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:4px 10px;border-radius:999px}
+h1{font-size:clamp(28px,5.5vw,40px);line-height:1.15;letter-spacing:-.02em;margin:14px 0 12px;font-weight:700}
+.lead{font-size:17px;color:var(--muted);margin:0 0 14px;max-width:62ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.chips li{font-size:13px;font-weight:500;padding:4px 11px;border:1px solid var(--line);border-radius:999px;background:var(--card);margin:0}
 
-.box{
-  background:var(--panel);
-  border:2px solid;border-color:var(--lite) var(--shade) var(--shade) var(--lite);
-  outline:2px solid var(--dark);
-  margin-bottom:18px;
-}
-.box-bar{
-  background:linear-gradient(#5f93d6,var(--bar) 55%,#264f89);
-  color:#fff;font:15px/1 var(--pix);letter-spacing:.04em;
-  padding:6px 9px;display:flex;justify-content:space-between;align-items:center;gap:8px;
-  text-shadow:1px 1px 0 #17345c;
-}
-.box-bar a{color:#fff;text-decoration:none}
-.box-in{padding:12px 14px}
-.dots{border:2px dotted var(--bar);padding:10px 12px;background:#f4f9ff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin:0 0 18px}
+.step{display:flex;align-items:center;gap:12px;margin:0 0 14px}
+.num{flex:none;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:14px;font-weight:700;display:grid;place-items:center}
+h2{font-size:19px;line-height:1.3;margin:0;font-weight:650;letter-spacing:-.01em}
+.card>*+*{margin-top:.95em}
+.card>.step+*{margin-top:0}
+p{margin:0}
+ol,ul{margin:0;padding-left:1.3em}li+li{margin-top:.4em}
+.note{font-size:13.5px;color:var(--muted)}
+code{font:12.5px var(--mono);background:var(--field);padding:2px 6px;border:1px solid var(--line);border-radius:6px}
 
-.head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;background:linear-gradient(#f4f9ff,var(--panel))}
-.logo img{display:block;max-height:130px;max-width:260px;width:auto;height:auto;border:0;outline:0;transition:transform .12s ease-out;will-change:transform}
-.head-text{text-align:right;margin-left:auto}
-.site-title{font:36px/1.1 var(--pix);margin:0;color:var(--bar);text-shadow:2px 2px 0 #fff,3px 3px 0 var(--shade)}
-.site-title a{color:inherit;text-decoration:none}
-.tagline{font:14px var(--pix);color:var(--hover);margin-top:4px}
+.field{display:flex;flex-direction:column;gap:6px}
+label,.lbl{font-size:14px;font-weight:600}
+input[type=file],select,input[type=text]{width:100%;padding:10px 12px;background:var(--field);color:var(--ink);font:14px var(--ui);border:1px solid var(--line);border-radius:10px}
+input[type=file]::file-selector-button{margin-right:10px;padding:6px 12px;border:0;border-radius:8px;background:var(--accent);color:var(--accent-ink);font:600 13px var(--ui);cursor:pointer}
+input[type=color]{width:46px;height:32px;padding:2px;background:var(--field);border:1px solid var(--line);border-radius:8px;cursor:pointer}
+input[type=color]:disabled{opacity:.45;cursor:not-allowed}
+input[type=range]{width:100%;accent-color:var(--accent)}
+fieldset{border:0;padding:0;margin:0}
+.swatches{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:2px}
+.swatches label{position:relative;display:block;width:30px;height:30px;font-size:0;cursor:pointer}
+.swatches input[type=radio]{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.swatches span{display:block;width:100%;height:100%;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25),0 1px 3px rgba(0,0,0,.2);transition:transform .12s}
+.swatches label:hover span{transform:scale(1.1)}
+.swatches input:checked+span{box-shadow:inset 0 0 0 1px rgba(0,0,0,.25),0 0 0 2px var(--card),0 0 0 4px var(--ink)}
+.swatches input:focus-visible+span{outline:2px solid var(--accent);outline-offset:4px}
+.custom{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--muted);margin-left:6px}
 
-.ticker{overflow:hidden;white-space:nowrap;background:#17345c;color:#c9ecff;font:14px/1 var(--pix);padding:7px 0}
-.ticker span{display:inline-block;padding-left:100%;animation:scroll 22s linear infinite}
-@keyframes scroll{to{transform:translateX(-100%)}}
+.adv{border:1px solid var(--line);border-radius:12px;background:var(--field);padding:0}
+.adv>summary{cursor:pointer;font-weight:600;padding:12px 14px;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.adv>summary::-webkit-details-marker{display:none}
+.adv>summary::after{content:"+";font-size:18px;color:var(--muted)}
+.adv[open]>summary::after{content:"\2212"}
+.adv-in{padding:4px 14px 16px;border-top:1px solid var(--line)}
+.adv-in>*+*{margin-top:14px}
+.adv-in>.grid{margin-top:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+.grid .field{min-width:0}
+.rng{display:flex;justify-content:space-between;align-items:baseline}
+.rng output{font:12.5px var(--mono);color:var(--muted)}
+.inline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.check{display:flex;align-items:center;gap:8px;font-weight:500}
+.check input{width:16px;height:16px;accent-color:var(--accent)}
+.hide{display:none!important}
 
-.cols{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:18px;align-items:start}
+.btn{font:600 14.5px var(--ui);color:var(--accent-ink);background:var(--accent);border:0;border-radius:10px;padding:11px 20px;cursor:pointer;transition:filter .12s,transform .12s}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.55;cursor:wait}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line);padding:8px 14px;font-size:13px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+#status{min-height:1.5em;font-weight:600;font-size:14px}
+#status.ok{color:var(--ok)}#status.err{color:var(--bad)}
+#result[hidden]{display:none}
+#result>*+*{margin-top:.9em}
+iframe{width:100%;height:380px;border:1px solid var(--line);border-radius:12px;background:var(--field);display:block}
+textarea{width:100%;height:9em;font:12px/1.5 var(--mono);background:var(--field);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;resize:vertical}
 
-.entry .box-in>*+*{margin-top:.9em}
-.entry h2{font:22px/1.2 var(--pix);margin:0}
-.entry h2 a{text-decoration:none}
-.entry p{margin:0}
-.entry blockquote{margin:0;padding:6px 10px;border-left:4px solid var(--bob);background:#f4f9ff}
-.entry img{border:2px solid #fff;outline:1px solid var(--shade)}
-.caption{font-size:12px;color:#4a6285}
-.q{font:20px/1.4 var(--pix)}
-.q-src{text-align:right;font-size:12px;color:#4a6285}
-.ask-q{background:#f4f9ff;border:2px dotted var(--bar);padding:8px 10px}
-.ask-q b{display:block;font:14px var(--pix);color:var(--bar)}
-.chat{list-style:none;margin:0;padding:0}
-.meta{border-top:2px dotted var(--bar);margin-top:14px;padding-top:8px;font-size:11px;color:#4a6285;display:flex;flex-wrap:wrap;gap:4px 14px}
-.meta a{color:#4a6285}
-.meta a:hover{color:var(--hover)}
-.tags{flex-basis:100%}
-.tags a{margin-right:8px;text-decoration:none}
+pre.code{margin:0;background:var(--code-bg);color:var(--code-ink);font:13px/1.7 var(--mono);padding:14px 16px;border-radius:12px;overflow-x:auto}
+pre.code .here{display:block;background:var(--hl);color:var(--hl-ink);margin:0 -16px;padding:0 16px;font-weight:600}
+pre.code .dim{opacity:.6}
 
-.side ul{list-style:none;margin:0;padding:0}
-.side li+li{border-top:1px dotted var(--shade)}
-.side li a{display:block;padding:5px 2px;text-decoration:none}
-.side li a::before{content:"\25B6\00a0";color:var(--bob);font-size:10px}
-.buttons{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:6px}
-.buttons img{display:block;width:88px;height:31px;border:0;outline:0;image-rendering:pixelated}
-.buttons a:hover img{filter:brightness(1.12)}
-.me{text-align:center}
-.me img{width:96px;height:96px;margin:0 auto 8px;border:3px double var(--bar);background:#fff;padding:2px}
-.me .desc{font-size:12px;text-align:left}
-.stat{font:14px/1.5 var(--pix);color:var(--bar)}
-.search input{width:100%;border:2px inset var(--shade);background:#fff;padding:4px 6px;font:12px var(--ui)}
-.needs{display:flex;flex-direction:column;gap:6px}
-.need{display:flex;align-items:center;gap:8px;font:13px var(--pix)}
-.need i{flex:1;height:10px;background:#fff;border:1px solid var(--dark);position:relative}
-.need i::after{content:"";position:absolute;inset:0 auto 0 0;background:linear-gradient(#7ee386,#1d8f2a)}
-.need b{font-weight:400;width:62px}
-.need .a::after{width:80%}.need .b::after{width:55%}.need .c::after{width:92%}.need .d::after{width:30%}
-.need .e::after{width:70%}.need .f::after{width:88%}.need .g::after{width:48%}.need .h::after{width:75%}
-.need .low::after{background:linear-gradient(#ff9a9a,#c0292b)}
-.tagcloud{display:flex;flex-wrap:wrap;gap:6px}
-.tagcloud a{font:13px var(--pix);text-decoration:none;background:#f4f9ff;padding:2px 9px;border:2px dotted var(--bar)}
-.tagcloud a:hover{background:var(--bar);color:#fff}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;border-bottom:1px solid var(--line)}
+.tab{flex:none;font:600 13.5px var(--ui);color:var(--muted);background:none;border:0;border-bottom:2px solid transparent;padding:9px 12px;cursor:pointer;margin-bottom:-1px}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent)}
+.panel[hidden]{display:none}
+.panel>*+*{margin-top:.8em}
 
-.pager{display:flex;justify-content:space-between;font:16px var(--pix)}
-.pager a{text-decoration:none;background:var(--panel);padding:5px 12px;border:2px solid;border-color:var(--lite) var(--shade) var(--shade) var(--lite);outline:2px solid var(--dark)}
-.foot{text-align:center;font-size:11px;color:#34507a;margin-top:6px}
+details.faq{border-top:1px solid var(--line);padding:12px 0}
+details.faq:first-of-type{margin-top:.4em}
+details.faq summary{cursor:pointer;font-weight:600}
+details.faq p{margin-top:8px;color:var(--muted)}
 
-@media (max-width:760px){
-  .cols{grid-template-columns:1fr}
-  .site-title{font-size:26px}
-  .logo img{max-height:70px;max-width:120px}
-}
-@media (prefers-reduced-motion:reduce){
-  .ticker span{animation:none;padding-left:10px}
-  .ticker{white-space:normal}
-}
-
-/* ---- 3D head, fixed to the lower right ---- */
-#headwrap{position:fixed;left:0;bottom:10px;z-index:40;pointer-events:none;line-height:0}
-#headwrap canvas{display:block}
-#headwrap.slide{transition:transform .45s cubic-bezier(.3,1.25,.5,1)}
-body.over-head,body.over-head *{cursor:pointer!important}
-#headmenu{position:fixed;z-index:41;width:0;height:0;animation:pie .14s ease-out}
-#headmenu[hidden]{display:none}
-@keyframes pie{from{transform:scale(.5);opacity:0}}
-.pie-ring{position:absolute;left:-80px;top:-80px;width:160px;height:160px;border-radius:50%;box-sizing:border-box;
-  border:9px solid rgba(95,147,214,.6);outline:2px solid var(--dark);box-shadow:inset 0 0 0 2px #fff;pointer-events:none}
-.pie-btn{position:absolute;transform:translate(-50%,-50%);font:15px/1 var(--pix);color:#fff;white-space:nowrap;cursor:pointer;
-  background:linear-gradient(#5f93d6,var(--bar) 55%,#264f89);border:2px solid;border-color:#fff #17345c #17345c #fff;
-  outline:1px solid var(--dark);border-radius:14px;padding:7px 13px;text-shadow:1px 1px 0 #17345c}
-.pie-btn:hover,.pie-btn:focus-visible{background:linear-gradient(#8bd18f,#2f9a3a 55%,#1d6e28)}
-.pie-a{left:calc(var(--out,-1) * 106px);top:0}
-.pie-b{left:calc(var(--out,-1) * 75px);top:-75px}
-.pie-c{left:0;top:-106px}
-#showhead{position:fixed;right:12px;bottom:10px;z-index:40;font:14px/1 var(--pix);color:#fff;cursor:pointer;
-  background:linear-gradient(#5f93d6,var(--bar) 55%,#264f89);border:2px solid;border-color:#fff #17345c #17345c #fff;
-  outline:1px solid var(--dark);padding:6px 10px;text-shadow:1px 1px 0 #17345c}
-#showhead[hidden]{display:none}
-@media (prefers-reduced-motion:reduce){#headmenu{animation:none}#headwrap.slide{transition:none}}
+.foot{text-align:center;padding:12px 8px 0;color:var(--muted)}
+.foot .by{font-size:14px;font-weight:600;color:var(--ink)}
+.foot .disclaimer{font-size:12.5px;line-height:1.6;max-width:62ch;margin:10px auto 0}
+@media (max-width:520px){.card{padding:18px}.grid{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
-<div class="page">
+<div class="wrap">
 
-  <header class="box">
-    <div class="head">
-      {block:IfLogoImage}<a class="logo" href="/"><img src="{image:Logo}" alt="{Title}"/></a>{/block:IfLogoImage}
-      <div class="head-text">
-        <h1 class="site-title"><a href="/">{Title}</a></h1>
-        {block:Description}<div class="tagline">{Description}</div>{/block:Description}
-      </div>
+<header class="hero">
+  <span class="eyebrow">Head Kit</span>
+  <h1>Add your own 3D head to any website</h1>
+  <p class="lead">Upload a head model and its picture. You get one small piece of code to paste into your site. The head sits in a corner, follows the cursor, and opens a little pop-up menu when clicked.</p>
+  <ul class="chips" aria-label="Works with">
+    <li>Tumblr</li><li>WordPress</li><li>Blogger</li><li>Neocities</li><li>Plain HTML</li>
+  </ul>
+</header>
+
+<section class="card">
+  <div class="step"><span class="num">1</span><h2>Get your two files</h2></div>
+  <p>You need a head model (<code>.obj</code>) and the picture that wraps around it (<code>.jpg</code>, <code>.png</code> or <code>.bmp</code>). If you have a Blender file, export it like this:</p>
+  <ol>
+    <li>Open the <code>.blend</code> file in Blender (free at blender.org).</li>
+    <li>Choose <b>File &gt; Export &gt; Wavefront (.obj)</b>. Tick <b>Triangulated Mesh</b>, keep <b>Materials</b> ticked, and save.</li>
+    <li>For the picture, open the <b>Shading</b> tab, click the picture box (it shows the file name), then choose <b>Image &gt; Save As</b>.</li>
+  </ol>
+  <p class="note">Models from other programs work too, as long as they have a UV map. That’s what tells the picture where to go on the head.</p>
+</section>
+
+<section class="card">
+  <div class="step"><span class="num">2</span><h2>Build your snippet</h2></div>
+  <div id="form" style="display:contents">
+  <div class="field"><label for="objf">Head model (.obj)</label><input id="objf" type="file" accept=".obj"/></div>
+  <div class="field"><label for="texf">Head picture (.jpg, .png or .bmp)</label><input id="texf" type="file" accept=".jpg,.jpeg,.png,.bmp,.gif,.webp,image/*"/></div>
+  <div class="field"><label for="face">Which way does the head face?</label>
+    <select id="face">
+      <option value="3.14159">Try this first (Blender default)</option>
+      <option value="0">Turn it around</option>
+      <option value="1.5708">Turn it left</option>
+      <option value="-1.5708">Turn it right</option>
+    </select></div>
+  <fieldset>
+    <legend class="lbl">Menu colour</legend>
+    <div class="swatches" id="colors" role="radiogroup" aria-label="Menu colour">
+      <label class="custom" for="cc" style="margin-left:0;order:99">Custom <input type="color" id="cc" value="#1a1a1a"/></label>
     </div>
-    {block:IfShowWelcomeTicker}
-    <div class="ticker" aria-label="Welcome message"><span>*:.&nbsp; {text:Welcome Text} &nbsp;.:*</span></div>
-    {/block:IfShowWelcomeTicker}
-  </header>
+    <p class="note" style="margin-top:8px">The pop-up menu uses this one colour. You set it here, and visitors can’t change it.</p>
+  </fieldset>
 
-  <div class="cols">
-
-    <main id="content">
-
-      {block:SearchPage}
-      <div class="box"><div class="box-in dots">{block:NoSearchResults}Nothing matched "{SearchQuery}". Try another word!{/block:NoSearchResults}{block:SearchResults}{SearchResultCount} results for "{SearchQuery}"{/block:SearchResults}</div></div>
-      {/block:SearchPage}
-      {block:TagPage}<div class="box"><div class="box-in dots">Entries tagged #{Tag}</div></div>{/block:TagPage}
-
-      {block:Posts}
-      <article class="box entry" id="post-{PostID}">
-        <div class="box-bar">
-          <span>&#9733; {ShortMonth} {DayOfMonth}, {Year}</span>
-          <a href="{Permalink}" aria-label="Permalink">#</a>
-        </div>
-        <div class="box-in">
-
-          {block:Text}
-            {block:Title}<h2><a href="{Permalink}">{Title}</a></h2>{/block:Title}
-            {Body}
-          {/block:Text}
-
-          {block:Photo}
-            {LinkOpenTag}<img src="{PhotoURL-500}" alt="{PhotoAlt}"/>{LinkCloseTag}
-            {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
-          {/block:Photo}
-
-          {block:Photoset}
-            {Photoset-500}
-            {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
-          {/block:Photoset}
-
-          {block:Quote}
-            <div class="q">&ldquo;{Quote}&rdquo;</div>
-            {block:Source}<div class="q-src">- {Source}</div>{/block:Source}
-          {/block:Quote}
-
-          {block:Link}
-            <h2><a href="{URL}" {Target}>{Name}</a></h2>
-            {block:Description}<div>{Description}</div>{/block:Description}
-          {/block:Link}
-
-          {block:Chat}
-            {block:Title}<h2>{Title}</h2>{/block:Title}
-            <ul class="chat">{block:Lines}<li>{block:Label}<b>{Label}</b> {/block:Label}{Line}</li>{/block:Lines}</ul>
-          {/block:Chat}
-
-          {block:Audio}
-            {AudioEmbed-500}
-            {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
-          {/block:Audio}
-
-          {block:Video}
-            {Video-500}
-            {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
-          {/block:Video}
-
-          {block:Answer}
-            <div class="ask-q"><b>{Asker} asked:</b>{Question}</div>
-            {Answer}
-          {/block:Answer}
-
-          <div class="meta">
-            {block:IfShowNotes}{block:NoteCount}<a href="{Permalink}">{NoteCountWithLabel}</a>{/block:NoteCount}{/block:IfShowNotes}
-            {block:RebloggedFrom}<span>via <a href="{ReblogParentURL}">{ReblogParentName}</a></span>{/block:RebloggedFrom}
-            {block:IfShowTags}{block:HasTags}<span class="tags">{block:Tags}<a href="{TagURL}">#{Tag}</a>{/block:Tags}</span>{/block:HasTags}{/block:IfShowTags}
-          </div>
-
-          {block:PermalinkPage}{block:PostNotes}<div>{PostNotes-20}</div>{/block:PostNotes}{/block:PermalinkPage}
-        </div>
-      </article>
-      {/block:Posts}
-
-      {block:NoPosts}<div class="box"><div class="box-in dots">No entries yet. Check back soon!</div></div>{/block:NoPosts}
-
-      {block:Pagination}
-      <nav class="pager" aria-label="Pages">
-        {block:PreviousPage}<a href="{PreviousPage}">&laquo; Newer</a>{/block:PreviousPage}
-        {block:NextPage}<a href="{NextPage}">Older &raquo;</a>{/block:NextPage}
-      </nav>
-      {/block:Pagination}
-    </main>
-
-    <aside class="side">
-      <section class="box">
-        <div class="box-bar">Links</div>
-        <div class="box-in">
-          <div class="buttons">
-          {block:IfButton1Image}{block:IfButton1Link}<a href="{text:Button 1 Link}" target="_blank" rel="noopener"><img src="{image:Button 1}" alt="Link button 1" width="88" height="31"/></a>{/block:IfButton1Link}{block:IfNotButton1Link}<img src="{image:Button 1}" alt="Button 1" width="88" height="31"/>{/block:IfNotButton1Link}{/block:IfButton1Image}
-          {block:IfButton2Image}{block:IfButton2Link}<a href="{text:Button 2 Link}" target="_blank" rel="noopener"><img src="{image:Button 2}" alt="Link button 2" width="88" height="31"/></a>{/block:IfButton2Link}{block:IfNotButton2Link}<img src="{image:Button 2}" alt="Button 2" width="88" height="31"/>{/block:IfNotButton2Link}{/block:IfButton2Image}
-          {block:IfButton3Image}{block:IfButton3Link}<a href="{text:Button 3 Link}" target="_blank" rel="noopener"><img src="{image:Button 3}" alt="Link button 3" width="88" height="31"/></a>{/block:IfButton3Link}{block:IfNotButton3Link}<img src="{image:Button 3}" alt="Button 3" width="88" height="31"/>{/block:IfNotButton3Link}{/block:IfButton3Image}
-          {block:IfButton4Image}{block:IfButton4Link}<a href="{text:Button 4 Link}" target="_blank" rel="noopener"><img src="{image:Button 4}" alt="Link button 4" width="88" height="31"/></a>{/block:IfButton4Link}{block:IfNotButton4Link}<img src="{image:Button 4}" alt="Button 4" width="88" height="31"/>{/block:IfNotButton4Link}{/block:IfButton4Image}
-          {block:IfButton5Image}{block:IfButton5Link}<a href="{text:Button 5 Link}" target="_blank" rel="noopener"><img src="{image:Button 5}" alt="Link button 5" width="88" height="31"/></a>{/block:IfButton5Link}{block:IfNotButton5Link}<img src="{image:Button 5}" alt="Button 5" width="88" height="31"/>{/block:IfNotButton5Link}{/block:IfButton5Image}
-          {block:IfButton6Image}{block:IfButton6Link}<a href="{text:Button 6 Link}" target="_blank" rel="noopener"><img src="{image:Button 6}" alt="Link button 6" width="88" height="31"/></a>{/block:IfButton6Link}{block:IfNotButton6Link}<img src="{image:Button 6}" alt="Button 6" width="88" height="31"/>{/block:IfNotButton6Link}{/block:IfButton6Image}
-          </div>
-          <ul>
-            {block:IfLink1Name}<li><a href="{text:Link 1 URL}" target="_blank" rel="noopener">{text:Link 1 Name}</a></li>{/block:IfLink1Name}
-            {block:IfLink2Name}<li><a href="{text:Link 2 URL}" target="_blank" rel="noopener">{text:Link 2 Name}</a></li>{/block:IfLink2Name}
-            {block:IfLink3Name}<li><a href="{text:Link 3 URL}" target="_blank" rel="noopener">{text:Link 3 Name}</a></li>{/block:IfLink3Name}
-          </ul>
-        </div>
-      </section>
-
-      <section class="box">
-        <div class="box-bar">Menu</div>
-        <div class="box-in">
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/archive">Archive</a></li>
-            <li><a href="/tagged/{text:Builds Tag}">Builds</a></li>
-            {block:IfShowTagsBox}<li><a href="#tags">Tags</a></li>{/block:IfShowTagsBox}
-            {block:AskEnabled}<li><a href="/ask">{AskLabel}</a></li>{/block:AskEnabled}
-            {block:SubmissionsEnabled}<li><a href="/submit">{SubmitLabel}</a></li>{/block:SubmissionsEnabled}
-            {block:HasPages}{block:Pages}<li><a href="{URL}">{Label}</a></li>{/block:Pages}{/block:HasPages}
-          </ul>
-        </div>
-      </section>
-
-      {block:SearchEnabled}
-      <section class="box">
-        <div class="box-bar">Search</div>
-        <div class="box-in search">
-          <form action="/search" method="get" role="search">
-            <input type="search" name="q" value="{SearchQuery}" placeholder="Find an entry" aria-label="Search this blog"/>
-          </form>
-        </div>
-      </section>
-      {/block:SearchEnabled}
-
-      {block:IfShowTagsBox}
-      <section class="box" id="tags">
-        <div class="box-bar">Tags</div>
-        <div class="box-in tagcloud">
-          {block:IfTag1}<a href="/tagged/{text:Tag 1}">#{text:Tag 1}</a>{/block:IfTag1}
-          {block:IfTag2}<a href="/tagged/{text:Tag 2}">#{text:Tag 2}</a>{/block:IfTag2}
-          {block:IfTag3}<a href="/tagged/{text:Tag 3}">#{text:Tag 3}</a>{/block:IfTag3}
-          {block:IfTag4}<a href="/tagged/{text:Tag 4}">#{text:Tag 4}</a>{/block:IfTag4}
-          {block:IfTag5}<a href="/tagged/{text:Tag 5}">#{text:Tag 5}</a>{/block:IfTag5}
-          {block:IfTag6}<a href="/tagged/{text:Tag 6}">#{text:Tag 6}</a>{/block:IfTag6}
-        </div>
-      </section>
-      {/block:IfShowTagsBox}
-
-      {block:IfShowNowPlaying}
-      <section class="box">
-        <div class="box-bar">Now Playing</div>
-        <div class="box-in stat">&#9834; {text:Now Playing}</div>
-      </section>
-      {/block:IfShowNowPlaying}
-
-      {block:IfShowNeedBars}
-      <section class="box">
-        <div class="box-bar">Needs</div>
-        <div class="box-in needs" aria-hidden="true">
-          <div class="need"><b>Hunger</b><i class="a"></i></div>
-          <div class="need"><b>Comfort</b><i class="b"></i></div>
-          <div class="need"><b>Hygiene</b><i class="c"></i></div>
-          <div class="need"><b>Bladder</b><i class="d low"></i></div>
-          <div class="need"><b>Energy</b><i class="e"></i></div>
-          <div class="need"><b>Fun</b><i class="f"></i></div>
-          <div class="need"><b>Social</b><i class="g"></i></div>
-          <div class="need"><b>Room</b><i class="h"></i></div>
-        </div>
-      </section>
-      {/block:IfShowNeedBars}
-    </aside>
+  <details class="adv" id="adv">
+    <summary>Advanced settings</summary>
+    <div class="adv-in">
+      <div class="field"><label for="font">Menu font</label><select id="font"></select></div>
+      <div class="field hide" id="fontcustomwrap"><label for="fontcustom">Google Font name</label>
+        <input type="text" id="fontcustom" placeholder="e.g. Lobster" autocomplete="off" spellcheck="false"/>
+        <span class="note">Type a font name exactly as it appears on fonts.google.com. If it can’t be found, the menu falls back to a plain font.</span></div>
+      <div class="inline">
+        <label for="fc">Text colour</label>
+        <input type="color" id="fc" value="#ffffff" disabled/>
+        <label class="check"><input type="checkbox" id="autofc" checked/> Pick automatically</label>
+      </div>
+      <div class="grid">
+        <div class="field"><div class="rng"><label for="fsize">Text size</label><output id="o-fsize">15 px</output></div><input type="range" id="fsize" min="11" max="24" step="1" value="15"/></div>
+        <div class="field"><div class="rng"><label for="rad">Button roundness</label><output id="o-rad">14 px</output></div><input type="range" id="rad" min="0" max="24" step="1" value="14"/></div>
+        <div class="field"><div class="rng"><label for="hsize">Head size on computers</label><output id="o-hsize">180 px</output></div><input type="range" id="hsize" min="100" max="320" step="10" value="180"/></div>
+        <div class="field"><div class="rng"><label for="hsizem">Head size on phones</label><output id="o-hsizem">120 px</output></div><input type="range" id="hsizem" min="80" max="200" step="10" value="120"/></div>
+      </div>
+      <div class="grid">
+        <div class="field"><label for="corner">Starting corner</label>
+          <select id="corner"><option value="right">Lower right</option><option value="left">Lower left</option></select></div>
+        <div class="field"><span class="lbl">Menu ring</span>
+          <label class="check" style="margin-top:6px"><input type="checkbox" id="ring" checked/> Show the ring behind the buttons</label></div>
+      </div>
+      <div><button class="btn ghost" id="reset" type="button">Reset advanced settings</button></div>
+    </div>
+  </details>
   </div>
 
-  <div class="foot">{text:Footer Text}</div>
+  <div class="row"><button class="btn" id="go" type="button">Build my snippet</button></div>
+  <p id="status" role="status" aria-live="polite"></p>
+  <div id="result" hidden>
+    <iframe id="prev" title="Preview of your head" sandbox="allow-scripts allow-popups"></iframe>
+    <p class="note">Move your mouse around the preview and click the head to open the menu. If the face looks backwards or sideways, change the direction above. Every setting updates the preview and the snippet.</p>
+    <label for="out">Your Head Kit snippet</label>
+    <textarea id="out" readonly spellcheck="false"></textarea>
+    <div class="row"><button class="btn" id="copy" type="button">Copy snippet</button><span id="size" class="note"></span></div>
+  </div>
+</section>
+
+<section class="card">
+  <div class="step"><span class="num">3</span><h2>Paste it into your site</h2></div>
+  <p>You don’t replace anything and you don’t need a special theme. The snippet is a single <code>&lt;script&gt;</code> block. Paste it on its own line <b>just above the closing body tag</b> (<code>&lt;/body&gt;</code>), which is the very end of your page:</p>
+  <pre class="code"><span class="dim">&lt;html&gt;
+  &lt;head&gt; … &lt;/head&gt;
+  &lt;body&gt;
+    … your page content …
+</span><span class="here">    &lt;!-- Head Kit: paste here --&gt;</span><span class="dim">  &lt;/body&gt;
+&lt;/html&gt;</span></pre>
+  <p class="note">If your site doesn’t let you edit the page HTML, look for a place to add a custom footer script. Pick your platform:</p>
+
+  <div class="tabs" role="tablist" aria-label="Platform">
+    <button class="tab" role="tab" id="t-tumblr" aria-controls="p-tumblr" aria-selected="true" type="button">Tumblr</button>
+    <button class="tab" role="tab" id="t-wp" aria-controls="p-wp" aria-selected="false" type="button">WordPress</button>
+    <button class="tab" role="tab" id="t-blogger" aria-controls="p-blogger" aria-selected="false" type="button">Blogger</button>
+    <button class="tab" role="tab" id="t-html" aria-controls="p-html" aria-selected="false" type="button">Neocities / own HTML</button>
+    <button class="tab" role="tab" id="t-builders" aria-controls="p-builders" aria-selected="false" type="button">Wix, Squarespace &amp; others</button>
+  </div>
+
+  <div class="panel" role="tabpanel" id="p-tumblr" aria-labelledby="t-tumblr">
+    <ol>
+      <li>Open your blog, click <b>Edit appearance</b>, then <b>Edit theme</b>, then <b>Edit HTML</b>.</li>
+      <li>Click inside the code box and press <b>Ctrl+F</b> (or <b>Cmd+F</b> on a Mac). Search for <code>&lt;/body&gt;</code>.</li>
+      <li>Click at the start of that line so your cursor sits just before <code>&lt;/body&gt;</code>. Press <b>Enter</b> to make an empty line, then paste the snippet. Keep your existing theme code as it is.</li>
+      <li>Click <b>Update preview</b>, then <b>Save</b>.</li>
+      <li>Open your real blog address in a new tab. Tumblr’s preview often ignores mouse movement, so the head only follows your cursor on the live page.</li>
+    </ol>
+  </div>
+
+  <div class="panel" role="tabpanel" id="p-wp" aria-labelledby="t-wp" hidden>
+    <p>The safest way is a free header and footer plugin, so a theme update never wipes your code.</p>
+    <ol>
+      <li>In your dashboard, go to <b>Plugins &gt; Add New</b> and install a header/footer code plugin (for example <b>WPCode</b>), then activate it.</li>
+      <li>Open the plugin’s <b>Header &amp; Footer</b> settings.</li>
+      <li>Paste the snippet into the <b>Footer</b> box and save.</li>
+    </ol>
+    <p class="note">Prefer editing files? With a classic theme, open <b>Appearance &gt; Theme File Editor</b>, choose <code>footer.php</code>, and paste the snippet on its own line directly above <code>&lt;?php wp_footer(); ?&gt;</code> or <code>&lt;/body&gt;</code>. Use a child theme so updates don’t erase it.</p>
+  </div>
+
+  <div class="panel" role="tabpanel" id="p-blogger" aria-labelledby="t-blogger" hidden>
+    <p>Blogger’s template editor rejects some characters in scripts, so use a gadget instead:</p>
+    <ol>
+      <li>In Blogger, open <b>Layout</b>.</li>
+      <li>Click <b>Add a Gadget</b> in a footer or sidebar area, and choose <b>HTML/JavaScript</b>.</li>
+      <li>Paste the whole snippet into the content box, then <b>Save</b> and <b>Save arrangement</b>.</li>
+    </ol>
+    <p class="note">The head floats in a corner of the screen, so it doesn’t matter which area holds the gadget.</p>
+  </div>
+
+  <div class="panel" role="tabpanel" id="p-html" aria-labelledby="t-html" hidden>
+    <p>For Neocities, GitHub Pages, or any site where you control the files:</p>
+    <ol>
+      <li>Open your page’s <code>.html</code> file in an editor.</li>
+      <li>Scroll to the bottom and find <code>&lt;/body&gt;</code>.</li>
+      <li>Paste the snippet on a new line directly above it, then save and upload.</li>
+    </ol>
+    <p class="note">Want the head on every page? Paste it into each page, or into the shared footer or template file if your site has one.</p>
+  </div>
+
+  <div class="panel" role="tabpanel" id="p-builders" aria-labelledby="t-builders" hidden>
+    <p>Website builders usually hide the HTML, but most have a spot for custom code. Menu names change over time, so look for one of these in your site settings:</p>
+    <ul>
+      <li><b>Wix:</b> Settings &gt; Custom Code, add the code to <b>Body – end</b> on all pages.</li>
+      <li><b>Squarespace:</b> Settings &gt; Advanced &gt; Code Injection, paste into the <b>Footer</b> box.</li>
+      <li><b>Webflow:</b> Site settings &gt; Custom code, paste into <b>Footer code</b>.</li>
+      <li><b>Anything else:</b> search the help pages for “custom code”, “footer script” or “code injection”.</li>
+    </ul>
+    <p class="note">Some builders only allow custom code on paid plans, and a few (such as link-in-bio pages or note apps) block scripts completely. If yours does, the head can’t run there.</p>
+  </div>
+</section>
+
+<section class="card">
+  <div class="step"><span class="num">4</span><h2>What visitors can do</h2></div>
+  <p>Hover over the head and the cursor turns into a pointer. Clicking it opens the pop-up menu:</p>
+  <ul>
+    <li><b>Hide Head</b> removes it, and a small <b>Show head</b> button appears to bring it back.</li>
+    <li><b>Go Lower Left / Go Lower Right</b> sends it to the other corner.</li>
+    <li><b>Cancel</b> or the <b>Esc</b> key closes the menu.</li>
+    <li><b>Kit by Arno</b> opens the Head Kit page in a new tab.</li>
+  </ul>
+  <p class="note">The menu’s colour, font and sizes come from the settings you chose in Step 2. A visitor’s choice to hide the head or move it is remembered in their own browser.</p>
+</section>
+
+<section class="card">
+  <div class="step"><span class="num">?</span><h2>If something looks wrong</h2></div>
+  <details class="faq"><summary>Nothing shows up on my site</summary><p>Check that the snippet sits above <code>&lt;/body&gt;</code> and that you pasted all of it, from <code>&lt;script&gt;</code> to <code>&lt;/script&gt;</code>. Make sure you used an HTML or code editor, not a visual one that strips scripts. If you hid the head earlier, look for the <b>Show head</b> button at the bottom of the page. Some sites, and some mobile apps, block custom scripts. Your browser also needs WebGL, which almost every current browser has.</p></details>
+  <details class="faq"><summary>The face is backwards or sideways</summary><p>Change <b>Which way does the head face?</b> in Step 2. The preview updates and the snippet is rewritten. Copy it again and replace the old one.</p></details>
+  <details class="faq"><summary>It says my model has no UV map</summary><p>The model needs a UV map so the picture can wrap around it. In Blender, tick <b>UV</b> in the export settings, or check that the model has been unwrapped.</p></details>
+  <details class="faq"><summary>The colours look wrong or the head is plain</summary><p>You may have picked a different picture than the one the model uses. If the model uses several pictures, this kit can only use one, so pick the main face picture.</p></details>
+  <details class="faq"><summary>My site won’t accept the code, or loads slowly</summary><p>Very detailed models make the snippet large, and some editors limit how much code you can paste. Simple models with a few hundred triangles work best. Pictures are shrunk to 256 pixels wide automatically.</p></details>
+  <details class="faq"><summary>The head covers part of my page</summary><p>Visitors can hide it or move it from the menu. You can also make it smaller: open <b>Advanced settings</b> in Step 2, lower the head size, and copy the new snippet.</p></details>
+  <details class="faq"><summary>My font isn’t showing</summary><p>Fonts other than the system default are loaded from Google Fonts, so the visitor needs an internet connection. Check the name is spelled exactly as on fonts.google.com. Some strict sites block outside fonts, and then the menu uses a plain fallback font.</p></details>
+  <details class="faq"><summary>Can I use heads from a game?</summary><p>Fan sites do it all the time, but the models and pictures belong to the people who made them. If you plan to sell anything or run a bigger site, check the rules first.</p></details>
+</section>
+
+<footer class="foot">
+  <p class="by">Made by Arno, 2024.</p>
+  <p class="disclaimer"><b>Disclaimer:</b> Head Kit is an unofficial, fan-made tool provided “as is”, without warranty of any kind. It is not affiliated with, endorsed by, or sponsored by Tumblr, WordPress, Blogger, or any other platform, game, or brand mentioned here. All trademarks, models and textures belong to their respective owners. You are responsible for having the right to use any files you upload and for following the rules of the site where you add the snippet. Your files are processed in your browser and are not sent to any server.</p>
+</footer>
+
 </div>
-{block:IfNotUse3DHead}<script>window.no3dHead=true;</script>{/block:IfNotUse3DHead}
+
+<!-- Head Kit snippet template. The page fills in the placeholders below. -->
+<script type="text/plain" id="tpl">
+(function () {
+  if (window.__headKit) return;
+  window.__headKit = true;
+
+  function start() {
+    var MESH = __MESH__;
+    var SRC = '__SRC__';
+    var CFG = __CFG__;
+    var KEY = 'headKitHidden', KEY_SIDE = 'headKitSide';
+    var SIZE = window.innerWidth < CFG.mobileBelow ? CFG.sizeMobile : CFG.size;
+    var K = Math.max(1, SIZE / 180);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    var canvas = document.createElement('canvas');
+    canvas.width = SIZE * dpr; canvas.height = SIZE * dpr;
+    canvas.style.width = SIZE + 'px'; canvas.style.height = SIZE + 'px';
+    canvas.setAttribute('aria-hidden', 'true');
+    var gl = canvas.getContext('webgl', { alpha: true, antialias: true }) || canvas.getContext('experimental-webgl');
+    if (!gl) return;
+
+    function shader(type, src) {
+      var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error('shader');
+      return s;
+    }
+    var prog;
+    try {
+      prog = gl.createProgram();
+      gl.attachShader(prog, shader(gl.VERTEX_SHADER,
+        'attribute vec3 aPos;attribute vec2 aUV;attribute vec3 aN;' +
+        'uniform mat4 uMVP;uniform mat4 uRot;varying vec2 vUV;varying vec3 vN;' +
+        'void main(){vUV=aUV;vN=(uRot*vec4(aN,0.0)).xyz;gl_Position=uMVP*vec4(aPos,1.0);}'));
+      gl.attachShader(prog, shader(gl.FRAGMENT_SHADER,
+        'precision mediump float;varying vec2 vUV;varying vec3 vN;uniform sampler2D uTex;uniform float uFlat;uniform vec3 uColor;' +
+        'void main(){if(uFlat>0.5){gl_FragColor=vec4(uColor,1.0);return;}' +
+        'vec4 c=texture2D(uTex,vUV);' +
+        'float d=max(dot(normalize(vN),normalize(vec3(-0.4,0.5,0.8))),0.0);' +
+        'gl_FragColor=vec4(c.rgb*(0.8+0.3*d),1.0);}'));
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    } catch (e) { return; }
+    gl.useProgram(prog);
+
+    function buf(data) { var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW); return b; }
+    var bP = buf(MESH.p), bU = buf(MESH.u), bN = buf(MESH.n), count = MESH.p.length / 3;
+    var aPos = gl.getAttribLocation(prog, 'aPos'), aUV = gl.getAttribLocation(prog, 'aUV'), aN = gl.getAttribLocation(prog, 'aN');
+    var uMVP = gl.getUniformLocation(prog, 'uMVP'), uRot = gl.getUniformLocation(prog, 'uRot');
+    var uFlat = gl.getUniformLocation(prog, 'uFlat'), uColor = gl.getUniformLocation(prog, 'uColor');
+
+    function mul(a, b) {
+      var o = new Float32Array(16), r, c, k;
+      for (c = 0; c < 4; c++) for (r = 0; r < 4; r++) {
+        var s = 0; for (k = 0; k < 4; k++) s += a[k * 4 + r] * b[c * 4 + k]; o[c * 4 + r] = s;
+      }
+      return o;
+    }
+    function rotY(t) { var c = Math.cos(t), s = Math.sin(t); return new Float32Array([c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1]); }
+    function rotX(t) { var c = Math.cos(t), s = Math.sin(t); return new Float32Array([1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1]); }
+    function scaleM(s) { return new Float32Array([s, 0, 0, 0, 0, s, 0, 0, 0, 0, s, 0, 0, 0, 0, 1]); }
+    var fov = 34 * Math.PI / 180, f = 1 / Math.tan(fov / 2), nr = 1, fr = 10;
+    var proj = new Float32Array([f, 0, 0, 0, 0, f, 0, 0, 0, 0, (fr + nr) / (nr - fr), -1, 0, 0, 2 * fr * nr / (nr - fr), 0]);
+    var view = new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -5, 1]);
+    var base = rotY(__FACE__);
+
+    /* ---- colour helpers: one menu colour, shades worked out from it ---- */
+    function isHex(h) { return typeof h === 'string' && /^#[0-9a-f]{6}$/i.test(h); }
+    function rgb(h) { var n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+    function hex(c) { return '#' + c.map(function (v) { v = Math.max(0, Math.min(255, Math.round(v))); return (v < 16 ? '0' : '') + v.toString(16); }).join(''); }
+    function mix(a, b, t) { var x = rgb(a), y = rgb(b); return hex([x[0] + (y[0] - x[0]) * t, x[1] + (y[1] - x[1]) * t, x[2] + (y[2] - x[2]) * t]); }
+    function toHsl(c) {
+      var r = c[0] / 255, g = c[1] / 255, b = c[2] / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), h = 0, s = 0, l = (mx + mn) / 2, d = mx - mn;
+      if (d) { s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn); h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h /= 6; }
+      return [h, s, l];
+    }
+    function fromHsl(a) {
+      var h = a[0], s = a[1], l = a[2];
+      if (!s) return hex([l * 255, l * 255, l * 255]);
+      function q(p, qq, t) { if (t < 0) t += 1; if (t > 1) t -= 1; if (t < 1 / 6) return p + (qq - p) * 6 * t; if (t < 1 / 2) return qq; if (t < 2 / 3) return p + (qq - p) * (2 / 3 - t) * 6; return p; }
+      var m2 = l < 0.5 ? l * (1 + s) : l + s - l * s, m1 = 2 * l - m2;
+      return hex([q(m1, m2, h + 1 / 3) * 255, q(m1, m2, h) * 255, q(m1, m2, h - 1 / 3) * 255]);
+    }
+    function shade(h, ds, dl) { var a = toHsl(rgb(h)); return fromHsl([a[0], Math.max(0, Math.min(1, a[1] + ds)), Math.max(0, Math.min(1, a[2] + dl))]); }
+    function lum(h) { var c = rgb(h).map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; }
+    function contrast(a, b) { var l1 = lum(a), l2 = lum(b); return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05); }
+
+    var C = isHex(CFG.color) ? CFG.color : '#1a1a1a';
+    var top = shade(C, 0.08, 0.18), bot = shade(C, 0, -0.06);
+    var hTop = shade(C, 0.05, 0.3), hMid = shade(C, 0.05, 0.12);
+    var edge = mix(C, '#000000', 0.5), outl = mix(C, '#000000', 0.33);
+    var fc = isHex(CFG.fontColor) ? CFG.fontColor : (contrast(C, '#1b1b1b') > contrast(C, '#ffffff') ? '#1b1b1b' : '#ffffff');
+    var shadow = lum(fc) > 0.5 ? edge : 'rgba(255,255,255,.45)';
+    var tr = rgb(top);
+    var grad = 'linear-gradient(' + top + ',' + C + ' 55%,' + bot + ')';
+    var gradH = 'linear-gradient(' + hTop + ',' + hMid + ' 55%,' + C + ')';
+    var outlRgb = rgb(outl).map(function (v) { return v / 255; });
+    var fs = CFG.fontSize, stack = CFG.stack;
+
+    /* ---- font and styles (added by script, so nothing else in your page changes) ---- */
+    if (CFG.gfont) {
+      var lk = document.createElement('link');
+      lk.rel = 'stylesheet';
+      lk.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(CFG.gfont).replace(/%20/g, '+') + '&display=swap';
+      document.head.appendChild(lk);
+    }
+    var css = [
+      '#hk-wrap{position:fixed;left:0;bottom:10px;z-index:2147483000;pointer-events:none;line-height:0}',
+      '#hk-wrap canvas{display:block}',
+      '#hk-wrap.hk-slide{transition:transform .45s cubic-bezier(.3,1.25,.5,1)}',
+      'body.hk-over,body.hk-over *{cursor:pointer!important}',
+      '#hk-menu{position:fixed;z-index:2147483001;width:0;height:0;--k:' + K + ';animation:hk-pie .14s ease-out}',
+      '#hk-menu[hidden]{display:none}',
+      '@keyframes hk-pie{from{transform:scale(.5);opacity:0}}',
+      CFG.ring
+        ? '.hk-ring{position:absolute;left:calc(-80px * var(--k));top:calc(-80px * var(--k));width:calc(160px * var(--k));height:calc(160px * var(--k));border-radius:50%;box-sizing:border-box;border:9px solid rgba(' + tr[0] + ',' + tr[1] + ',' + tr[2] + ',.6);outline:2px solid ' + outl + ';box-shadow:inset 0 0 0 2px #fff;pointer-events:none}'
+        : '.hk-ring{display:none}',
+      '.hk-btn{position:absolute;transform:translate(-50%,-50%);display:block;box-sizing:border-box;margin:0;-webkit-appearance:none;appearance:none;text-decoration:none;font:' + fs + 'px/1 ' + stack + ';color:' + fc + ';white-space:nowrap;cursor:pointer;background:' + grad + ';border:2px solid;border-color:#fff ' + edge + ' ' + edge + ' #fff;outline:1px solid ' + outl + ';border-radius:' + CFG.radius + 'px;padding:7px 13px;text-shadow:1px 1px 0 ' + shadow + '}',
+      '.hk-btn:hover,.hk-btn:focus-visible{background:' + gradH + ';color:' + fc + '}',
+      '.hk-btn:focus-visible,#hk-show:focus-visible{outline:2px dashed ' + outl + ';outline-offset:2px}',
+      '.hk-a{left:calc(var(--out,-1) * 106px * var(--k));top:0}',
+      '.hk-b{left:calc(var(--out,-1) * 75px * var(--k));top:calc(-75px * var(--k))}',
+      '.hk-c{left:0;top:calc(-106px * var(--k))}',
+      '.hk-d{left:calc(var(--out,-1) * 75px * var(--k));top:calc(75px * var(--k))}',
+      '#hk-show{position:fixed;right:12px;bottom:10px;z-index:2147483000;margin:0;-webkit-appearance:none;appearance:none;font:' + Math.max(10, fs - 1) + 'px/1 ' + stack + ';color:' + fc + ';cursor:pointer;background:' + grad + ';border:2px solid;border-color:#fff ' + edge + ' ' + edge + ' #fff;outline:1px solid ' + outl + ';border-radius:' + Math.round(CFG.radius / 2) + 'px;padding:6px 10px;text-shadow:1px 1px 0 ' + shadow + '}',
+      '#hk-show:hover{background:' + gradH + '}',
+      '#hk-show[hidden]{display:none}',
+      '@media (prefers-reduced-motion:reduce){#hk-menu{animation:none}#hk-wrap.hk-slide{transition:none}}'
+    ].join('\n');
+    var styleEl = document.createElement('style'); styleEl.id = 'hk-style'; styleEl.textContent = css;
+    document.head.appendChild(styleEl);
+
+    /* ---- wrapper, pie menu, "show head" button ---- */
+    var wrap = document.createElement('div'); wrap.id = 'hk-wrap'; wrap.appendChild(canvas);
+    var menu = document.createElement('div'); menu.id = 'hk-menu'; menu.hidden = true;
+    menu.innerHTML = '<div class="hk-ring"></div>' +
+      '<button type="button" class="hk-btn hk-a" data-act="hide">Hide Head</button>' +
+      '<button type="button" class="hk-btn hk-b" data-act="move">Go Lower Left</button>' +
+      '<button type="button" class="hk-btn hk-c" data-act="cancel">Cancel</button>' +
+      '<a class="hk-btn hk-d" href="https://arnotolkien.github.io/3Dhead-on-html/" target="_blank" rel="noopener">Kit by Arno</a>';
+    var showBtn = document.createElement('button'); showBtn.type = 'button'; showBtn.id = 'hk-show'; showBtn.textContent = 'Show head'; showBtn.hidden = true;
+    document.body.appendChild(wrap); document.body.appendChild(menu); document.body.appendChild(showBtn);
+
+    var moveBtn = menu.querySelector('.hk-b');
+    var dock = CFG.corner === 'left' ? 'left' : 'right';
+    try { var sd = localStorage.getItem(KEY_SIDE); if (sd === 'left' || sd === 'right') dock = sd; } catch (e) {}
+    function place() {
+      var x = dock === 'right' ? document.documentElement.clientWidth - SIZE - 12 : 12;
+      wrap.style.transform = 'translateX(' + x + 'px)';
+      showBtn.style.left = dock === 'right' ? 'auto' : '12px';
+      showBtn.style.right = dock === 'right' ? '12px' : 'auto';
+      moveBtn.textContent = dock === 'right' ? 'Go Lower Left' : 'Go Lower Right';
+      menu.style.setProperty('--out', dock === 'right' ? -1 : 1);
+    }
+    function switchSide() {
+      dock = dock === 'right' ? 'left' : 'right';
+      try { localStorage.setItem(KEY_SIDE, dock); } catch (e) {}
+      place();
+    }
+    place();
+    setTimeout(function () { wrap.classList.add('hk-slide'); }, 60);
+    window.addEventListener('resize', place);
+
+    var hidden = false, hover = false, menuOpen = false;
+    try { hidden = localStorage.getItem(KEY) === '1'; } catch (e) {}
+    function applyHidden() {
+      wrap.style.display = hidden ? 'none' : '';
+      showBtn.hidden = !hidden;
+    }
+    function setHidden(h) {
+      hidden = h; applyHidden(); closeMenu(); setHover(false);
+      try { localStorage.setItem(KEY, h ? '1' : '0'); } catch (e) {}
+    }
+    function setHover(h) { hover = h; document.body.classList.toggle('hk-over', h); }
+    function openMenu() {
+      var r = canvas.getBoundingClientRect();
+      var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      var vw = document.documentElement.clientWidth, vh = window.innerHeight;
+      var ext = 175 * K;
+      cx = dock === 'right' ? Math.max(cx, ext) : Math.min(cx, vw - ext);
+      cy = Math.max(125 * K, Math.min(cy, vh - (75 * K + 22)));
+      menu.style.left = cx + 'px'; menu.style.top = cy + 'px';
+      menu.hidden = false; menuOpen = true;
+    }
+    function closeMenu() { menu.hidden = true; menuOpen = false; }
+    applyHidden();
+
+    menu.addEventListener('click', function (e) {
+      var t = e.target;
+      if (t.closest && t.closest('a')) { closeMenu(); return; }
+      var b = t.closest ? t.closest('button') : null;
+      if (!b) return;
+      var act = b.getAttribute('data-act');
+      if (act === 'hide') setHidden(true);
+      else if (act === 'move') { closeMenu(); switchSide(); }
+      else closeMenu();
+    });
+    showBtn.addEventListener('click', function () { setHidden(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+
+    /* ---- hit test: is the pointer over the head's actual shape? ---- */
+    var scr = new Float32Array(count * 2), haveScr = false;
+    function project(m) {
+      var i, x, y, z, w;
+      for (i = 0; i < count; i++) {
+        x = MESH.p[i * 3]; y = MESH.p[i * 3 + 1]; z = MESH.p[i * 3 + 2];
+        w = m[3] * x + m[7] * y + m[11] * z + m[15];
+        scr[i * 2] = (m[0] * x + m[4] * y + m[8] * z + m[12]) / w;
+        scr[i * 2 + 1] = (m[1] * x + m[5] * y + m[9] * z + m[13]) / w;
+      }
+      haveScr = true;
+    }
+    function side(px, py, ax, ay, bx, by) { return (px - bx) * (ay - by) - (ax - bx) * (py - by); }
+    function hit(cx, cy) {
+      if (hidden || !haveScr) return false;
+      var r = canvas.getBoundingClientRect();
+      var px = ((cx - r.left) / r.width) * 2 - 1, py = 1 - ((cy - r.top) / r.height) * 2;
+      if (px < -1 || px > 1 || py < -1 || py > 1) return false;
+      for (var t = 0; t < count; t += 3) {
+        var ax = scr[t * 2], ay = scr[t * 2 + 1], bx = scr[t * 2 + 2], by = scr[t * 2 + 3], qx = scr[t * 2 + 4], qy = scr[t * 2 + 5];
+        var d1 = side(px, py, ax, ay, bx, by), d2 = side(px, py, bx, by, qx, qy), d3 = side(px, py, qx, qy, ax, ay);
+        var neg = d1 < 0 || d2 < 0 || d3 < 0, pos = d1 > 0 || d2 > 0 || d3 > 0;
+        if (!(neg && pos)) return true;
+      }
+      return false;
+    }
+
+    var mx = 0, my = 0, hasMouse = false, yaw = 0, pitch = 0;
+    window.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;
+      mx = e.clientX; my = e.clientY; hasMouse = true;
+      var h = hit(mx, my); if (h !== hover) setHover(h);
+    });
+    document.documentElement.addEventListener('mouseleave', function () { hasMouse = false; setHover(false); });
+    window.addEventListener('click', function (e) {
+      if (menuOpen) { if (!menu.contains(e.target)) closeMenu(); return; }
+      if (hit(e.clientX, e.clientY)) { e.preventDefault(); e.stopPropagation(); openMenu(); }
+    }, true);
+
+    function clamp(n) { return Math.max(-1, Math.min(1, n)); }
+    function frame(ts) {
+      requestAnimationFrame(frame);
+      if (hidden) return;
+      var ty, tp, r = canvas.getBoundingClientRect();
+      if (hasMouse) {
+        ty = clamp((mx - (r.left + r.width / 2)) / 350) * 0.9;
+        tp = clamp((my - (r.top + r.height / 2)) / 300) * 0.5;
+      } else { ty = 0.35 * Math.sin(ts / 1100); tp = 0.07 * Math.sin(ts / 1500); }
+      yaw += (ty - yaw) * 0.12; pitch += (tp - pitch) * 0.12;
+      var rot = mul(rotX(pitch), mul(rotY(yaw), base));
+      var mvp = mul(proj, mul(view, rot));
+      project(mvp);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bP); gl.enableVertexAttribArray(aPos); gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bU); gl.enableVertexAttribArray(aUV); gl.vertexAttribPointer(aUV, 2, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bN); gl.enableVertexAttribArray(aN); gl.vertexAttribPointer(aN, 3, gl.FLOAT, false, 0, 0);
+      gl.uniformMatrix4fv(uRot, false, rot);
+      if (hover || menuOpen) {
+        gl.disable(gl.DEPTH_TEST);
+        gl.uniform1f(uFlat, 1);
+        gl.uniform3f(uColor, outlRgb[0], outlRgb[1], outlRgb[2]);
+        gl.uniformMatrix4fv(uMVP, false, mul(mvp, scaleM(1.1)));
+        gl.drawArrays(gl.TRIANGLES, 0, count);
+        gl.uniform3f(uColor, 1, 1, 1);
+        gl.uniformMatrix4fv(uMVP, false, mul(mvp, scaleM(1.055)));
+        gl.drawArrays(gl.TRIANGLES, 0, count);
+      }
+      gl.enable(gl.DEPTH_TEST);
+      gl.uniform1f(uFlat, 0);
+      gl.uniformMatrix4fv(uMVP, false, mvp);
+      gl.drawArrays(gl.TRIANGLES, 0, count);
+    }
+
+    var face = new Image();
+    face.onload = function () {
+      var t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, face);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      requestAnimationFrame(frame);
+    };
+    face.src = SRC;
+  }
+
+  if (document.body) start();
+  else document.addEventListener('DOMContentLoaded', start);
+})();
+</script>
+
 <script>
 (function () {
-  if (window.no3dHead) return;
-  var MESH = {"p":[-0.3216,0.4585,0.8038,-0.6175,0.1299,0.2661,-0.2962,-0.3674,0.7218,-0.4743,-0.2199,-0.3353,-0.5721,-0.0165,-0.0418,-0.4381,-0.0997,-0.3628,-0.2962,-0.3674,0.7218,-0.5173,-0.5094,0.0712,0.5103,-0.5097,0.0703,-0.1818,-0.9999,-0.5455,-0.4951,-0.7505,0.0952,-0.4743,-0.2199,-0.3353,0.2919,-0.3676,0.7212,0.6271,0.1254,0.3453,0.3173,0.5668,0.7953,0.6536,-0.1391,0.2272,0.2919,-0.3676,0.7212,0.5103,-0.5097,0.0703,0.5103,-0.5097,0.0703,0.4665,-0.2202,-0.3361,0.5665,-0.0169,-0.0426,0.5103,-0.5097,0.0703,-0.5173,-0.5094,0.0712,0.4888,-0.7507,0.0949,0.4888,-0.7507,0.0949,0.1748,-1.0,-0.5458,0.4665,-0.2202,-0.3361,0.4888,-0.7507,0.0949,-0.5173,-0.5094,0.0712,-0.4951,-0.7505,0.0952,0.2919,-0.3676,0.7212,-0.2962,-0.3674,0.7218,0.5103,-0.5097,0.0703,0.3173,0.5668,0.7953,-0.3216,0.4585,0.8038,0.2919,-0.3676,0.7212,-0.2962,-0.3674,0.7218,0.2919,-0.3676,0.7212,-0.3216,0.4585,0.8038,-0.2025,1.0,0.4219,-0.5193,0.8543,-0.3522,-0.699,0.569,0.333,-0.2025,1.0,0.4219,0.3173,0.5668,0.7953,0.2809,0.8423,0.3368,-0.5193,0.8543,-0.3522,-0.2025,1.0,0.4219,0.0421,0.9802,-0.5435,0.699,0.4734,0.4005,0.6271,0.1254,0.3453,0.4393,0.3164,-0.3918,-0.2962,-0.3674,0.7218,-0.6568,-0.1344,0.2254,-0.5173,-0.5094,0.0712,-0.2962,-0.3674,0.7218,-0.6175,0.1299,0.2661,-0.6568,-0.1344,0.2254,0.6167,0.72,-0.3366,0.699,0.4734,0.4005,0.4393,0.3164,-0.3918,-0.6568,-0.1344,0.2254,-0.5721,-0.0165,-0.0418,-0.5173,-0.5094,0.0712,-0.4743,-0.2199,-0.3353,-0.5173,-0.5094,0.0712,-0.5721,-0.0165,-0.0418,-0.4117,0.0494,-0.4909,-0.4381,-0.0997,-0.3628,-0.4762,0.3846,-0.3296,-0.4381,-0.0997,-0.3628,-0.5721,-0.0165,-0.0418,-0.4762,0.3846,-0.3296,-0.4117,0.0494,-0.4909,-0.4762,0.3846,-0.3296,-0.2421,0.5327,-0.5805,-0.4762,0.3846,-0.3296,-0.5721,-0.0165,-0.0418,-0.6175,0.1299,0.2661,0.6536,-0.1391,0.2272,0.5103,-0.5097,0.0703,0.5665,-0.0169,-0.0426,0.5665,-0.0169,-0.0426,0.4665,-0.2202,-0.3361,0.4311,-0.1,-0.3636,0.4311,-0.1,-0.3636,0.4393,0.3164,-0.3918,0.5665,-0.0169,-0.0426,0.4393,0.3164,-0.3918,0.4311,-0.1,-0.3636,0.4043,0.0491,-0.4915,0.4393,0.3164,-0.3918,0.4043,0.0491,-0.4915,0.2799,0.5943,-0.5859,0.6536,-0.1391,0.2272,0.5665,-0.0169,-0.0426,0.6271,0.1254,0.3453,0.2799,0.5943,-0.5859,0.6167,0.72,-0.3366,0.4393,0.3164,-0.3918,0.2919,-0.3676,0.7212,0.6536,-0.1391,0.2272,0.6271,0.1254,0.3453,0.6271,0.1254,0.3453,0.5665,-0.0169,-0.0426,0.4393,0.3164,-0.3918,-0.699,0.569,0.333,-0.4762,0.3846,-0.3296,-0.6175,0.1299,0.2661,-0.6175,0.1299,0.2661,-0.5721,-0.0165,-0.0418,-0.6568,-0.1344,0.2254,-0.4743,-0.2199,-0.3353,-0.4951,-0.7505,0.0952,-0.5173,-0.5094,0.0712,0.1349,-0.4632,-0.6029,0.4665,-0.2202,-0.3361,0.1748,-1.0,-0.5458,0.0418,-0.3181,-0.7478,0.1349,-0.4632,-0.6029,0.0501,-0.4282,-0.8038,0.5103,-0.5097,0.0703,0.4888,-0.7507,0.0949,0.4665,-0.2202,-0.3361,0.1021,-0.107,-0.5502,0.4665,-0.2202,-0.3361,0.1349,-0.4632,-0.6029,0.4311,-0.1,-0.3636,0.1021,-0.107,-0.5502,0.4043,0.0491,-0.4915,-0.0036,0.1138,-0.6906,0.4043,0.0491,-0.4915,0.044,-0.0409,-0.6317,0.044,-0.0409,-0.6317,0.4043,0.0491,-0.4915,0.1021,-0.107,-0.5502,-0.1627,-0.9951,-0.2656,0.1748,-1.0,-0.5458,0.1552,-0.9952,-0.2662,0.1748,-1.0,-0.5458,-0.1818,-0.9999,-0.5455,-0.0037,-0.5036,-0.6595,-0.2421,0.5327,-0.5805,0.2799,0.5943,-0.5859,-0.0036,0.1138,-0.6906,-0.2421,0.5327,-0.5805,-0.0036,0.1138,-0.6906,-0.4117,0.0494,-0.4909,0.0501,-0.4282,-0.8038,-0.0037,-0.5036,-0.6595,-0.0563,-0.4281,-0.8037,-0.0036,0.1138,-0.6906,0.2799,0.5943,-0.5859,0.4043,0.0491,-0.4915,-0.0036,0.1138,-0.6906,0.044,-0.0409,-0.6317,-0.0532,-0.0409,-0.6317,-0.0532,-0.0409,-0.6317,0.044,-0.0409,-0.6317,0.0418,-0.3181,-0.7478,-0.0532,-0.0409,-0.6317,0.0418,-0.3181,-0.7478,-0.0492,-0.3181,-0.7478,-0.0492,-0.3181,-0.7478,0.0418,-0.3181,-0.7478,-0.0563,-0.4281,-0.8037,-0.4117,0.0494,-0.4909,-0.1106,-0.1068,-0.5498,-0.4381,-0.0997,-0.3628,-0.0036,0.1138,-0.6906,-0.0532,-0.0409,-0.6317,-0.4117,0.0494,-0.4909,-0.0563,-0.4281,-0.8037,-0.1423,-0.4631,-0.6027,-0.0492,-0.3181,-0.7478,-0.4743,-0.2199,-0.3353,-0.4381,-0.0997,-0.3628,-0.1106,-0.1068,-0.5498,-0.1106,-0.1068,-0.5498,-0.0532,-0.0409,-0.6317,-0.1423,-0.4631,-0.6027,-0.1013,0.8077,-0.6891,-0.5193,0.8543,-0.3522,0.0421,0.9802,-0.5435,-0.0563,-0.4281,-0.8037,-0.0037,-0.5036,-0.6595,-0.1423,-0.4631,-0.6027,-0.0492,-0.3181,-0.7478,-0.1423,-0.4631,-0.6027,-0.0532,-0.0409,-0.6317,0.0418,-0.3181,-0.7478,0.044,-0.0409,-0.6317,0.1349,-0.4632,-0.6029,0.0418,-0.3181,-0.7478,0.0501,-0.4282,-0.8038,-0.0563,-0.4281,-0.8037,-0.0037,-0.5036,-0.6595,0.1349,-0.4632,-0.6029,0.1748,-1.0,-0.5458,-0.4743,-0.2199,-0.3353,-0.1423,-0.4631,-0.6027,-0.1818,-0.9999,-0.5455,0.1748,-1.0,-0.5458,-0.1627,-0.9951,-0.2656,-0.1818,-0.9999,-0.5455,0.1748,-1.0,-0.5458,0.4888,-0.7507,0.0949,0.1552,-0.9952,-0.2662,-0.4951,-0.7505,0.0952,-0.1818,-0.9999,-0.5455,-0.1627,-0.9951,-0.2656,-0.3216,0.4585,0.8038,0.3173,0.5668,0.7953,-0.2025,1.0,0.4219,0.0421,0.9802,-0.5435,-0.2025,1.0,0.4219,0.2809,0.8423,0.3368,0.6271,0.1254,0.3453,0.699,0.4734,0.4005,0.3173,0.5668,0.7953,0.699,0.4734,0.4005,0.5328,0.7543,0.2659,0.3173,0.5668,0.7953,-0.2025,1.0,0.4219,-0.699,0.569,0.333,-0.3216,0.4585,0.8038,-0.699,0.569,0.333,-0.6175,0.1299,0.2661,-0.3216,0.4585,0.8038,-0.6302,0.7135,-0.4422,-0.699,0.569,0.333,-0.5193,0.8543,-0.3522,-0.6302,0.7135,-0.4422,-0.4762,0.3846,-0.3296,-0.699,0.569,0.333,0.699,0.4734,0.4005,0.6167,0.72,-0.3366,0.5328,0.7543,0.2659,0.6167,0.72,-0.3366,0.2799,0.5943,-0.5859,0.3039,0.8103,-0.3473,-0.1013,0.8077,-0.6891,0.0421,0.9802,-0.5435,0.2799,0.5943,-0.5859,0.0421,0.9802,-0.5435,0.3039,0.8103,-0.3473,0.2799,0.5943,-0.5859,0.5328,0.7543,0.2659,0.6167,0.72,-0.3366,0.3039,0.8103,-0.3473,0.3039,0.8103,-0.3473,0.0421,0.9802,-0.5435,0.2809,0.8423,0.3368,0.3173,0.5668,0.7953,0.5328,0.7543,0.2659,0.2809,0.8423,0.3368,0.2809,0.8423,0.3368,0.5328,0.7543,0.2659,0.3039,0.8103,-0.3473,-0.5193,0.8543,-0.3522,-0.1013,0.8077,-0.6891,-0.6302,0.7135,-0.4422,-0.1013,0.8077,-0.6891,0.2799,0.5943,-0.5859,-0.2421,0.5327,-0.5805,-0.4762,0.3846,-0.3296,-0.6302,0.7135,-0.4422,-0.2421,0.5327,-0.5805,-0.6302,0.7135,-0.4422,-0.1013,0.8077,-0.6891,-0.2421,0.5327,-0.5805,-0.1627,-0.9951,-0.2656,0.1552,-0.9952,-0.2662,0.4888,-0.7507,0.0949,-0.1627,-0.9951,-0.2656,0.4888,-0.7507,0.0949,-0.4951,-0.7505,0.0952,0.044,-0.0409,-0.6317,0.1021,-0.107,-0.5502,0.1349,-0.4632,-0.6029,0.4311,-0.1,-0.3636,0.4665,-0.2202,-0.3361,0.1021,-0.107,-0.5502,-0.1106,-0.1068,-0.5498,-0.4117,0.0494,-0.4909,-0.0532,-0.0409,-0.6317,-0.4743,-0.2199,-0.3353,-0.1106,-0.1068,-0.5498,-0.1423,-0.4631,-0.6027,-0.0037,-0.5036,-0.6595,-0.1818,-0.9999,-0.5455,-0.1423,-0.4631,-0.6027,0.0501,-0.4282,-0.8038,0.1349,-0.4632,-0.6029,-0.0037,-0.5036,-0.6595],"u":[0.9438,0.3103,0.8189,0.4506,0.9379,0.699,0.6447,0.5994,0.7368,0.5113,0.6345,0.5417,-0.0621,0.699,-0.2403,0.7478,0.2404,0.7486,0.5437,0.9629,0.7621,0.8626,0.6447,0.5994,0.0611,0.6994,0.1657,0.4557,0.0557,0.2592,0.1975,0.5776,0.0611,0.6994,0.2404,0.7486,0.2404,0.7486,0.3569,0.6001,0.2635,0.5121,0.2404,0.7486,-0.2403,0.7478,0.2378,0.8634,0.2378,0.8634,0.4586,0.9632,0.3569,0.6001,0.2378,0.8634,-0.2403,0.7478,-0.2379,0.8626,0.0611,0.6994,-0.0621,0.699,0.2404,0.7486,0.0557,0.2592,-0.0562,0.3103,0.0611,0.6994,-0.0621,0.699,0.0611,0.6994,-0.0562,0.3103,0.9408,0.0433,0.6659,0.0903,0.831,0.2445,-0.0592,0.0433,0.0557,0.2592,0.095,0.1159,0.6659,0.0903,0.9408,0.0433,0.4861,0.0257,0.1586,0.2926,0.1657,0.4557,0.3648,0.3445,0.9379,0.699,0.8018,0.5745,0.7597,0.7478,0.9379,0.699,0.8189,0.4506,0.8018,0.5745,0.3214,0.1551,0.1586,0.2926,0.3648,0.3445,0.8018,0.5745,0.7368,0.5113,0.7597,0.7478,0.6447,0.5994,0.7597,0.7478,0.7368,0.5113,0.608,0.4676,0.6345,0.5417,0.6567,0.3133,0.6345,0.5417,0.7368,0.5113,0.6567,0.3133,0.608,0.4676,0.6567,0.3133,0.5642,0.2363,0.6567,0.3133,0.7368,0.5113,0.8189,0.4506,0.1975,0.5776,0.2404,0.7486,0.2635,0.5121,0.2635,0.5121,0.3569,0.6001,0.367,0.5424,0.367,0.5424,0.3648,0.3445,0.2635,0.5121,0.3648,0.3445,0.367,0.5424,0.3936,0.4682,0.3648,0.3445,0.3936,0.4682,0.4269,0.2074,0.1975,0.5776,0.2635,0.5121,0.1657,0.4557,0.4269,0.2074,0.3214,0.1551,0.3648,0.3445,0.0611,0.6994,0.1975,0.5776,0.1657,0.4557,0.1657,0.4557,0.2635,0.5121,0.3648,0.3445,0.831,0.2445,0.6567,0.3133,0.8189,0.4506,0.8189,0.4506,0.7368,0.5113,0.8018,0.5745,0.6447,0.5994,0.7621,0.8626,0.7597,0.7478,0.4685,0.7074,0.3569,0.6001,0.4586,0.9632,0.4919,0.6346,0.4685,0.7074,0.491,0.6852,0.2404,0.7486,0.2378,0.8634,0.3569,0.6001,0.4726,0.5402,0.3569,0.6001,0.4685,0.7074,0.367,0.5424,0.4726,0.5402,0.3936,0.4682,0.5008,0.4317,0.3936,0.4682,0.4895,0.5066,0.4895,0.5066,0.3936,0.4682,0.4726,0.5402,0.5684,0.9685,0.4586,0.9632,0.4355,0.9688,0.4586,0.9632,0.5437,0.9629,0.501,0.7249,0.5642,0.2363,0.4269,0.2074,0.5008,0.4317,0.5642,0.2363,0.5008,0.4317,0.608,0.4676,0.491,0.6852,0.501,0.7249,0.5104,0.6851,0.5008,0.4317,0.4269,0.2074,0.3936,0.4682,0.5008,0.4317,0.4895,0.5066,0.5128,0.5066,0.5128,0.5066,0.4895,0.5066,0.4919,0.6346,0.5128,0.5066,0.4919,0.6346,0.5098,0.6345,0.5098,0.6345,0.4919,0.6346,0.5104,0.6851,0.608,0.4676,0.5298,0.54,0.6345,0.5417,0.5008,0.4317,0.5128,0.5066,0.608,0.4676,0.5104,0.6851,0.5336,0.7072,0.5098,0.6345,0.6447,0.5994,0.6345,0.5417,0.5298,0.54,0.5298,0.54,0.5128,0.5066,0.5336,0.7072,0.5241,0.1032,0.6659,0.0903,0.4861,0.0257,0.5104,0.6851,0.501,0.7249,0.5336,0.7072,0.5098,0.6345,0.5336,0.7072,0.5128,0.5066,0.4919,0.6346,0.4895,0.5066,0.4685,0.7074,0.4919,0.6346,0.491,0.6852,0.5104,0.6851,0.501,0.7249,0.4685,0.7074,0.4586,0.9632,0.6447,0.5994,0.5336,0.7072,0.5437,0.9629,0.4586,0.9632,0.5684,0.9685,0.5437,0.9629,0.4586,0.9632,0.2378,0.8634,0.4355,0.9688,0.7621,0.8626,0.5437,0.9629,0.5684,0.9685,-0.0562,0.3103,0.0557,0.2592,-0.0592,0.0433,0.4861,0.0257,-0.0592,0.0433,0.095,0.1159,0.1657,0.4557,0.1586,0.2926,0.0557,0.2592,0.1586,0.2926,0.161,0.1557,0.0557,0.2592,0.9408,0.0433,0.831,0.2445,0.9438,0.3103,0.831,0.2445,0.8189,0.4506,0.9438,0.3103,0.6585,0.1544,0.831,0.2445,0.6659,0.0903,0.6585,0.1544,0.6567,0.3133,0.831,0.2445,0.1586,0.2926,0.3214,0.1551,0.161,0.1557,0.3214,0.1551,0.4269,0.2074,0.374,0.1118,0.5241,0.1032,0.4861,0.0257,0.4269,0.2074,0.4861,0.0257,0.374,0.1118,0.4269,0.2074,0.161,0.1557,0.3214,0.1551,0.374,0.1118,0.374,0.1118,0.4861,0.0257,0.095,0.1159,0.0557,0.2592,0.161,0.1557,0.095,0.1159,0.095,0.1159,0.161,0.1557,0.374,0.1118,0.6659,0.0903,0.5241,0.1032,0.6585,0.1544,0.5241,0.1032,0.4269,0.2074,0.5642,0.2363,0.6567,0.3133,0.6585,0.1544,0.5642,0.2363,0.6585,0.1544,0.5241,0.1032,0.5642,0.2363,0.5684,0.9685,0.4355,0.9688,0.2378,0.8634,0.5684,0.9685,0.2378,0.8634,-0.2379,0.8626,0.4895,0.5066,0.4726,0.5402,0.4685,0.7074,0.367,0.5424,0.3569,0.6001,0.4726,0.5402,0.5298,0.54,0.608,0.4676,0.5128,0.5066,0.6447,0.5994,0.5298,0.54,0.5336,0.7072,0.501,0.7249,0.5437,0.9629,0.5336,0.7072,0.491,0.6852,0.4685,0.7074,0.501,0.7249],"n":[-0.436,0.194,0.879,-0.982,-0.039,0.185,-0.389,-0.578,0.718,-0.836,-0.03,-0.548,-0.961,-0.006,-0.278,-0.775,-0.093,-0.625,-0.389,-0.578,0.718,-0.873,-0.408,0.267,0.873,-0.41,0.264,-0.433,-0.689,-0.581,-0.681,-0.437,0.587,-0.836,-0.03,-0.548,0.374,-0.585,0.72,0.965,-0.085,0.247,0.395,0.353,0.848,0.984,-0.163,0.079,0.374,-0.585,0.72,0.873,-0.41,0.264,0.873,-0.41,0.264,0.834,-0.033,-0.55,0.96,0.016,-0.28,0.873,-0.41,0.264,-0.873,-0.408,0.267,0.682,-0.436,0.587,0.682,-0.436,0.587,0.432,-0.689,-0.582,0.834,-0.033,-0.55,0.682,-0.436,0.587,-0.873,-0.408,0.267,-0.681,-0.437,0.587,0.374,-0.585,0.72,-0.389,-0.578,0.718,0.873,-0.41,0.264,0.395,0.353,0.848,-0.436,0.194,0.879,0.374,-0.585,0.72,-0.389,-0.578,0.718,0.374,-0.585,0.72,-0.436,0.194,0.879,-0.182,0.901,0.392,-0.543,0.812,-0.213,-0.937,0.217,0.273,-0.182,0.901,0.392,0.395,0.353,0.848,0.373,0.895,0.247,-0.543,0.812,-0.213,-0.182,0.901,0.392,0.228,0.848,-0.479,0.941,0.107,0.32,0.965,-0.085,0.247,0.884,-0.074,-0.461,-0.389,-0.578,0.718,-0.984,-0.12,0.134,-0.873,-0.408,0.267,-0.389,-0.578,0.718,-0.982,-0.039,0.185,-0.984,-0.12,0.134,0.793,0.434,-0.428,0.941,0.107,0.32,0.884,-0.074,-0.461,-0.984,-0.12,0.134,-0.961,-0.006,-0.278,-0.873,-0.408,0.267,-0.836,-0.03,-0.548,-0.873,-0.408,0.267,-0.961,-0.006,-0.278,-0.719,-0.194,-0.667,-0.775,-0.093,-0.625,-0.868,-0.191,-0.459,-0.775,-0.093,-0.625,-0.961,-0.006,-0.278,-0.868,-0.191,-0.459,-0.719,-0.194,-0.667,-0.868,-0.191,-0.459,-0.355,-0.117,-0.927,-0.868,-0.191,-0.459,-0.961,-0.006,-0.278,-0.982,-0.039,0.185,0.984,-0.163,0.079,0.873,-0.41,0.264,0.96,0.016,-0.28,0.96,0.016,-0.28,0.834,-0.033,-0.55,0.773,-0.092,-0.627,0.773,-0.092,-0.627,0.884,-0.074,-0.461,0.96,0.016,-0.28,0.884,-0.074,-0.461,0.773,-0.092,-0.627,0.728,-0.208,-0.653,0.884,-0.074,-0.461,0.728,-0.208,-0.653,0.452,0.181,-0.874,0.984,-0.163,0.079,0.96,0.016,-0.28,0.965,-0.085,0.247,0.452,0.181,-0.874,0.793,0.434,-0.428,0.884,-0.074,-0.461,0.374,-0.585,0.72,0.984,-0.163,0.079,0.965,-0.085,0.247,0.965,-0.085,0.247,0.96,0.016,-0.28,0.884,-0.074,-0.461,-0.937,0.217,0.273,-0.868,-0.191,-0.459,-0.982,-0.039,0.185,-0.982,-0.039,0.185,-0.961,-0.006,-0.278,-0.984,-0.12,0.134,-0.836,-0.03,-0.548,-0.681,-0.437,0.587,-0.873,-0.408,0.267,0.666,-0.076,-0.742,0.834,-0.033,-0.55,0.432,-0.689,-0.582,0.53,0.365,-0.765,0.666,-0.076,-0.742,0.481,-0.251,-0.84,0.873,-0.41,0.264,0.682,-0.436,0.587,0.834,-0.033,-0.55,0.657,-0.14,-0.741,0.834,-0.033,-0.55,0.666,-0.076,-0.742,0.773,-0.092,-0.627,0.657,-0.14,-0.741,0.728,-0.208,-0.653,-0.008,-0.088,-0.996,0.728,-0.208,-0.653,0.378,-0.092,-0.921,0.378,-0.092,-0.921,0.728,-0.208,-0.653,0.657,-0.14,-0.741,-0.22,-0.944,0.246,0.432,-0.689,-0.582,0.219,-0.944,0.246,0.432,-0.689,-0.582,-0.433,-0.689,-0.581,-0.001,-0.612,-0.791,-0.355,-0.117,-0.927,0.452,0.181,-0.874,-0.008,-0.088,-0.996,-0.355,-0.117,-0.927,-0.008,-0.088,-0.996,-0.719,-0.194,-0.667,0.481,-0.251,-0.84,-0.001,-0.612,-0.791,-0.478,-0.252,-0.841,-0.008,-0.088,-0.996,0.452,0.181,-0.874,0.728,-0.208,-0.653,-0.008,-0.088,-0.996,0.378,-0.092,-0.921,-0.381,-0.092,-0.92,-0.381,-0.092,-0.92,0.378,-0.092,-0.921,0.53,0.365,-0.765,-0.381,-0.092,-0.92,0.53,0.365,-0.765,-0.529,0.362,-0.767,-0.529,0.362,-0.767,0.53,0.365,-0.765,-0.478,-0.252,-0.841,-0.719,-0.194,-0.667,-0.66,-0.141,-0.738,-0.775,-0.093,-0.625,-0.008,-0.088,-0.996,-0.381,-0.092,-0.92,-0.719,-0.194,-0.667,-0.478,-0.252,-0.841,-0.666,-0.076,-0.742,-0.529,0.362,-0.767,-0.836,-0.03,-0.548,-0.775,-0.093,-0.625,-0.66,-0.141,-0.738,-0.66,-0.141,-0.738,-0.381,-0.092,-0.92,-0.666,-0.076,-0.742,-0.099,0.271,-0.958,-0.543,0.812,-0.213,0.228,0.848,-0.479,-0.478,-0.252,-0.841,-0.001,-0.612,-0.791,-0.666,-0.076,-0.742,-0.529,0.362,-0.767,-0.666,-0.076,-0.742,-0.381,-0.092,-0.92,0.53,0.365,-0.765,0.378,-0.092,-0.921,0.666,-0.076,-0.742,0.53,0.365,-0.765,0.481,-0.251,-0.84,-0.478,-0.252,-0.841,-0.001,-0.612,-0.791,0.666,-0.076,-0.742,0.432,-0.689,-0.582,-0.836,-0.03,-0.548,-0.666,-0.076,-0.742,-0.433,-0.689,-0.581,0.432,-0.689,-0.582,-0.22,-0.944,0.246,-0.433,-0.689,-0.581,0.432,-0.689,-0.582,0.682,-0.436,0.587,0.219,-0.944,0.246,-0.681,-0.437,0.587,-0.433,-0.689,-0.581,-0.22,-0.944,0.246,-0.436,0.194,0.879,0.395,0.353,0.848,-0.182,0.901,0.392,0.228,0.848,-0.479,-0.182,0.901,0.392,0.373,0.895,0.247,0.965,-0.085,0.247,0.941,0.107,0.32,0.395,0.353,0.848,0.941,0.107,0.32,0.588,0.783,0.2,0.395,0.353,0.848,-0.182,0.901,0.392,-0.937,0.217,0.273,-0.436,0.194,0.879,-0.937,0.217,0.273,-0.982,-0.039,0.185,-0.436,0.194,0.879,-0.837,0.136,-0.531,-0.937,0.217,0.273,-0.543,0.812,-0.213,-0.837,0.136,-0.531,-0.868,-0.191,-0.459,-0.937,0.217,0.273,0.941,0.107,0.32,0.793,0.434,-0.428,0.588,0.783,0.2,0.793,0.434,-0.428,0.452,0.181,-0.874,0.486,0.822,-0.296,-0.099,0.271,-0.958,0.228,0.848,-0.479,0.452,0.181,-0.874,0.228,0.848,-0.479,0.486,0.822,-0.296,0.452,0.181,-0.874,0.588,0.783,0.2,0.793,0.434,-0.428,0.486,0.822,-0.296,0.486,0.822,-0.296,0.228,0.848,-0.479,0.373,0.895,0.247,0.395,0.353,0.848,0.588,0.783,0.2,0.373,0.895,0.247,0.373,0.895,0.247,0.588,0.783,0.2,0.486,0.822,-0.296,-0.543,0.812,-0.213,-0.099,0.271,-0.958,-0.837,0.136,-0.531,-0.099,0.271,-0.958,0.452,0.181,-0.874,-0.355,-0.117,-0.927,-0.868,-0.191,-0.459,-0.837,0.136,-0.531,-0.355,-0.117,-0.927,-0.837,0.136,-0.531,-0.099,0.271,-0.958,-0.355,-0.117,-0.927,-0.22,-0.944,0.246,0.219,-0.944,0.246,0.682,-0.436,0.587,-0.22,-0.944,0.246,0.682,-0.436,0.587,-0.681,-0.437,0.587,0.378,-0.092,-0.921,0.657,-0.14,-0.741,0.666,-0.076,-0.742,0.773,-0.092,-0.627,0.834,-0.033,-0.55,0.657,-0.14,-0.741,-0.66,-0.141,-0.738,-0.719,-0.194,-0.667,-0.381,-0.092,-0.92,-0.836,-0.03,-0.548,-0.66,-0.141,-0.738,-0.666,-0.076,-0.742,-0.001,-0.612,-0.791,-0.433,-0.689,-0.581,-0.666,-0.076,-0.742,0.481,-0.251,-0.84,0.666,-0.076,-0.742,-0.001,-0.612,-0.791]};
-  var SRC = 'data:image/jpeg;base64,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';
-  var KEY = 'simsHeadHidden';
-  var SIZE = window.innerWidth < 760 ? 120 : 180;
-  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var COLORS = [
+    ['White', '#ffffff'], ['Black', '#1a1a1a'], ['Blue', '#2563eb'], ['Pink', '#e0558a'], ['Green', '#2f9a3a'],
+    ['Purple', '#7a4cc2'], ['Orange', '#e8821e'], ['Red', '#c93a3a'], ['Yellow', '#f2c230'], ['Teal', '#1f8f8a']
+  ];
+  var SYS = 'system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
+  var FONTS = [
+    { id: 'pixel',     name: 'Pixel (original): DotGothic16', g: 'DotGothic16',      stack: '"DotGothic16","MS Gothic",monospace' },
+    { id: 'inter',     name: 'Modern sans: Inter',            g: 'Inter',            stack: '"Inter",' + SYS },
+    { id: 'poppins',   name: 'Friendly: Poppins',             g: 'Poppins',          stack: '"Poppins",' + SYS },
+    { id: 'quicksand', name: 'Rounded: Quicksand',            g: 'Quicksand',        stack: '"Quicksand",' + SYS },
+    { id: 'mono',      name: 'Mono: Space Mono',              g: 'Space Mono',       stack: '"Space Mono",ui-monospace,monospace' },
+    { id: 'serif',     name: 'Serif: Playfair Display',       g: 'Playfair Display', stack: '"Playfair Display",Georgia,serif' },
+    { id: 'p2p',       name: 'Wide pixel: Press Start 2P',    g: 'Press Start 2P',   stack: '"Press Start 2P","Courier New",monospace' },
+    { id: 'system',    name: 'System default (nothing to download)', g: '',          stack: SYS },
+    { id: 'custom',    name: 'Other Google Font…',            g: '',                 stack: SYS }
+  ];
+  var DEFAULTS = { font: 'pixel', fontcustom: '', autofc: true, fc: '#ffffff', fsize: 15, rad: 14, hsize: 180, hsizem: 120, corner: 'right', ring: true };
+  var TPL = document.getElementById('tpl').textContent;
+  var $ = function (id) { return document.getElementById(id); };
+  var DEFAULT_COLOR = '#1a1a1a';
+  var status = $('status'), state = null, curColor = DEFAULT_COLOR, timer = null;
+  function say(msg, cls) { status.textContent = msg; status.className = cls || ''; }
 
-  var canvas = document.createElement('canvas');
-  canvas.width = SIZE * dpr; canvas.height = SIZE * dpr;
-  canvas.style.width = SIZE + 'px'; canvas.style.height = SIZE + 'px';
-  canvas.setAttribute('aria-hidden', 'true');
-  var gl = canvas.getContext('webgl', { alpha: true, antialias: true }) || canvas.getContext('experimental-webgl');
-  if (!gl) return;
-
-  function shader(type, src) {
-    var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error('shader');
-    return s;
-  }
-  var prog;
-  try {
-    prog = gl.createProgram();
-    gl.attachShader(prog, shader(gl.VERTEX_SHADER,
-      'attribute vec3 aPos;attribute vec2 aUV;attribute vec3 aN;' +
-      'uniform mat4 uMVP;uniform mat4 uRot;varying vec2 vUV;varying vec3 vN;' +
-      'void main(){vUV=aUV;vN=(uRot*vec4(aN,0.0)).xyz;gl_Position=uMVP*vec4(aPos,1.0);}'));
-    gl.attachShader(prog, shader(gl.FRAGMENT_SHADER,
-      'precision mediump float;varying vec2 vUV;varying vec3 vN;uniform sampler2D uTex;uniform float uFlat;uniform vec3 uColor;' +
-      'void main(){if(uFlat>0.5){gl_FragColor=vec4(uColor,1.0);return;}' +
-      'vec4 c=texture2D(uTex,vUV);' +
-      'float d=max(dot(normalize(vN),normalize(vec3(-0.4,0.5,0.8))),0.0);' +
-      'gl_FragColor=vec4(c.rgb*(0.8+0.3*d),1.0);}'));
-    gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
-  } catch (e) { return; }
-  gl.useProgram(prog);
-
-  function buf(data) { var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW); return b; }
-  var bP = buf(MESH.p), bU = buf(MESH.u), bN = buf(MESH.n), count = MESH.p.length / 3;
-  var aPos = gl.getAttribLocation(prog, 'aPos'), aUV = gl.getAttribLocation(prog, 'aUV'), aN = gl.getAttribLocation(prog, 'aN');
-  var uMVP = gl.getUniformLocation(prog, 'uMVP'), uRot = gl.getUniformLocation(prog, 'uRot');
-  var uFlat = gl.getUniformLocation(prog, 'uFlat'), uColor = gl.getUniformLocation(prog, 'uColor');
-
-  function mul(a, b) {
-    var o = new Float32Array(16), r, c, k;
-    for (c = 0; c < 4; c++) for (r = 0; r < 4; r++) {
-      var s = 0; for (k = 0; k < 4; k++) s += a[k * 4 + r] * b[c * 4 + k]; o[c * 4 + r] = s;
-    }
-    return o;
-  }
-  function rotY(t) { var c = Math.cos(t), s = Math.sin(t); return new Float32Array([c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1]); }
-  function rotX(t) { var c = Math.cos(t), s = Math.sin(t); return new Float32Array([1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1]); }
-  function scaleM(s) { return new Float32Array([s, 0, 0, 0, 0, s, 0, 0, 0, 0, s, 0, 0, 0, 0, 1]); }
-  var fov = 34 * Math.PI / 180, f = 1 / Math.tan(fov / 2), nr = 1, fr = 10;
-  var proj = new Float32Array([f, 0, 0, 0, 0, f, 0, 0, 0, 0, (fr + nr) / (nr - fr), -1, 0, 0, 2 * fr * nr / (nr - fr), 0]);
-  var view = new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -5, 1]);
-  var base = rotY(Math.PI);
-
-  /* ---- page furniture: wrapper, pie menu, "show head" button ---- */
-  var wrap = document.createElement('div'); wrap.id = 'headwrap'; wrap.appendChild(canvas);
-  var menu = document.createElement('div'); menu.id = 'headmenu'; menu.hidden = true;
-  menu.innerHTML = '<div class="pie-ring"></div>' +
-    '<button type="button" class="pie-btn pie-a" data-act="hide">Hide Head</button>' +
-    '<button type="button" class="pie-btn pie-b" data-act="move">Go Lower Left</button>' +
-    '<button type="button" class="pie-btn pie-c" data-act="cancel">Cancel</button>';
-  var showBtn = document.createElement('button'); showBtn.type = 'button'; showBtn.id = 'showhead'; showBtn.textContent = 'Show head'; showBtn.hidden = true;
-  document.body.appendChild(wrap); document.body.appendChild(menu); document.body.appendChild(showBtn);
-
-  var moveBtn = menu.querySelector('.pie-b');
-  var dock = 'right';
-  try { if (localStorage.getItem('simsHeadSide') === 'left') dock = 'left'; } catch (e) {}
-  function place() {
-    var x = dock === 'right' ? document.documentElement.clientWidth - SIZE - 12 : 12;
-    wrap.style.transform = 'translateX(' + x + 'px)';
-    showBtn.style.left = dock === 'right' ? 'auto' : '12px';
-    showBtn.style.right = dock === 'right' ? '12px' : 'auto';
-    moveBtn.textContent = dock === 'right' ? 'Go Lower Left' : 'Go Lower Right';
-    menu.style.setProperty('--out', dock === 'right' ? -1 : 1);
-  }
-  function switchSide() {
-    dock = dock === 'right' ? 'left' : 'right';
-    try { localStorage.setItem('simsHeadSide', dock); } catch (e) {}
-    place();
-  }
-  place();
-  setTimeout(function () { wrap.classList.add('slide'); }, 60);
-  window.addEventListener('resize', place);
-
-  var hidden = false, hover = false, menuOpen = false;
-  try { hidden = localStorage.getItem(KEY) === '1'; } catch (e) {}
-  function applyHidden() {
-    wrap.style.display = hidden ? 'none' : '';
-    showBtn.hidden = !hidden;
-  }
-  function setHidden(h) {
-    hidden = h; applyHidden(); closeMenu(); setHover(false);
-    try { localStorage.setItem(KEY, h ? '1' : '0'); } catch (e) {}
-  }
-  function setHover(h) { hover = h; document.body.classList.toggle('over-head', h); }
-  function openMenu() {
-    var r = canvas.getBoundingClientRect();
-    menu.style.left = (r.left + r.width / 2) + 'px'; menu.style.top = (r.top + r.height / 2) + 'px';
-    menu.hidden = false; menuOpen = true;
-  }
-  function closeMenu() { menu.hidden = true; menuOpen = false; }
-  applyHidden();
-
-  menu.addEventListener('click', function (e) {
-    var b = e.target.closest ? e.target.closest('button') : null;
-    if (!b) return;
-    var act = b.getAttribute('data-act');
-    if (act === 'hide') setHidden(true);
-    else if (act === 'move') { closeMenu(); switchSide(); }
-    else closeMenu();
+  /* menu colour swatches */
+  var box = $('colors'), custom = box.querySelector('.custom');
+  COLORS.forEach(function (c, i) {
+    var l = document.createElement('label'); l.title = c[0];
+    var r = document.createElement('input'); r.type = 'radio'; r.name = 'mc'; r.value = c[1]; r.checked = c[1] === DEFAULT_COLOR;
+    r.setAttribute('aria-label', c[0]);
+    var s = document.createElement('span'); s.style.background = c[1];
+    l.appendChild(r); l.appendChild(s); l.appendChild(document.createTextNode(c[0]));
+    box.insertBefore(l, custom);
   });
-  showBtn.addEventListener('click', function () { setHidden(false); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
-
-  /* ---- hit test: is the pointer over the head's actual shape? ---- */
-  var scr = new Float32Array(count * 2), haveScr = false;
-  function project(m) {
-    var i, x, y, z, w;
-    for (i = 0; i < count; i++) {
-      x = MESH.p[i * 3]; y = MESH.p[i * 3 + 1]; z = MESH.p[i * 3 + 2];
-      w = m[3] * x + m[7] * y + m[11] * z + m[15];
-      scr[i * 2] = (m[0] * x + m[4] * y + m[8] * z + m[12]) / w;
-      scr[i * 2 + 1] = (m[1] * x + m[5] * y + m[9] * z + m[13]) / w;
-    }
-    haveScr = true;
-  }
-  function side(px, py, ax, ay, bx, by) { return (px - bx) * (ay - by) - (ax - bx) * (py - by); }
-  function hit(cx, cy) {
-    if (hidden || !haveScr) return false;
-    var r = canvas.getBoundingClientRect();
-    var px = ((cx - r.left) / r.width) * 2 - 1, py = 1 - ((cy - r.top) / r.height) * 2;
-    if (px < -1 || px > 1 || py < -1 || py > 1) return false;
-    for (var t = 0; t < count; t += 3) {
-      var ax = scr[t * 2], ay = scr[t * 2 + 1], bx = scr[t * 2 + 2], by = scr[t * 2 + 3], qx = scr[t * 2 + 4], qy = scr[t * 2 + 5];
-      var d1 = side(px, py, ax, ay, bx, by), d2 = side(px, py, bx, by, qx, qy), d3 = side(px, py, qx, qy, ax, ay);
-      var neg = d1 < 0 || d2 < 0 || d3 < 0, pos = d1 > 0 || d2 > 0 || d3 > 0;
-      if (!(neg && pos)) return true;
-    }
-    return false;
-  }
-
-  var mx = 0, my = 0, hasMouse = false, yaw = 0, pitch = 0;
-  window.addEventListener('pointermove', function (e) {
-    if (e.pointerType === 'touch') return;
-    mx = e.clientX; my = e.clientY; hasMouse = true;
-    var h = hit(mx, my); if (h !== hover) setHover(h);
+  box.addEventListener('change', function (e) {
+    if (e.target.name === 'mc') { curColor = e.target.value; $('cc').value = curColor; }
   });
-  document.documentElement.addEventListener('mouseleave', function () { hasMouse = false; setHover(false); });
-  window.addEventListener('click', function (e) {
-    if (menuOpen) { if (!menu.contains(e.target)) closeMenu(); return; }
-    if (hit(e.clientX, e.clientY)) { e.preventDefault(); e.stopPropagation(); openMenu(); }
-  }, true);
+  $('cc').addEventListener('input', function () {
+    curColor = $('cc').value;
+    Array.prototype.forEach.call(document.querySelectorAll('input[name=mc]'), function (r) { r.checked = false; });
+  });
 
-  function clamp(n) { return Math.max(-1, Math.min(1, n)); }
-  function frame(ts) {
-    requestAnimationFrame(frame);
-    if (hidden) return;
-    var ty, tp, r = canvas.getBoundingClientRect();
-    if (hasMouse) {
-      ty = clamp((mx - (r.left + r.width / 2)) / 350) * 0.9;
-      tp = clamp((my - (r.top + r.height / 2)) / 300) * 0.5;
-    } else { ty = 0.35 * Math.sin(ts / 1100); tp = 0.07 * Math.sin(ts / 1500); }
-    yaw += (ty - yaw) * 0.12; pitch += (tp - pitch) * 0.12;
-    var rot = mul(rotX(pitch), mul(rotY(yaw), base));
-    var mvp = mul(proj, mul(view, rot));
-    project(mvp);
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.bindBuffer(gl.ARRAY_BUFFER, bP); gl.enableVertexAttribArray(aPos); gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 0, 0);
-    gl.bindBuffer(gl.ARRAY_BUFFER, bU); gl.enableVertexAttribArray(aUV); gl.vertexAttribPointer(aUV, 2, gl.FLOAT, false, 0, 0);
-    gl.bindBuffer(gl.ARRAY_BUFFER, bN); gl.enableVertexAttribArray(aN); gl.vertexAttribPointer(aN, 3, gl.FLOAT, false, 0, 0);
-    gl.uniformMatrix4fv(uRot, false, rot);
-    if (hover || menuOpen) {
-      gl.disable(gl.DEPTH_TEST);
-      gl.uniform1f(uFlat, 1);
-      gl.uniform3f(uColor, 0.12, 0.27, 0.47);
-      gl.uniformMatrix4fv(uMVP, false, mul(mvp, scaleM(1.1)));
-      gl.drawArrays(gl.TRIANGLES, 0, count);
-      gl.uniform3f(uColor, 1, 1, 1);
-      gl.uniformMatrix4fv(uMVP, false, mul(mvp, scaleM(1.055)));
-      gl.drawArrays(gl.TRIANGLES, 0, count);
-    }
-    gl.enable(gl.DEPTH_TEST);
-    gl.uniform1f(uFlat, 0);
-    gl.uniformMatrix4fv(uMVP, false, mvp);
-    gl.drawArrays(gl.TRIANGLES, 0, count);
+  /* font list */
+  FONTS.forEach(function (f) { var o = document.createElement('option'); o.value = f.id; o.textContent = f.name; $('font').appendChild(o); });
+  function syncUI() {
+    $('fontcustomwrap').classList.toggle('hide', $('font').value !== 'custom');
+    $('fc').disabled = $('autofc').checked;
+    [['fsize', ' px'], ['rad', ' px'], ['hsize', ' px'], ['hsizem', ' px']].forEach(function (p) { $('o-' + p[0]).textContent = $(p[0]).value + p[1]; });
+  }
+  syncUI();
+  $('reset').addEventListener('click', function () {
+    $('font').value = DEFAULTS.font; $('fontcustom').value = DEFAULTS.fontcustom;
+    $('autofc').checked = DEFAULTS.autofc; $('fc').value = DEFAULTS.fc;
+    $('fsize').value = DEFAULTS.fsize; $('rad').value = DEFAULTS.rad;
+    $('hsize').value = DEFAULTS.hsize; $('hsizem').value = DEFAULTS.hsizem;
+    $('corner').value = DEFAULTS.corner; $('ring').checked = DEFAULTS.ring;
+    syncUI(); changed();
+  });
+
+  /* platform tabs */
+  var tabs = document.querySelectorAll('.tab');
+  function pick(tab) {
+    Array.prototype.forEach.call(tabs, function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      $(t.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  Array.prototype.forEach.call(tabs, function (t, i) {
+    t.addEventListener('click', function () { pick(t); });
+    t.addEventListener('keydown', function (e) {
+      var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : -1;
+      if (j < 0) return;
+      var n = tabs[(j + tabs.length) % tabs.length]; pick(n); n.focus(); e.preventDefault();
+    });
+  });
+
+  function readText(file) {
+    return new Promise(function (ok, no) { var r = new FileReader(); r.onload = function () { ok(r.result); }; r.onerror = no; r.readAsText(file); });
+  }
+  function readImage(file) {
+    return new Promise(function (ok, no) {
+      var ext = (file.name.split('.').pop() || '').toLowerCase();
+      var mime = { bmp: 'image/bmp', png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', gif: 'image/gif', webp: 'image/webp' }[ext];
+      var r = new FileReader();
+      r.onload = function () {
+        var url = r.result;
+        if (mime) url = 'data:' + mime + url.slice(url.indexOf(';'));
+        var im = new Image();
+        im.onload = function () {
+          var s = Math.min(1, 256 / im.width), c = document.createElement('canvas');
+          c.width = Math.max(1, Math.round(im.width * s)); c.height = Math.max(1, Math.round(im.height * s));
+          c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+          ok(c.toDataURL('image/jpeg', 0.9));
+        };
+        im.onerror = function () { no(new Error('I couldn’t open that picture. Try saving it as a .jpg or .png first.')); };
+        im.src = url;
+      };
+      r.onerror = no; r.readAsDataURL(file);
+    });
   }
 
-  var face = new Image();
-  face.onload = function () {
-    var t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, face);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    requestAnimationFrame(frame);
-  };
-  face.src = SRC;
+  function parseObj(text) {
+    var V = [], VT = [], VN = [], F = [], mats = 0;
+    text.split(/\r?\n/).forEach(function (line) {
+      var t = line.trim().split(/\s+/), k = t[0];
+      if (k === 'v') V.push([+t[1], +t[2], +t[3]]);
+      else if (k === 'vt') VT.push([+t[1], +t[2]]);
+      else if (k === 'vn') VN.push([+t[1], +t[2], +t[3]]);
+      else if (k === 'usemtl') mats++;
+      else if (k === 'f') F.push(t.slice(1).map(function (c) { return c.split('/'); }));
+    });
+    if (!V.length || !F.length) throw new Error('That doesn’t look like a .obj model. It has no points or faces.');
+    if (!VT.length) throw new Error('This model has no UV map, so the picture can’t be wrapped on it. In Blender, tick UV when you export.');
+    var lo = [1e9, 1e9, 1e9], hi = [-1e9, -1e9, -1e9];
+    V.forEach(function (v) { for (var j = 0; j < 3; j++) { if (v[j] < lo[j]) lo[j] = v[j]; if (v[j] > hi[j]) hi[j] = v[j]; } });
+    var h = hi[1] - lo[1];
+    if (!(h > 0)) throw new Error('The model looks flat, so I can’t size it.');
+    var c = [0, 1, 2].map(function (j) { return (lo[j] + hi[j]) / 2; }), s = 2 / h;
+    function ix(n, len) { n = parseInt(n, 10); return n < 0 ? len + n : n - 1; }
+    var P = [], U = [], N = [], tris = 0;
+    F.forEach(function (f) {
+      for (var i = 1; i < f.length - 1; i++) {
+        var corner = [f[0], f[i], f[i + 1]], pts = [];
+        corner.forEach(function (k) {
+          var v = V[ix(k[0], V.length)], t = VT[ix(k[1], VT.length)];
+          if (!v || !t) throw new Error('This model’s faces point to missing data. Try exporting it again.');
+          pts.push({ v: v, t: t, n: k[2] ? VN[ix(k[2], VN.length)] : null });
+        });
+        var a = pts[0].v, b = pts[1].v, d = pts[2].v;
+        var e1 = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], e2 = [d[0] - a[0], d[1] - a[1], d[2] - a[2]];
+        var fn = [e1[1] * e2[2] - e1[2] * e2[1], e1[2] * e2[0] - e1[0] * e2[2], e1[0] * e2[1] - e1[1] * e2[0]];
+        var fl = Math.sqrt(fn[0] * fn[0] + fn[1] * fn[1] + fn[2] * fn[2]) || 1;
+        pts.forEach(function (q) {
+          for (var j = 0; j < 3; j++) P.push(+((q.v[j] - c[j]) * s).toFixed(4));
+          U.push(+q.t[0].toFixed(4), +(1 - q.t[1]).toFixed(4));
+          var n = q.n || [fn[0] / fl, fn[1] / fl, fn[2] / fl];
+          N.push(+n[0].toFixed(3), +n[1].toFixed(3), +n[2].toFixed(3));
+        });
+        tris++;
+      }
+    });
+    return { mesh: { p: P, u: U, n: N }, tris: tris, mats: mats };
+  }
+
+  /* collect every setting into one config object */
+  function readCfg() {
+    var f = FONTS.filter(function (x) { return x.id === $('font').value; })[0] || FONTS[0];
+    var g = f.g, stack = f.stack;
+    if (f.id === 'custom') {
+      var n = ($('fontcustom').value || '').replace(/[^A-Za-z0-9 ]/g, '').replace(/\s+/g, ' ').trim();
+      if (n) { g = n; stack = '"' + n + '",' + SYS; }
+    }
+    return {
+      color: curColor, gfont: g, stack: stack,
+      fontColor: $('autofc').checked ? 'auto' : $('fc').value,
+      fontSize: +$('fsize').value, radius: +$('rad').value,
+      size: +$('hsize').value, sizeMobile: +$('hsizem').value,
+      corner: $('corner').value, ring: $('ring').checked, mobileBelow: 760
+    };
+  }
+  function build(cfg) {
+    var body = TPL
+      .replace('__MESH__', function () { return JSON.stringify(state.mesh); })
+      .replace('__CFG__', function () { return JSON.stringify(cfg); })
+      .replace('__FACE__', function () { return $('face').value; })
+      .replace('__SRC__', function () { return state.src; });
+    return '<script>' + body + '<\/script>';
+  }
+
+  function compose(quiet) {
+    var cfg = readCfg();
+    var snippet = '<!-- Head Kit by Arno (2024). Paste this just above the closing body tag. -->\n' + build(cfg);
+    var pcfg = JSON.parse(JSON.stringify(cfg)); pcfg.mobileBelow = 0; pcfg.corner = cfg.corner;
+    var field = getComputedStyle(document.documentElement).getPropertyValue('--field').trim() || '#f1f3f6';
+    $('out').value = snippet;
+    $('prev').srcdoc = '<!doctype html><html><head><meta charset="utf-8"></head><body style="margin:0;height:100vh;background:' + field + '">' + build(pcfg) + '</body></html>';
+    $('result').hidden = false;
+    var kb = Math.round(snippet.length / 1024);
+    $('size').textContent = state.tris + ' triangles · ' + kb + ' KB';
+    if (quiet) { say('Updated. Copy the snippet again to use the new settings.', 'ok'); return; }
+    var extra = state.mats > 1 ? ' Note: this model uses ' + state.mats + ' pictures, and I can only use the one you chose.' : '';
+    var big = kb > 150 ? ' This snippet is quite large, and some site editors may refuse it. A simpler model would help.' : '';
+    say('Done! Check the preview, then copy your snippet.' + extra + big, 'ok');
+  }
+  function changed() {
+    if (!state) return;
+    clearTimeout(timer);
+    timer = setTimeout(function () { compose(true); }, 250);
+  }
+
+  $('go').addEventListener('click', function () {
+    var of = $('objf').files[0], tf = $('texf').files[0];
+    if (!of || !tf) { say('Please choose both files: the .obj model and its picture.', 'err'); return; }
+    $('go').disabled = true; say('Building your snippet…');
+    Promise.all([readText(of), readImage(tf)]).then(function (r) {
+      var m = parseObj(r[0]);
+      if (m.tris > 20000) throw new Error('This model has ' + m.tris + ' triangles, which is too heavy for a web page. Try a simpler model (under 5,000).');
+      state = { mesh: m.mesh, tris: m.tris, mats: m.mats, src: r[1] };
+      compose(false);
+    }).catch(function (e) { say(e && e.message ? e.message : 'Something went wrong. Please check your files.', 'err'); })
+      .then(function () { $('go').disabled = false; });
+  });
+
+  $('form').addEventListener('input', function (e) { if (e.target.type !== 'file') { syncUI(); changed(); } });
+  $('form').addEventListener('change', function (e) { if (e.target.type !== 'file') { syncUI(); changed(); } });
+
+  $('copy').addEventListener('click', function () {
+    var ta = $('out'), done = function () { say('Copied! Now paste it just above the closing body tag (Step 3).', 'ok'); };
+    ta.focus(); ta.select();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(ta.value).then(done, function () { document.execCommand('copy'); done(); });
+    } else { document.execCommand('copy'); done(); }
+  });
 })();
 </script>
 </body>
