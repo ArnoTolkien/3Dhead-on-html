@@ -3,155 +3,579 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Head Kit: put your own 3D head on your Tumblr blog</title>
-<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet"/>
+<title>Head Kit: add a 3D head to any website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#b9d2ee;--dot:#cfe0f4;--panel:#e3eefa;--field:#f4f9ff;--ink:#1c2f4d;--muted:#4a6285;
-  --b1:#5f93d6;--b2:#2f5d9e;--b3:#264f89;--edge:#1f4478;--lite:#fff;--shade:#6f90bb;
-  --link:#1f58c9;--hover:#e0558a;--ok:#1d7a2a;--bad:#b3261e;
-  --pix:"DotGothic16","MS Gothic",monospace;--ui:Verdana,Tahoma,Geneva,sans-serif;
+  --bg:#f5f6f8;--card:#ffffff;--field:#f1f3f6;--ink:#0f172a;--muted:#5b6475;--line:#e2e6ed;
+  --accent:#2563eb;--accent-ink:#ffffff;--accent-soft:#e8efff;--ok:#15803d;--bad:#b91c1c;
+  --code-bg:#0f172a;--code-ink:#e2e8f0;--hl:#fde68a;--hl-ink:#422006;
+  --radius:14px;--shadow:0 1px 2px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.06);
+  --ui:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0e1a2f;--dot:#14243f;--panel:#17273f;--field:#0f1b30;--ink:#e3eefa;--muted:#9db6d8;
-  --edge:#6f90bb;--lite:#3b5a86;--shade:#091120;--link:#8db4ff;--ok:#6fdc7c;--bad:#ff8f87}}
-:root[data-theme="dark"]{
-  --bg:#0e1a2f;--dot:#14243f;--panel:#17273f;--field:#0f1b30;--ink:#e3eefa;--muted:#9db6d8;
-  --edge:#6f90bb;--lite:#3b5a86;--shade:#091120;--link:#8db4ff;--ok:#6fdc7c;--bad:#ff8f87}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0a0e16;--card:#121826;--field:#0c111c;--ink:#e8ecf4;--muted:#9aa4b8;--line:#232c3f;
+  --accent:#6ea0ff;--accent-ink:#0a0e16;--accent-soft:#17233d;--ok:#4ade80;--bad:#f87171;
+  --code-bg:#070a11;--hl:#4a3a08;--hl-ink:#fde68a;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35)}}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-body{margin:0;padding:20px 12px 56px;color:var(--ink);font:15px/1.65 var(--ui);background-color:var(--bg);
-  background-image:radial-gradient(var(--dot) 22%,transparent 24%),radial-gradient(var(--dot) 22%,transparent 24%);
-  background-size:22px 22px;background-position:0 0,11px 11px}
-a{color:var(--link)}a:hover{color:var(--hover)}
-:focus-visible{outline:3px dashed var(--hover);outline-offset:2px}
+body{margin:0;padding:32px 16px 56px;background:var(--bg);color:var(--ink);font:15px/1.65 var(--ui);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .wrap{max-width:760px;margin:0 auto}
-.box{background:var(--panel);margin:0 0 20px;border:2px solid;border-color:var(--lite) var(--shade) var(--shade) var(--lite);outline:2px solid var(--edge)}
-.bar{background:linear-gradient(var(--b1),var(--b2) 55%,var(--b3));color:#fff;font:17px/1.2 var(--pix);padding:8px 12px;text-shadow:1px 1px 0 #17345c}
-.in{padding:14px 16px}
-.in>*+*{margin-top:.9em}
-h1{font:clamp(26px,5vw,36px)/1.15 var(--pix);margin:0;color:var(--ink)}
+
+.hero{padding:8px 4px 28px}
+.eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:4px 10px;border-radius:999px}
+h1{font-size:clamp(28px,5.5vw,40px);line-height:1.15;letter-spacing:-.02em;margin:14px 0 12px;font-weight:700}
+.lead{font-size:17px;color:var(--muted);margin:0 0 14px;max-width:62ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.chips li{font-size:13px;font-weight:500;padding:4px 11px;border:1px solid var(--line);border-radius:999px;background:var(--card);margin:0}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin:0 0 18px}
+.step{display:flex;align-items:center;gap:12px;margin:0 0 14px}
+.num{flex:none;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:14px;font-weight:700;display:grid;place-items:center}
+h2{font-size:19px;line-height:1.3;margin:0;font-weight:650;letter-spacing:-.01em}
+.card>*+*{margin-top:.95em}
+.card>.step+*{margin-top:0}
 p{margin:0}
-ol,ul{margin:0;padding-left:1.3em}li+li{margin-top:.35em}
-.lead{font-size:16px}
-.note{font-size:13px;color:var(--muted)}
-code{font:13px var(--ui);background:var(--field);padding:1px 5px;border:1px solid var(--shade)}
-.field{display:flex;flex-direction:column;gap:4px}
-label{font:15px var(--pix)}
-input[type=file],select{width:100%;padding:8px;background:var(--field);color:var(--ink);font:14px var(--ui);border:2px inset var(--shade)}
-.btn{font:17px var(--pix);color:#fff;cursor:pointer;padding:9px 18px;background:linear-gradient(var(--b1),var(--b2) 55%,var(--b3));
-  border:2px solid;border-color:#fff #17345c #17345c #fff;outline:1px solid var(--edge);text-shadow:1px 1px 0 #17345c}
-.btn:hover{background:linear-gradient(#8bd18f,#2f9a3a 55%,#1d6e28)}
-.btn:disabled{opacity:.5;cursor:wait}
-.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-#status{min-height:1.6em;font-weight:bold}
+ol,ul{margin:0;padding-left:1.3em}li+li{margin-top:.4em}
+.note{font-size:13.5px;color:var(--muted)}
+code{font:12.5px var(--mono);background:var(--field);padding:2px 6px;border:1px solid var(--line);border-radius:6px}
+
+.field{display:flex;flex-direction:column;gap:6px}
+label,.lbl{font-size:14px;font-weight:600}
+input[type=file],select{width:100%;padding:10px 12px;background:var(--field);color:var(--ink);font:14px var(--ui);border:1px solid var(--line);border-radius:10px}
+input[type=file]::file-selector-button{margin-right:10px;padding:6px 12px;border:0;border-radius:8px;background:var(--accent);color:var(--accent-ink);font:600 13px var(--ui);cursor:pointer}
+fieldset{border:0;padding:0;margin:0}
+.swatches{display:flex;flex-wrap:wrap;gap:10px;margin-top:2px}
+.swatches label{position:relative;display:block;width:30px;height:30px;font-size:0;cursor:pointer}
+.swatches input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.swatches span{display:block;width:100%;height:100%;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25),0 1px 3px rgba(0,0,0,.2);transition:transform .12s}
+.swatches label:hover span{transform:scale(1.1)}
+.swatches input:checked+span{box-shadow:inset 0 0 0 1px rgba(0,0,0,.25),0 0 0 2px var(--card),0 0 0 4px var(--ink)}
+.swatches input:focus-visible+span{outline:2px solid var(--accent);outline-offset:4px}
+
+.btn{font:600 14.5px var(--ui);color:var(--accent-ink);background:var(--accent);border:0;border-radius:10px;padding:11px 20px;cursor:pointer;transition:filter .12s,transform .12s}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.55;cursor:wait}
+.btn.ghost{background:var(--field);color:var(--ink);border:1px solid var(--line)}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+#status{min-height:1.5em;font-weight:600;font-size:14px}
 #status.ok{color:var(--ok)}#status.err{color:var(--bad)}
 #result[hidden]{display:none}
-iframe{width:100%;height:300px;border:2px inset var(--shade);background:var(--bg);display:block}
-textarea{width:100%;height:9em;font:12px/1.4 ui-monospace,Consolas,monospace;background:var(--field);color:var(--ink);border:2px inset var(--shade);padding:8px;resize:vertical}
-details{border-top:1px dotted var(--shade);padding:8px 0}
-summary{cursor:pointer;font:15px var(--pix)}
-details p{margin-top:6px}
-@media (max-width:520px){.in{padding:12px}}
+#result>*+*{margin-top:.9em}
+iframe{width:100%;height:360px;border:1px solid var(--line);border-radius:12px;background:var(--field);display:block}
+textarea{width:100%;height:9em;font:12px/1.5 var(--mono);background:var(--field);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;resize:vertical}
+
+pre.code{margin:0;background:var(--code-bg);color:var(--code-ink);font:13px/1.7 var(--mono);padding:14px 16px;border-radius:12px;overflow-x:auto}
+pre.code .here{display:block;background:var(--hl);color:var(--hl-ink);margin:0 -16px;padding:0 16px;font-weight:600}
+pre.code .dim{opacity:.6}
+
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;border-bottom:1px solid var(--line)}
+.tab{flex:none;font:600 13.5px var(--ui);color:var(--muted);background:none;border:0;border-bottom:2px solid transparent;padding:9px 12px;cursor:pointer;margin-bottom:-1px}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent)}
+.panel[hidden]{display:none}
+.panel>*+*{margin-top:.8em}
+
+details{border-top:1px solid var(--line);padding:12px 0}
+details:first-of-type{margin-top:.4em}
+summary{cursor:pointer;font-weight:600}
+details p{margin-top:8px;color:var(--muted)}
+
+.foot{text-align:center;padding:12px 8px 0;color:var(--muted)}
+.foot .by{font-size:14px;font-weight:600;color:var(--ink)}
+.foot .disclaimer{font-size:12.5px;line-height:1.6;max-width:62ch;margin:10px auto 0}
+@media (max-width:520px){.card{padding:18px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<header class="box">
-  <div class="bar">Head Kit</div>
-  <div class="in">
-    <h1>Put your own 3D head on your Tumblr blog</h1>
-    <p class="lead">Upload a head model and its picture. You get a finished Tumblr theme where the head sits in a corner, follows your cursor, and has a little pop-up menu. You don’t need to code anything.</p>
-    <p class="note">You’ll need a free Tumblr blog, a head model (a <code>.obj</code> file) and the picture that goes with it (<code>.jpg</code>, <code>.png</code> or <code>.bmp</code>).</p>
-  </div>
+<header class="hero">
+  <span class="eyebrow">Head Kit</span>
+  <h1>Add your own 3D head to any website</h1>
+  <p class="lead">Upload a head model and its picture. You get one small piece of code to paste into your site. The head sits in a corner, follows the cursor, and opens a menu with colour themes when clicked.</p>
+  <ul class="chips" aria-label="Works with">
+    <li>Tumblr</li><li>WordPress</li><li>Blogger</li><li>Neocities</li><li>Plain HTML</li>
+  </ul>
 </header>
 
-<section class="box">
-  <div class="bar">Step 1: Get your two files</div>
-  <div class="in">
-    <p>If you have a Blender file, export it like this:</p>
-    <ol>
-      <li>Open the <code>.blend</code> file in Blender (free at blender.org).</li>
-      <li>Choose <b>File &gt; Export &gt; Wavefront (.obj)</b>. Tick <b>Triangulated Mesh</b>, keep <b>Materials</b> ticked, and save.</li>
-      <li>For the picture, open the <b>Shading</b> tab, click the picture box (it shows the file name), then choose <b>Image &gt; Save As</b>.</li>
-    </ol>
-    <p class="note">Models from other programs work too, as long as they have a UV map. That’s the part that tells the picture where to go on the head.</p>
+<section class="card">
+  <div class="step"><span class="num">1</span><h2>Get your two files</h2></div>
+  <p>You need a head model (<code>.obj</code>) and the picture that wraps around it (<code>.jpg</code>, <code>.png</code> or <code>.bmp</code>). If you have a Blender file, export it like this:</p>
+  <ol>
+    <li>Open the <code>.blend</code> file in Blender (free at blender.org).</li>
+    <li>Choose <b>File &gt; Export &gt; Wavefront (.obj)</b>. Tick <b>Triangulated Mesh</b>, keep <b>Materials</b> ticked, and save.</li>
+    <li>For the picture, open the <b>Shading</b> tab, click the picture box (it shows the file name), then choose <b>Image &gt; Save As</b>.</li>
+  </ol>
+  <p class="note">Models from other programs work too, as long as they have a UV map. That’s what tells the picture where to go on the head.</p>
+</section>
+
+<section class="card">
+  <div class="step"><span class="num">2</span><h2>Build your snippet</h2></div>
+  <div class="field"><label for="objf">Head model (.obj)</label><input id="objf" type="file" accept=".obj"/></div>
+  <div class="field"><label for="texf">Head picture (.jpg, .png or .bmp)</label><input id="texf" type="file" accept=".jpg,.jpeg,.png,.bmp,.gif,.webp,image/*"/></div>
+  <div class="field"><label for="face">Which way does the head face?</label>
+    <select id="face">
+      <option value="3.14159">Try this first (Blender default)</option>
+      <option value="0">Turn it around</option>
+      <option value="1.5708">Turn it left</option>
+      <option value="-1.5708">Turn it right</option>
+    </select></div>
+  <fieldset>
+    <legend class="lbl">Starting menu colour</legend>
+    <div class="swatches" id="colors" role="radiogroup" aria-label="Starting menu colour"></div>
+    <p class="note" style="margin-top:8px">Visitors can switch colours themselves from the head’s menu. This only sets the first one they see.</p>
+  </fieldset>
+  <div class="row"><button class="btn" id="go" type="button">Build my snippet</button></div>
+  <p id="status" role="status" aria-live="polite"></p>
+  <div id="result" hidden>
+    <iframe id="prev" title="Preview of your head" sandbox="allow-scripts"></iframe>
+    <p class="note">Move your mouse around the preview and click the head to open the menu. If the face looks backwards or sideways, change the direction above and the preview updates.</p>
+    <label for="out">Your Head Kit snippet</label>
+    <textarea id="out" readonly spellcheck="false"></textarea>
+    <div class="row"><button class="btn" id="copy" type="button">Copy snippet</button><span id="size" class="note"></span></div>
   </div>
 </section>
 
-<section class="box">
-  <div class="bar">Step 2: Build your theme</div>
-  <div class="in">
-    <div class="field"><label for="objf">Head model (.obj)</label><input id="objf" type="file" accept=".obj"/></div>
-    <div class="field"><label for="texf">Head picture (.jpg, .png or .bmp)</label><input id="texf" type="file" accept=".jpg,.jpeg,.png,.bmp,.gif,.webp,image/*"/></div>
-    <div class="field"><label for="face">Which way does the head face?</label>
-      <select id="face">
-        <option value="3.14159">Try this first (Blender default)</option>
-        <option value="0">Turn it around</option>
-        <option value="1.5708">Turn it left</option>
-        <option value="-1.5708">Turn it right</option>
-      </select></div>
-    <div class="row"><button class="btn" id="go" type="button">Build my theme</button></div>
-    <p id="status" role="status" aria-live="polite"></p>
-    <div id="result" hidden>
-      <iframe id="prev" title="Preview of your head" sandbox="allow-scripts"></iframe>
-      <p class="note">Move your mouse around the preview. If the face looks backwards or sideways, pick a different choice above and press <b>Build my theme</b> again.</p>
-      <label for="out">Your theme code</label>
-      <textarea id="out" readonly spellcheck="false"></textarea>
-      <div class="row"><button class="btn" id="copy" type="button">Copy theme code</button><span id="size" class="note"></span></div>
-    </div>
-  </div>
-</section>
+<section class="card">
+  <div class="step"><span class="num">3</span><h2>Paste it into your site</h2></div>
+  <p>You don’t replace anything and you don’t need a special theme. The snippet is a single <code>&lt;script&gt;</code> block. Paste it on its own line <b>just above the closing body tag</b> (<code>&lt;/body&gt;</code>), which is the very end of your page:</p>
+  <pre class="code"><span class="dim">&lt;html&gt;
+  &lt;head&gt; … &lt;/head&gt;
+  &lt;body&gt;
+    … your page content …
+</span><span class="here">    &lt;!-- Head Kit: paste here --&gt;</span><span class="dim">  &lt;/body&gt;
+&lt;/html&gt;</span></pre>
+  <p class="note">If your site doesn’t let you edit the page HTML, look for a place to add a custom footer script. Pick your platform:</p>
 
-<section class="box">
-  <div class="bar">Step 3: Put it on Tumblr</div>
-  <div class="in">
+  <div class="tabs" role="tablist" aria-label="Platform">
+    <button class="tab" role="tab" id="t-tumblr" aria-controls="p-tumblr" aria-selected="true" type="button">Tumblr</button>
+    <button class="tab" role="tab" id="t-wp" aria-controls="p-wp" aria-selected="false" type="button">WordPress</button>
+    <button class="tab" role="tab" id="t-blogger" aria-controls="p-blogger" aria-selected="false" type="button">Blogger</button>
+    <button class="tab" role="tab" id="t-html" aria-controls="p-html" aria-selected="false" type="button">Neocities / own HTML</button>
+    <button class="tab" role="tab" id="t-builders" aria-controls="p-builders" aria-selected="false" type="button">Wix, Squarespace &amp; others</button>
+  </div>
+
+  <div class="panel" role="tabpanel" id="p-tumblr" aria-labelledby="t-tumblr">
     <ol>
-      <li>On Tumblr, open your blog and click <b>Edit appearance</b>, then <b>Edit theme</b>, then <b>Edit HTML</b>.</li>
-      <li>Click in the code box, select everything (Ctrl+A, or Cmd+A on a Mac), and delete it.</li>
-      <li>Paste the theme code you copied in Step 2.</li>
+      <li>Open your blog, click <b>Edit appearance</b>, then <b>Edit theme</b>, then <b>Edit HTML</b>.</li>
+      <li>Click inside the code box and press <b>Ctrl+F</b> (or <b>Cmd+F</b> on a Mac). Search for <code>&lt;/body&gt;</code>.</li>
+      <li>Click at the start of that line so your cursor sits just before <code>&lt;/body&gt;</code>. Press <b>Enter</b> to make an empty line, then paste the snippet. Keep your existing theme code as it is.</li>
       <li>Click <b>Update preview</b>, then <b>Save</b>.</li>
       <li>Open your real blog address in a new tab. Tumblr’s preview often ignores mouse movement, so the head only follows your cursor on the live page.</li>
     </ol>
   </div>
-</section>
 
-<section class="box">
-  <div class="bar">Step 4: Make it yours</div>
-  <div class="in">
-    <p>Back in <b>Edit appearance</b>, the options on the left let you change things without touching code:</p>
+  <div class="panel" role="tabpanel" id="p-wp" aria-labelledby="t-wp" hidden>
+    <p>The safest way is a free header and footer plugin, so a theme update never wipes your code.</p>
+    <ol>
+      <li>In your dashboard, go to <b>Plugins &gt; Add New</b> and install a header/footer code plugin (for example <b>WPCode</b>), then activate it.</li>
+      <li>Open the plugin’s <b>Header &amp; Footer</b> settings.</li>
+      <li>Paste the snippet into the <b>Footer</b> box and save.</li>
+    </ol>
+    <p class="note">Prefer editing files? With a classic theme, open <b>Appearance &gt; Theme File Editor</b>, choose <code>footer.php</code>, and paste the snippet on its own line directly above <code>&lt;?php wp_footer(); ?&gt;</code> or <code>&lt;/body&gt;</code>. Use a child theme so updates don’t erase it.</p>
+  </div>
+
+  <div class="panel" role="tabpanel" id="p-blogger" aria-labelledby="t-blogger" hidden>
+    <p>Blogger’s template editor rejects some characters in scripts, so use a gadget instead:</p>
+    <ol>
+      <li>In Blogger, open <b>Layout</b>.</li>
+      <li>Click <b>Add a Gadget</b> in a footer or sidebar area, and choose <b>HTML/JavaScript</b>.</li>
+      <li>Paste the whole snippet into the content box, then <b>Save</b> and <b>Save arrangement</b>.</li>
+    </ol>
+    <p class="note">The head floats in a corner of the screen, so it doesn’t matter which area holds the gadget.</p>
+  </div>
+
+  <div class="panel" role="tabpanel" id="p-html" aria-labelledby="t-html" hidden>
+    <p>For Neocities, GitHub Pages, or any site where you control the files:</p>
+    <ol>
+      <li>Open your page’s <code>.html</code> file in an editor.</li>
+      <li>Scroll to the bottom and find <code>&lt;/body&gt;</code>.</li>
+      <li>Paste the snippet on a new line directly above it, then save and upload.</li>
+    </ol>
+    <p class="note">Want the head on every page? Paste it into each page, or into the shared footer or template file if your site has one.</p>
+  </div>
+
+  <div class="panel" role="tabpanel" id="p-builders" aria-labelledby="t-builders" hidden>
+    <p>Website builders usually hide the HTML, but most have a spot for custom code. Menu names change over time, so look for one of these in your site settings:</p>
     <ul>
-      <li>Colors for the background, boxes, title bars, text and links.</li>
-      <li>The welcome message, your title and description, and the footer.</li>
-      <li>A background picture (tick <b>Stretch Background Image</b> to fit the screen).</li>
-      <li>Up to six link buttons (88x31 pictures) and three text links.</li>
-      <li><b>Use 3D Head</b> to turn the head off completely.</li>
+      <li><b>Wix:</b> Settings &gt; Custom Code, add the code to <b>Body – end</b> on all pages.</li>
+      <li><b>Squarespace:</b> Settings &gt; Advanced &gt; Code Injection, paste into the <b>Footer</b> box.</li>
+      <li><b>Webflow:</b> Site settings &gt; Custom code, paste into <b>Footer code</b>.</li>
+      <li><b>Anything else:</b> search the help pages for “custom code”, “footer script” or “code injection”.</li>
     </ul>
-    <p>Visitors can click the head to hide it or move it to the other corner, and they can bring it back with the <b>Show head</b> button.</p>
+    <p class="note">Some builders only allow custom code on paid plans, and a few (such as link-in-bio pages or note apps) block scripts completely. If yours does, the head can’t run there.</p>
   </div>
 </section>
 
-<section class="box">
-  <div class="bar">If something looks wrong</div>
-  <div class="in">
-    <details><summary>The face is backwards or sideways</summary><p>Change <b>Which way does the head face?</b> in Step 2 and build again. One of the four choices will be right.</p></details>
-    <details><summary>It says my model has no UV map</summary><p>The model needs a UV map so the picture can wrap around it. In Blender, tick <b>UV</b> in the export settings, or check that the model has been unwrapped.</p></details>
-    <details><summary>The colors look wrong or the head is plain</summary><p>You may have picked a different picture than the one the model uses. If the model uses several pictures, this kit can only use one, so pick the main face picture.</p></details>
-    <details><summary>The page is slow to load</summary><p>Very detailed models make the page heavier. Simple models with a few hundred triangles work best, and pictures are shrunk to 256 pixels wide automatically.</p></details>
-    <details><summary>Can I use heads from a game?</summary><p>Fan blogs do it all the time, but the models and pictures belong to the people who made them. If you plan to sell anything or run a bigger site, check the rules first.</p></details>
-  </div>
+<section class="card">
+  <div class="step"><span class="num">4</span><h2>What visitors can do</h2></div>
+  <p>Hover over the head and the cursor turns into a pointer. Clicking it opens a round menu with these choices:</p>
+  <ul>
+    <li><b>Hide head</b> removes it, and a small <b>Show head</b> button appears to bring it back.</li>
+    <li><b>Move left / Move right</b> sends it to the other corner.</li>
+    <li><b>Colour dots</b> change the menu theme: blue, white, black, pink, green, purple, orange, red, yellow or teal. The head’s hover outline changes to match.</li>
+    <li><b>Close</b> or the <b>Esc</b> key closes the menu.</li>
+  </ul>
+  <p class="note">Choices are remembered in each visitor’s own browser. The colour themes only affect the head’s menu, never the rest of your site.</p>
 </section>
+
+<section class="card">
+  <div class="step"><span class="num">?</span><h2>If something looks wrong</h2></div>
+  <details><summary>Nothing shows up on my site</summary><p>Check that the snippet sits above <code>&lt;/body&gt;</code> and that you pasted all of it, from <code>&lt;script&gt;</code> to <code>&lt;/script&gt;</code>. Make sure you used an HTML or code editor, not a visual one that strips scripts. If you hid the head earlier, look for the <b>Show head</b> button at the bottom of the page. Some sites, and some mobile apps, block custom scripts. Your browser also needs WebGL, which almost every current browser has.</p></details>
+  <details><summary>The face is backwards or sideways</summary><p>Change <b>Which way does the head face?</b> in Step 2. The preview updates and the snippet is rewritten. Copy it again and replace the old one.</p></details>
+  <details><summary>It says my model has no UV map</summary><p>The model needs a UV map so the picture can wrap around it. In Blender, tick <b>UV</b> in the export settings, or check that the model has been unwrapped.</p></details>
+  <details><summary>The colours look wrong or the head is plain</summary><p>You may have picked a different picture than the one the model uses. If the model uses several pictures, this kit can only use one, so pick the main face picture.</p></details>
+  <details><summary>My site won’t accept the code, or loads slowly</summary><p>Very detailed models make the snippet large, and some editors limit how much code you can paste. Simple models with a few hundred triangles work best. Pictures are shrunk to 256 pixels wide automatically.</p></details>
+  <details><summary>The head covers part of my page</summary><p>Visitors can hide it or move it from the menu. You can also make it smaller: near the top of your snippet, find the line starting <code>var SIZE =</code> and lower the two numbers.</p></details>
+  <details><summary>Can I use heads from a game?</summary><p>Fan sites do it all the time, but the models and pictures belong to the people who made them. If you plan to sell anything or run a bigger site, check the rules first.</p></details>
+</section>
+
+<footer class="foot">
+  <p class="by">Made by Arno, 2024.</p>
+  <p class="disclaimer"><b>Disclaimer:</b> Head Kit is an unofficial, fan-made tool provided “as is”, without warranty of any kind. It is not affiliated with, endorsed by, or sponsored by Tumblr, WordPress, Blogger, or any other platform, game, or brand mentioned here. All trademarks, models and textures belong to their respective owners. You are responsible for having the right to use any files you upload and for following the rules of the site where you add the snippet. Your files are processed in your browser and are not sent to any server.</p>
+</footer>
 
 </div>
 
+<!-- Head Kit snippet template. The page fills in the placeholders below. -->
+<script type="text/plain" id="tpl">
+(function () {
+  if (window.__headKit) return;
+  window.__headKit = true;
+
+  function start() {
+    var MESH = __MESH__;
+    var SRC = '__SRC__';
+    var THEMES = __THEMES__;
+    var DEFAULT_THEME = '__THEME__';
+    var KEY_HIDE = 'headKitHidden', KEY_SIDE = 'headKitSide', KEY_COLOR = 'headKitColor';
+    var SIZE = window.innerWidth < 760 ? 120 : 180;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    var canvas = document.createElement('canvas');
+    canvas.width = SIZE * dpr; canvas.height = SIZE * dpr;
+    canvas.style.width = SIZE + 'px'; canvas.style.height = SIZE + 'px';
+    canvas.setAttribute('aria-hidden', 'true');
+    var gl = canvas.getContext('webgl', { alpha: true, antialias: true }) || canvas.getContext('experimental-webgl');
+    if (!gl) return;
+
+    function shader(type, src) {
+      var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error('shader');
+      return s;
+    }
+    var prog;
+    try {
+      prog = gl.createProgram();
+      gl.attachShader(prog, shader(gl.VERTEX_SHADER,
+        'attribute vec3 aPos;attribute vec2 aUV;attribute vec3 aN;' +
+        'uniform mat4 uMVP;uniform mat4 uRot;varying vec2 vUV;varying vec3 vN;' +
+        'void main(){vUV=aUV;vN=(uRot*vec4(aN,0.0)).xyz;gl_Position=uMVP*vec4(aPos,1.0);}'));
+      gl.attachShader(prog, shader(gl.FRAGMENT_SHADER,
+        'precision mediump float;varying vec2 vUV;varying vec3 vN;uniform sampler2D uTex;uniform float uFlat;uniform vec3 uColor;' +
+        'void main(){if(uFlat>0.5){gl_FragColor=vec4(uColor,1.0);return;}' +
+        'vec4 c=texture2D(uTex,vUV);' +
+        'float d=max(dot(normalize(vN),normalize(vec3(-0.4,0.5,0.8))),0.0);' +
+        'gl_FragColor=vec4(c.rgb*(0.8+0.3*d),1.0);}'));
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    } catch (e) { return; }
+    gl.useProgram(prog);
+
+    function buf(data) { var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW); return b; }
+    var bP = buf(MESH.p), bU = buf(MESH.u), bN = buf(MESH.n), count = MESH.p.length / 3;
+    var aPos = gl.getAttribLocation(prog, 'aPos'), aUV = gl.getAttribLocation(prog, 'aUV'), aN = gl.getAttribLocation(prog, 'aN');
+    var uMVP = gl.getUniformLocation(prog, 'uMVP'), uRot = gl.getUniformLocation(prog, 'uRot');
+    var uFlat = gl.getUniformLocation(prog, 'uFlat'), uColor = gl.getUniformLocation(prog, 'uColor');
+
+    function mul(a, b) {
+      var o = new Float32Array(16), r, c, k;
+      for (c = 0; c < 4; c++) for (r = 0; r < 4; r++) {
+        var s = 0; for (k = 0; k < 4; k++) s += a[k * 4 + r] * b[c * 4 + k]; o[c * 4 + r] = s;
+      }
+      return o;
+    }
+    function rotY(t) { var c = Math.cos(t), s = Math.sin(t); return new Float32Array([c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1]); }
+    function rotX(t) { var c = Math.cos(t), s = Math.sin(t); return new Float32Array([1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1]); }
+    function scaleM(s) { return new Float32Array([s, 0, 0, 0, 0, s, 0, 0, 0, 0, s, 0, 0, 0, 0, 1]); }
+    var fov = 34 * Math.PI / 180, f = 1 / Math.tan(fov / 2), nr = 1, fr = 10;
+    var proj = new Float32Array([f, 0, 0, 0, 0, f, 0, 0, 0, 0, (fr + nr) / (nr - fr), -1, 0, 0, 2 * fr * nr / (nr - fr), 0]);
+    var view = new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -5, 1]);
+    var base = rotY(__FACE__);
+
+    /* ---- styles (added by script, so nothing else in your page changes) ---- */
+    var css = [
+      '#hk-wrap{position:fixed;left:0;bottom:10px;z-index:2147483000;pointer-events:none;line-height:0}',
+      '#hk-wrap canvas{display:block}',
+      '#hk-wrap.hk-slide{transition:transform .45s cubic-bezier(.3,1.25,.5,1)}',
+      'body.hk-over,body.hk-over *{cursor:pointer!important}',
+      '#hk-menu{position:fixed;z-index:2147483001;width:0;height:0;animation:hk-pop .16s ease-out;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-weight:600;font-size:13px;line-height:1}',
+      '#hk-menu[hidden]{display:none}',
+      '@keyframes hk-pop{from{transform:scale(.6);opacity:0}}',
+      '.hk-ring{position:absolute;left:-120px;top:-120px;width:240px;height:240px;box-sizing:border-box;border-radius:50%;border:2px solid var(--hk-bg);box-shadow:0 0 0 1px var(--hk-edge),0 8px 28px rgba(0,0,0,.16);pointer-events:none}',
+      '.hk-btn{position:absolute;transform:translate(-50%,-50%);margin:0;-webkit-appearance:none;appearance:none;font:inherit;color:var(--hk-fg);background:var(--hk-bg);border:1px solid var(--hk-edge);border-radius:999px;padding:9px 14px;white-space:nowrap;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.22);transition:transform .12s ease,filter .12s ease}',
+      '.hk-btn:hover,.hk-btn:focus-visible{filter:brightness(1.08);transform:translate(-50%,-50%) scale(1.06)}',
+      '.hk-btn:focus-visible,.hk-sw:focus-visible,#hk-show:focus-visible{outline:2px solid var(--hk-bg);outline-offset:3px}',
+      '.hk-a{left:calc(var(--out,-1) * 120px);top:0}',
+      '.hk-b{left:calc(var(--out,-1) * 85px);top:-85px}',
+      '.hk-c{left:0;top:-120px}',
+      '.hk-sw{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;padding:0;border-radius:50%;border:2px solid #fff;cursor:pointer;-webkit-appearance:none;appearance:none;box-shadow:0 0 0 1px rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.25);transition:transform .12s ease}',
+      '.hk-sw:hover{transform:scale(1.18)}',
+      '.hk-sw[aria-pressed="true"]{transform:scale(1.22);box-shadow:0 0 0 2px #111,0 0 0 4px #fff,0 2px 8px rgba(0,0,0,.35)}',
+      '#hk-show{position:fixed;right:12px;bottom:12px;z-index:2147483000;margin:0;-webkit-appearance:none;appearance:none;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-weight:600;font-size:13px;line-height:1;color:var(--hk-fg);background:var(--hk-bg);border:1px solid var(--hk-edge);border-radius:999px;padding:9px 14px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.22)}',
+      '#hk-show[hidden]{display:none}',
+      '@media (prefers-reduced-motion:reduce){#hk-menu{animation:none}#hk-wrap.hk-slide{transition:none}.hk-btn,.hk-sw{transition:none}}'
+    ].join('\n');
+    var styleEl = document.createElement('style'); styleEl.id = 'hk-style'; styleEl.textContent = css;
+    document.head.appendChild(styleEl);
+
+    /* ---- wrapper, pie menu, "show head" button ---- */
+    var wrap = document.createElement('div'); wrap.id = 'hk-wrap'; wrap.appendChild(canvas);
+    var menu = document.createElement('div'); menu.id = 'hk-menu'; menu.hidden = true;
+    menu.setAttribute('role', 'dialog'); menu.setAttribute('aria-label', 'Head menu');
+    menu.innerHTML = '<div class="hk-ring"></div>' +
+      '<button type="button" class="hk-btn hk-a" data-act="hide">Hide head</button>' +
+      '<button type="button" class="hk-btn hk-b" data-act="move">Move left</button>' +
+      '<button type="button" class="hk-btn hk-c" data-act="cancel">Close</button>';
+    var showBtn = document.createElement('button'); showBtn.type = 'button'; showBtn.id = 'hk-show'; showBtn.textContent = 'Show head'; showBtn.hidden = true;
+
+    var swatches = [];
+    THEMES.forEach(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'hk-sw'; b.setAttribute('data-theme', t.id);
+      b.title = t.name; b.setAttribute('aria-label', t.name + ' menu colour'); b.setAttribute('aria-pressed', 'false');
+      b.style.background = t.bg;
+      menu.appendChild(b); swatches.push(b);
+    });
+    document.body.appendChild(wrap); document.body.appendChild(menu); document.body.appendChild(showBtn);
+
+    /* ---- colour themes ---- */
+    var accent = [0.15, 0.39, 0.92];
+    function hexRgb(h) { var n = parseInt(h.slice(1), 16); return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255]; }
+    function applyTheme(id, save) {
+      var t = null, i;
+      for (i = 0; i < THEMES.length; i++) if (THEMES[i].id === id) t = THEMES[i];
+      if (!t) t = THEMES[0];
+      [menu, showBtn].forEach(function (el) {
+        el.style.setProperty('--hk-bg', t.bg); el.style.setProperty('--hk-fg', t.fg); el.style.setProperty('--hk-edge', t.edge);
+      });
+      accent = hexRgb(t.hl);
+      swatches.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-theme') === t.id ? 'true' : 'false'); });
+      if (save) { try { localStorage.setItem(KEY_COLOR, t.id); } catch (e) {} }
+    }
+    var savedColor = null;
+    try { savedColor = localStorage.getItem(KEY_COLOR); } catch (e) {}
+    applyTheme(savedColor || DEFAULT_THEME, false);
+
+    /* ---- docking ---- */
+    var moveBtn = menu.querySelector('.hk-b');
+    var dock = 'right';
+    try { if (localStorage.getItem(KEY_SIDE) === 'left') dock = 'left'; } catch (e) {}
+    function layoutSwatches() {
+      var out = dock === 'right' ? -1 : 1, n = swatches.length, R = 190;
+      swatches.forEach(function (b, i) {
+        var a = (4 + i * (82 / Math.max(1, n - 1))) * Math.PI / 180;
+        b.style.left = (out * R * Math.cos(a)) + 'px';
+        b.style.top = (-R * Math.sin(a)) + 'px';
+      });
+    }
+    function place() {
+      var x = dock === 'right' ? document.documentElement.clientWidth - SIZE - 12 : 12;
+      wrap.style.transform = 'translateX(' + x + 'px)';
+      showBtn.style.left = dock === 'right' ? 'auto' : '12px';
+      showBtn.style.right = dock === 'right' ? '12px' : 'auto';
+      moveBtn.textContent = dock === 'right' ? 'Move left' : 'Move right';
+      menu.style.setProperty('--out', dock === 'right' ? -1 : 1);
+      layoutSwatches();
+    }
+    function switchSide() {
+      dock = dock === 'right' ? 'left' : 'right';
+      try { localStorage.setItem(KEY_SIDE, dock); } catch (e) {}
+      place();
+    }
+    place();
+    setTimeout(function () { wrap.classList.add('hk-slide'); }, 60);
+    window.addEventListener('resize', place);
+
+    var hidden = false, hover = false, menuOpen = false;
+    try { hidden = localStorage.getItem(KEY_HIDE) === '1'; } catch (e) {}
+    function applyHidden() {
+      wrap.style.display = hidden ? 'none' : '';
+      showBtn.hidden = !hidden;
+    }
+    function setHidden(h) {
+      hidden = h; applyHidden(); closeMenu(); setHover(false);
+      try { localStorage.setItem(KEY_HIDE, h ? '1' : '0'); } catch (e) {}
+    }
+    function setHover(h) { hover = h; document.body.classList.toggle('hk-over', h); }
+    function openMenu() {
+      var r = canvas.getBoundingClientRect();
+      menu.style.left = (r.left + r.width / 2) + 'px'; menu.style.top = (r.top + r.height / 2) + 'px';
+      menu.hidden = false; menuOpen = true;
+    }
+    function closeMenu() { menu.hidden = true; menuOpen = false; }
+    applyHidden();
+
+    menu.addEventListener('click', function (e) {
+      var b = e.target.closest ? e.target.closest('button') : null;
+      if (!b) return;
+      var th = b.getAttribute('data-theme');
+      if (th) { applyTheme(th, true); return; }
+      var act = b.getAttribute('data-act');
+      if (act === 'hide') setHidden(true);
+      else if (act === 'move') { closeMenu(); switchSide(); }
+      else closeMenu();
+    });
+    showBtn.addEventListener('click', function () { setHidden(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+
+    /* ---- hit test: is the pointer over the head's actual shape? ---- */
+    var scr = new Float32Array(count * 2), haveScr = false;
+    function project(m) {
+      var i, x, y, z, w;
+      for (i = 0; i < count; i++) {
+        x = MESH.p[i * 3]; y = MESH.p[i * 3 + 1]; z = MESH.p[i * 3 + 2];
+        w = m[3] * x + m[7] * y + m[11] * z + m[15];
+        scr[i * 2] = (m[0] * x + m[4] * y + m[8] * z + m[12]) / w;
+        scr[i * 2 + 1] = (m[1] * x + m[5] * y + m[9] * z + m[13]) / w;
+      }
+      haveScr = true;
+    }
+    function side(px, py, ax, ay, bx, by) { return (px - bx) * (ay - by) - (ax - bx) * (py - by); }
+    function hit(cx, cy) {
+      if (hidden || !haveScr) return false;
+      var r = canvas.getBoundingClientRect();
+      var px = ((cx - r.left) / r.width) * 2 - 1, py = 1 - ((cy - r.top) / r.height) * 2;
+      if (px < -1 || px > 1 || py < -1 || py > 1) return false;
+      for (var t = 0; t < count; t += 3) {
+        var ax = scr[t * 2], ay = scr[t * 2 + 1], bx = scr[t * 2 + 2], by = scr[t * 2 + 3], qx = scr[t * 2 + 4], qy = scr[t * 2 + 5];
+        var d1 = side(px, py, ax, ay, bx, by), d2 = side(px, py, bx, by, qx, qy), d3 = side(px, py, qx, qy, ax, ay);
+        var neg = d1 < 0 || d2 < 0 || d3 < 0, pos = d1 > 0 || d2 > 0 || d3 > 0;
+        if (!(neg && pos)) return true;
+      }
+      return false;
+    }
+
+    var mx = 0, my = 0, hasMouse = false, yaw = 0, pitch = 0;
+    window.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;
+      mx = e.clientX; my = e.clientY; hasMouse = true;
+      var h = hit(mx, my); if (h !== hover) setHover(h);
+    });
+    document.documentElement.addEventListener('mouseleave', function () { hasMouse = false; setHover(false); });
+    window.addEventListener('click', function (e) {
+      if (menuOpen) { if (!menu.contains(e.target)) closeMenu(); return; }
+      if (hit(e.clientX, e.clientY)) { e.preventDefault(); e.stopPropagation(); openMenu(); }
+    }, true);
+
+    function clamp(n) { return Math.max(-1, Math.min(1, n)); }
+    function frame(ts) {
+      requestAnimationFrame(frame);
+      if (hidden) return;
+      var ty, tp, r = canvas.getBoundingClientRect();
+      if (hasMouse) {
+        ty = clamp((mx - (r.left + r.width / 2)) / 350) * 0.9;
+        tp = clamp((my - (r.top + r.height / 2)) / 300) * 0.5;
+      } else { ty = 0.35 * Math.sin(ts / 1100); tp = 0.07 * Math.sin(ts / 1500); }
+      yaw += (ty - yaw) * 0.12; pitch += (tp - pitch) * 0.12;
+      var rot = mul(rotX(pitch), mul(rotY(yaw), base));
+      var mvp = mul(proj, mul(view, rot));
+      project(mvp);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bP); gl.enableVertexAttribArray(aPos); gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bU); gl.enableVertexAttribArray(aUV); gl.vertexAttribPointer(aUV, 2, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bN); gl.enableVertexAttribArray(aN); gl.vertexAttribPointer(aN, 3, gl.FLOAT, false, 0, 0);
+      gl.uniformMatrix4fv(uRot, false, rot);
+      if (hover || menuOpen) {
+        gl.disable(gl.DEPTH_TEST);
+        gl.uniform1f(uFlat, 1);
+        gl.uniform3f(uColor, accent[0], accent[1], accent[2]);
+        gl.uniformMatrix4fv(uMVP, false, mul(mvp, scaleM(1.1)));
+        gl.drawArrays(gl.TRIANGLES, 0, count);
+        gl.uniform3f(uColor, 1, 1, 1);
+        gl.uniformMatrix4fv(uMVP, false, mul(mvp, scaleM(1.055)));
+        gl.drawArrays(gl.TRIANGLES, 0, count);
+      }
+      gl.enable(gl.DEPTH_TEST);
+      gl.uniform1f(uFlat, 0);
+      gl.uniformMatrix4fv(uMVP, false, mvp);
+      gl.drawArrays(gl.TRIANGLES, 0, count);
+    }
+
+    var face = new Image();
+    face.onload = function () {
+      var t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, face);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      requestAnimationFrame(frame);
+    };
+    face.src = SRC;
+  }
+
+  if (document.body) start();
+  else document.addEventListener('DOMContentLoaded', start);
+})();
+</script>
+
 <script>
 (function () {
-  var THEME = "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\"/>\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>\n<title>{Title}{block:PostSummary} - {PostSummary}{/block:PostSummary}<\/title>\n<link rel=\"shortcut icon\" href=\"{Favicon}\"/>\n<link rel=\"alternate\" type=\"application/rss+xml\" href=\"{RSS}\"/>\n{block:Description}<meta name=\"description\" content=\"{MetaDescription}\"/>{/block:Description}\n\n<!-- ===== CUSTOMIZE PANEL OPTIONS (you change these on Tumblr, no code needed) ===== -->\n<meta name=\"image:Logo\" content=\"\"/>\n<meta name=\"image:Button 1\" content=\"\"/>\n<meta name=\"text:Button 1 Link\" content=\"\"/>\n<meta name=\"image:Button 2\" content=\"\"/>\n<meta name=\"text:Button 2 Link\" content=\"\"/>\n<meta name=\"image:Button 3\" content=\"\"/>\n<meta name=\"text:Button 3 Link\" content=\"\"/>\n<meta name=\"image:Button 4\" content=\"\"/>\n<meta name=\"text:Button 4 Link\" content=\"\"/>\n<meta name=\"image:Button 5\" content=\"\"/>\n<meta name=\"text:Button 5 Link\" content=\"\"/>\n<meta name=\"image:Button 6\" content=\"\"/>\n<meta name=\"text:Button 6 Link\" content=\"\"/>\n<meta name=\"text:Link 1 Name\" content=\"\"/>\n<meta name=\"text:Link 1 URL\" content=\"\"/>\n<meta name=\"text:Link 2 Name\" content=\"\"/>\n<meta name=\"text:Link 2 URL\" content=\"\"/>\n<meta name=\"text:Link 3 Name\" content=\"\"/>\n<meta name=\"text:Link 3 URL\" content=\"\"/>\n<meta name=\"image:Background\" content=\"\"/>\n<meta name=\"color:Background\" content=\"#b9d2ee\"/>\n<meta name=\"color:Dots\" content=\"#cfe0f4\"/>\n<meta name=\"color:Boxes\" content=\"#e3eefa\"/>\n<meta name=\"color:Title Bars\" content=\"#2f5d9e\"/>\n<meta name=\"color:Text\" content=\"#1c2f4d\"/>\n<meta name=\"color:Links\" content=\"#1f58c9\"/>\n<meta name=\"color:Link Hover\" content=\"#e0558a\"/>\n<meta name=\"text:Welcome Text\" content=\"Welcome to my Sims 1 diary! Households, build mode, and lots of Simlish.\"/>\n<meta name=\"text:Now Playing\" content=\"Buy Mode theme (on loop)\"/>\n<meta name=\"text:Footer Text\" content=\"Fan blog. Not affiliated with Maxis or EA.\"/>\n<meta name=\"if:Dot Pattern\" content=\"1\"/>\n<meta name=\"if:Stretch Background Image\" content=\"1\"/>\n<meta name=\"text:Builds Tag\" content=\"builds\"/>\n<meta name=\"text:Tag 1\" content=\"builds\"/>\n<meta name=\"text:Tag 2\" content=\"households\"/>\n<meta name=\"text:Tag 3\" content=\"stories\"/>\n<meta name=\"text:Tag 4\" content=\"screenshots\"/>\n<meta name=\"text:Tag 5\" content=\"downloads\"/>\n<meta name=\"text:Tag 6\" content=\"challenges\"/>\n<meta name=\"if:Show Tags Box\" content=\"1\"/>\n<meta name=\"if:Use 3D Head\" content=\"1\"/>\n<meta name=\"if:Show Welcome Ticker\" content=\"1\"/>\n<meta name=\"if:Show Now Playing\" content=\"1\"/>\n<meta name=\"if:Show Need Bars\" content=\"1\"/>\n<meta name=\"if:Show Notes\" content=\"1\"/>\n<meta name=\"if:Show Tags\" content=\"1\"/>\n\n<link href=\"https://fonts.googleapis.com/css2?family=DotGothic16&display=swap\" rel=\"stylesheet\"/>\n\n<style>\n:root{\n  --bg:{color:Background};\n  --dots:{color:Dots};\n  --panel:{color:Boxes};\n  --bar:{color:Title Bars};\n  --text:{color:Text};\n  --link:{color:Links};\n  --hover:{color:Link Hover};\n  --bob:#3fcf4a;\n  --dark:#1f4478;\n  --lite:#ffffff;\n  --shade:#6f90bb;\n  --pix:\"DotGothic16\",\"MS Gothic\",monospace;\n  --ui:Verdana,Tahoma,Geneva,sans-serif;\n}\n*{box-sizing:border-box}\nbody{\n  margin:0;padding:18px 10px 150px;color:var(--text);\n  font:13px/1.65 var(--ui);\n  background-color:var(--bg);\n}\n{block:IfDotPattern}\nbody{\n  background-image:radial-gradient(var(--dots) 22%,transparent 24%),radial-gradient(var(--dots) 22%,transparent 24%);\n  background-size:22px 22px;background-position:0 0,11px 11px;\n}\n{/block:IfDotPattern}\n{block:IfBackgroundImage}\nbody{background-image:url(\"{image:Background}\");background-size:auto;background-position:0 0;background-repeat:repeat}\n{block:IfStretchBackgroundImage}\nbody{background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed}\n{/block:IfStretchBackgroundImage}\n{/block:IfBackgroundImage}\n\na{color:var(--link)}\na:hover{color:var(--hover)}\na:focus-visible,input:focus-visible{outline:2px dashed var(--hover);outline-offset:2px}\nimg,video,iframe{max-width:100%;height:auto;display:block}\n.page{max-width:900px;margin:0 auto}\n\n.box{\n  background:var(--panel);\n  border:2px solid;border-color:var(--lite) var(--shade) var(--shade) var(--lite);\n  outline:2px solid var(--dark);\n  margin-bottom:18px;\n}\n.box-bar{\n  background:linear-gradient(#5f93d6,var(--bar) 55%,#264f89);\n  color:#fff;font:15px/1 var(--pix);letter-spacing:.04em;\n  padding:6px 9px;display:flex;justify-content:space-between;align-items:center;gap:8px;\n  text-shadow:1px 1px 0 #17345c;\n}\n.box-bar a{color:#fff;text-decoration:none}\n.box-in{padding:12px 14px}\n.dots{border:2px dotted var(--bar);padding:10px 12px;background:#f4f9ff}\n\n.head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;background:linear-gradient(#f4f9ff,var(--panel))}\n.logo img{display:block;max-height:130px;max-width:260px;width:auto;height:auto;border:0;outline:0;transition:transform .12s ease-out;will-change:transform}\n.head-text{text-align:right;margin-left:auto}\n.site-title{font:36px/1.1 var(--pix);margin:0;color:var(--bar);text-shadow:2px 2px 0 #fff,3px 3px 0 var(--shade)}\n.site-title a{color:inherit;text-decoration:none}\n.tagline{font:14px var(--pix);color:var(--hover);margin-top:4px}\n\n.ticker{overflow:hidden;white-space:nowrap;background:#17345c;color:#c9ecff;font:14px/1 var(--pix);padding:7px 0}\n.ticker span{display:inline-block;padding-left:100%;animation:scroll 22s linear infinite}\n@keyframes scroll{to{transform:translateX(-100%)}}\n\n.cols{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:18px;align-items:start}\n\n.entry .box-in>*+*{margin-top:.9em}\n.entry h2{font:22px/1.2 var(--pix);margin:0}\n.entry h2 a{text-decoration:none}\n.entry p{margin:0}\n.entry blockquote{margin:0;padding:6px 10px;border-left:4px solid var(--bob);background:#f4f9ff}\n.entry img{border:2px solid #fff;outline:1px solid var(--shade)}\n.caption{font-size:12px;color:#4a6285}\n.q{font:20px/1.4 var(--pix)}\n.q-src{text-align:right;font-size:12px;color:#4a6285}\n.ask-q{background:#f4f9ff;border:2px dotted var(--bar);padding:8px 10px}\n.ask-q b{display:block;font:14px var(--pix);color:var(--bar)}\n.chat{list-style:none;margin:0;padding:0}\n.meta{border-top:2px dotted var(--bar);margin-top:14px;padding-top:8px;font-size:11px;color:#4a6285;display:flex;flex-wrap:wrap;gap:4px 14px}\n.meta a{color:#4a6285}\n.meta a:hover{color:var(--hover)}\n.tags{flex-basis:100%}\n.tags a{margin-right:8px;text-decoration:none}\n\n.side ul{list-style:none;margin:0;padding:0}\n.side li+li{border-top:1px dotted var(--shade)}\n.side li a{display:block;padding:5px 2px;text-decoration:none}\n.side li a::before{content:\"\\25B6\\00a0\";color:var(--bob);font-size:10px}\n.buttons{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:6px}\n.buttons img{display:block;width:88px;height:31px;border:0;outline:0;image-rendering:pixelated}\n.buttons a:hover img{filter:brightness(1.12)}\n.me{text-align:center}\n.me img{width:96px;height:96px;margin:0 auto 8px;border:3px double var(--bar);background:#fff;padding:2px}\n.me .desc{font-size:12px;text-align:left}\n.stat{font:14px/1.5 var(--pix);color:var(--bar)}\n.search input{width:100%;border:2px inset var(--shade);background:#fff;padding:4px 6px;font:12px var(--ui)}\n.needs{display:flex;flex-direction:column;gap:6px}\n.need{display:flex;align-items:center;gap:8px;font:13px var(--pix)}\n.need i{flex:1;height:10px;background:#fff;border:1px solid var(--dark);position:relative}\n.need i::after{content:\"\";position:absolute;inset:0 auto 0 0;background:linear-gradient(#7ee386,#1d8f2a)}\n.need b{font-weight:400;width:62px}\n.need .a::after{width:80%}.need .b::after{width:55%}.need .c::after{width:92%}.need .d::after{width:30%}\n.need .e::after{width:70%}.need .f::after{width:88%}.need .g::after{width:48%}.need .h::after{width:75%}\n.need .low::after{background:linear-gradient(#ff9a9a,#c0292b)}\n.tagcloud{display:flex;flex-wrap:wrap;gap:6px}\n.tagcloud a{font:13px var(--pix);text-decoration:none;background:#f4f9ff;padding:2px 9px;border:2px dotted var(--bar)}\n.tagcloud a:hover{background:var(--bar);color:#fff}\n\n.pager{display:flex;justify-content:space-between;font:16px var(--pix)}\n.pager a{text-decoration:none;background:var(--panel);padding:5px 12px;border:2px solid;border-color:var(--lite) var(--shade) var(--shade) var(--lite);outline:2px solid var(--dark)}\n.foot{text-align:center;font-size:11px;color:#34507a;margin-top:6px}\n\n@media (max-width:760px){\n  .cols{grid-template-columns:1fr}\n  .site-title{font-size:26px}\n  .logo img{max-height:70px;max-width:120px}\n}\n@media (prefers-reduced-motion:reduce){\n  .ticker span{animation:none;padding-left:10px}\n  .ticker{white-space:normal}\n}\n\n/* ---- 3D head, fixed to the lower right ---- */\n#headwrap{position:fixed;left:0;bottom:10px;z-index:40;pointer-events:none;line-height:0}\n#headwrap canvas{display:block}\n#headwrap.slide{transition:transform .45s cubic-bezier(.3,1.25,.5,1)}\nbody.over-head,body.over-head *{cursor:pointer!important}\n#headmenu{position:fixed;z-index:41;width:0;height:0;animation:pie .14s ease-out}\n#headmenu[hidden]{display:none}\n@keyframes pie{from{transform:scale(.5);opacity:0}}\n.pie-ring{position:absolute;left:-80px;top:-80px;width:160px;height:160px;border-radius:50%;box-sizing:border-box;\n  border:9px solid rgba(95,147,214,.6);outline:2px solid var(--dark);box-shadow:inset 0 0 0 2px #fff;pointer-events:none}\n.pie-btn{position:absolute;transform:translate(-50%,-50%);font:15px/1 var(--pix);color:#fff;white-space:nowrap;cursor:pointer;\n  background:linear-gradient(#5f93d6,var(--bar) 55%,#264f89);border:2px solid;border-color:#fff #17345c #17345c #fff;\n  outline:1px solid var(--dark);border-radius:14px;padding:7px 13px;text-shadow:1px 1px 0 #17345c}\n.pie-btn:hover,.pie-btn:focus-visible{background:linear-gradient(#8bd18f,#2f9a3a 55%,#1d6e28)}\n.pie-a{left:calc(var(--out,-1) * 106px);top:0}\n.pie-b{left:calc(var(--out,-1) * 75px);top:-75px}\n.pie-c{left:0;top:-106px}\n#showhead{position:fixed;right:12px;bottom:10px;z-index:40;font:14px/1 var(--pix);color:#fff;cursor:pointer;\n  background:linear-gradient(#5f93d6,var(--bar) 55%,#264f89);border:2px solid;border-color:#fff #17345c #17345c #fff;\n  outline:1px solid var(--dark);padding:6px 10px;text-shadow:1px 1px 0 #17345c}\n#showhead[hidden]{display:none}\n@media (prefers-reduced-motion:reduce){#headmenu{animation:none}#headwrap.slide{transition:none}}\n<\/style>\n<\/head>\n\n<body>\n<div class=\"page\">\n\n  <header class=\"box\">\n    <div class=\"head\">\n      {block:IfLogoImage}<a class=\"logo\" href=\"/\"><img src=\"{image:Logo}\" alt=\"{Title}\"/><\/a>{/block:IfLogoImage}\n      <div class=\"head-text\">\n        <h1 class=\"site-title\"><a href=\"/\">{Title}<\/a><\/h1>\n        {block:Description}<div class=\"tagline\">{Description}<\/div>{/block:Description}\n      <\/div>\n    <\/div>\n    {block:IfShowWelcomeTicker}\n    <div class=\"ticker\" aria-label=\"Welcome message\"><span>*:.&nbsp; {text:Welcome Text} &nbsp;.:*<\/span><\/div>\n    {/block:IfShowWelcomeTicker}\n  <\/header>\n\n  <div class=\"cols\">\n\n    <main id=\"content\">\n\n      {block:SearchPage}\n      <div class=\"box\"><div class=\"box-in dots\">{block:NoSearchResults}Nothing matched \"{SearchQuery}\". Try another word!{/block:NoSearchResults}{block:SearchResults}{SearchResultCount} results for \"{SearchQuery}\"{/block:SearchResults}<\/div><\/div>\n      {/block:SearchPage}\n      {block:TagPage}<div class=\"box\"><div class=\"box-in dots\">Entries tagged #{Tag}<\/div><\/div>{/block:TagPage}\n\n      {block:Posts}\n      <article class=\"box entry\" id=\"post-{PostID}\">\n        <div class=\"box-bar\">\n          <span>&#9733; {ShortMonth} {DayOfMonth}, {Year}<\/span>\n          <a href=\"{Permalink}\" aria-label=\"Permalink\">#<\/a>\n        <\/div>\n        <div class=\"box-in\">\n\n          {block:Text}\n            {block:Title}<h2><a href=\"{Permalink}\">{Title}<\/a><\/h2>{/block:Title}\n            {Body}\n          {/block:Text}\n\n          {block:Photo}\n            {LinkOpenTag}<img src=\"{PhotoURL-500}\" alt=\"{PhotoAlt}\"/>{LinkCloseTag}\n            {block:Caption}<div class=\"caption\">{Caption}<\/div>{/block:Caption}\n          {/block:Photo}\n\n          {block:Photoset}\n            {Photoset-500}\n            {block:Caption}<div class=\"caption\">{Caption}<\/div>{/block:Caption}\n          {/block:Photoset}\n\n          {block:Quote}\n            <div class=\"q\">&ldquo;{Quote}&rdquo;<\/div>\n            {block:Source}<div class=\"q-src\">- {Source}<\/div>{/block:Source}\n          {/block:Quote}\n\n          {block:Link}\n            <h2><a href=\"{URL}\" {Target}>{Name}<\/a><\/h2>\n            {block:Description}<div>{Description}<\/div>{/block:Description}\n          {/block:Link}\n\n          {block:Chat}\n            {block:Title}<h2>{Title}<\/h2>{/block:Title}\n            <ul class=\"chat\">{block:Lines}<li>{block:Label}<b>{Label}<\/b> {/block:Label}{Line}<\/li>{/block:Lines}<\/ul>\n          {/block:Chat}\n\n          {block:Audio}\n            {AudioEmbed-500}\n            {block:Caption}<div class=\"caption\">{Caption}<\/div>{/block:Caption}\n          {/block:Audio}\n\n          {block:Video}\n            {Video-500}\n            {block:Caption}<div class=\"caption\">{Caption}<\/div>{/block:Caption}\n          {/block:Video}\n\n          {block:Answer}\n            <div class=\"ask-q\"><b>{Asker} asked:<\/b>{Question}<\/div>\n            {Answer}\n          {/block:Answer}\n\n          <div class=\"meta\">\n            {block:IfShowNotes}{block:NoteCount}<a href=\"{Permalink}\">{NoteCountWithLabel}<\/a>{/block:NoteCount}{/block:IfShowNotes}\n            {block:RebloggedFrom}<span>via <a href=\"{ReblogParentURL}\">{ReblogParentName}<\/a><\/span>{/block:RebloggedFrom}\n            {block:IfShowTags}{block:HasTags}<span class=\"tags\">{block:Tags}<a href=\"{TagURL}\">#{Tag}<\/a>{/block:Tags}<\/span>{/block:HasTags}{/block:IfShowTags}\n          <\/div>\n\n          {block:PermalinkPage}{block:PostNotes}<div>{PostNotes-20}<\/div>{/block:PostNotes}{/block:PermalinkPage}\n        <\/div>\n      <\/article>\n      {/block:Posts}\n\n      {block:NoPosts}<div class=\"box\"><div class=\"box-in dots\">No entries yet. Check back soon!<\/div><\/div>{/block:NoPosts}\n\n      {block:Pagination}\n      <nav class=\"pager\" aria-label=\"Pages\">\n        {block:PreviousPage}<a href=\"{PreviousPage}\">&laquo; Newer<\/a>{/block:PreviousPage}\n        {block:NextPage}<a href=\"{NextPage}\">Older &raquo;<\/a>{/block:NextPage}\n      <\/nav>\n      {/block:Pagination}\n    <\/main>\n\n    <aside class=\"side\">\n      <section class=\"box\">\n        <div class=\"box-bar\">Links<\/div>\n        <div class=\"box-in\">\n          <div class=\"buttons\">\n          {block:IfButton1Image}{block:IfButton1Link}<a href=\"{text:Button 1 Link}\" target=\"_blank\" rel=\"noopener\"><img src=\"{image:Button 1}\" alt=\"Link button 1\" width=\"88\" height=\"31\"/><\/a>{/block:IfButton1Link}{block:IfNotButton1Link}<img src=\"{image:Button 1}\" alt=\"Button 1\" width=\"88\" height=\"31\"/>{/block:IfNotButton1Link}{/block:IfButton1Image}\n          {block:IfButton2Image}{block:IfButton2Link}<a href=\"{text:Button 2 Link}\" target=\"_blank\" rel=\"noopener\"><img src=\"{image:Button 2}\" alt=\"Link button 2\" width=\"88\" height=\"31\"/><\/a>{/block:IfButton2Link}{block:IfNotButton2Link}<img src=\"{image:Button 2}\" alt=\"Button 2\" width=\"88\" height=\"31\"/>{/block:IfNotButton2Link}{/block:IfButton2Image}\n          {block:IfButton3Image}{block:IfButton3Link}<a href=\"{text:Button 3 Link}\" target=\"_blank\" rel=\"noopener\"><img src=\"{image:Button 3}\" alt=\"Link button 3\" width=\"88\" height=\"31\"/><\/a>{/block:IfButton3Link}{block:IfNotButton3Link}<img src=\"{image:Button 3}\" alt=\"Button 3\" width=\"88\" height=\"31\"/>{/block:IfNotButton3Link}{/block:IfButton3Image}\n          {block:IfButton4Image}{block:IfButton4Link}<a href=\"{text:Button 4 Link}\" target=\"_blank\" rel=\"noopener\"><img src=\"{image:Button 4}\" alt=\"Link button 4\" width=\"88\" height=\"31\"/><\/a>{/block:IfButton4Link}{block:IfNotButton4Link}<img src=\"{image:Button 4}\" alt=\"Button 4\" width=\"88\" height=\"31\"/>{/block:IfNotButton4Link}{/block:IfButton4Image}\n          {block:IfButton5Image}{block:IfButton5Link}<a href=\"{text:Button 5 Link}\" target=\"_blank\" rel=\"noopener\"><img src=\"{image:Button 5}\" alt=\"Link button 5\" width=\"88\" height=\"31\"/><\/a>{/block:IfButton5Link}{block:IfNotButton5Link}<img src=\"{image:Button 5}\" alt=\"Button 5\" width=\"88\" height=\"31\"/>{/block:IfNotButton5Link}{/block:IfButton5Image}\n          {block:IfButton6Image}{block:IfButton6Link}<a href=\"{text:Button 6 Link}\" target=\"_blank\" rel=\"noopener\"><img src=\"{image:Button 6}\" alt=\"Link button 6\" width=\"88\" height=\"31\"/><\/a>{/block:IfButton6Link}{block:IfNotButton6Link}<img src=\"{image:Button 6}\" alt=\"Button 6\" width=\"88\" height=\"31\"/>{/block:IfNotButton6Link}{/block:IfButton6Image}\n          <\/div>\n          <ul>\n            {block:IfLink1Name}<li><a href=\"{text:Link 1 URL}\" target=\"_blank\" rel=\"noopener\">{text:Link 1 Name}<\/a><\/li>{/block:IfLink1Name}\n            {block:IfLink2Name}<li><a href=\"{text:Link 2 URL}\" target=\"_blank\" rel=\"noopener\">{text:Link 2 Name}<\/a><\/li>{/block:IfLink2Name}\n            {block:IfLink3Name}<li><a href=\"{text:Link 3 URL}\" target=\"_blank\" rel=\"noopener\">{text:Link 3 Name}<\/a><\/li>{/block:IfLink3Name}\n          <\/ul>\n        <\/div>\n      <\/section>\n\n      <section class=\"box\">\n        <div class=\"box-bar\">Menu<\/div>\n        <div class=\"box-in\">\n          <ul>\n            <li><a href=\"/\">Home<\/a><\/li>\n            <li><a href=\"/archive\">Archive<\/a><\/li>\n            <li><a href=\"/tagged/{text:Builds Tag}\">Builds<\/a><\/li>\n            {block:IfShowTagsBox}<li><a href=\"#tags\">Tags<\/a><\/li>{/block:IfShowTagsBox}\n            {block:AskEnabled}<li><a href=\"/ask\">{AskLabel}<\/a><\/li>{/block:AskEnabled}\n            {block:SubmissionsEnabled}<li><a href=\"/submit\">{SubmitLabel}<\/a><\/li>{/block:SubmissionsEnabled}\n            {block:HasPages}{block:Pages}<li><a href=\"{URL}\">{Label}<\/a><\/li>{/block:Pages}{/block:HasPages}\n          <\/ul>\n        <\/div>\n      <\/section>\n\n      {block:SearchEnabled}\n      <section class=\"box\">\n        <div class=\"box-bar\">Search<\/div>\n        <div class=\"box-in search\">\n          <form action=\"/search\" method=\"get\" role=\"search\">\n            <input type=\"search\" name=\"q\" value=\"{SearchQuery}\" placeholder=\"Find an entry\" aria-label=\"Search this blog\"/>\n          <\/form>\n        <\/div>\n      <\/section>\n      {/block:SearchEnabled}\n\n      {block:IfShowTagsBox}\n      <section class=\"box\" id=\"tags\">\n        <div class=\"box-bar\">Tags<\/div>\n        <div class=\"box-in tagcloud\">\n          {block:IfTag1}<a href=\"/tagged/{text:Tag 1}\">#{text:Tag 1}<\/a>{/block:IfTag1}\n          {block:IfTag2}<a href=\"/tagged/{text:Tag 2}\">#{text:Tag 2}<\/a>{/block:IfTag2}\n          {block:IfTag3}<a href=\"/tagged/{text:Tag 3}\">#{text:Tag 3}<\/a>{/block:IfTag3}\n          {block:IfTag4}<a href=\"/tagged/{text:Tag 4}\">#{text:Tag 4}<\/a>{/block:IfTag4}\n          {block:IfTag5}<a href=\"/tagged/{text:Tag 5}\">#{text:Tag 5}<\/a>{/block:IfTag5}\n          {block:IfTag6}<a href=\"/tagged/{text:Tag 6}\">#{text:Tag 6}<\/a>{/block:IfTag6}\n        <\/div>\n      <\/section>\n      {/block:IfShowTagsBox}\n\n      {block:IfShowNowPlaying}\n      <section class=\"box\">\n        <div class=\"box-bar\">Now Playing<\/div>\n        <div class=\"box-in stat\">&#9834; {text:Now Playing}<\/div>\n      <\/section>\n      {/block:IfShowNowPlaying}\n\n      {block:IfShowNeedBars}\n      <section class=\"box\">\n        <div class=\"box-bar\">Needs<\/div>\n        <div class=\"box-in needs\" aria-hidden=\"true\">\n          <div class=\"need\"><b>Hunger<\/b><i class=\"a\"><\/i><\/div>\n          <div class=\"need\"><b>Comfort<\/b><i class=\"b\"><\/i><\/div>\n          <div class=\"need\"><b>Hygiene<\/b><i class=\"c\"><\/i><\/div>\n          <div class=\"need\"><b>Bladder<\/b><i class=\"d low\"><\/i><\/div>\n          <div class=\"need\"><b>Energy<\/b><i class=\"e\"><\/i><\/div>\n          <div class=\"need\"><b>Fun<\/b><i class=\"f\"><\/i><\/div>\n          <div class=\"need\"><b>Social<\/b><i class=\"g\"><\/i><\/div>\n          <div class=\"need\"><b>Room<\/b><i class=\"h\"><\/i><\/div>\n        <\/div>\n      <\/section>\n      {/block:IfShowNeedBars}\n    <\/aside>\n  <\/div>\n\n  <div class=\"foot\">{text:Footer Text}<\/div>\n<\/div>\n{block:IfNotUse3DHead}<script>window.no3dHead=true;<\/script>{/block:IfNotUse3DHead}\n<script>\n/*HEAD*/<\/script>\n<\/body>\n<\/html>\n", HEAD = "(function () {\n  if (window.no3dHead) return;\n  var MESH = __MESH__;\n  var SRC = '__SRC__';\n  var KEY = 'simsHeadHidden';\n  var SIZE = window.innerWidth < 760 ? 120 : 180;\n  var dpr = Math.min(window.devicePixelRatio || 1, 2);\n\n  var canvas = document.createElement('canvas');\n  canvas.width = SIZE * dpr; canvas.height = SIZE * dpr;\n  canvas.style.width = SIZE + 'px'; canvas.style.height = SIZE + 'px';\n  canvas.setAttribute('aria-hidden', 'true');\n  var gl = canvas.getContext('webgl', { alpha: true, antialias: true }) || canvas.getContext('experimental-webgl');\n  if (!gl) return;\n\n  function shader(type, src) {\n    var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);\n    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error('shader');\n    return s;\n  }\n  var prog;\n  try {\n    prog = gl.createProgram();\n    gl.attachShader(prog, shader(gl.VERTEX_SHADER,\n      'attribute vec3 aPos;attribute vec2 aUV;attribute vec3 aN;' +\n      'uniform mat4 uMVP;uniform mat4 uRot;varying vec2 vUV;varying vec3 vN;' +\n      'void main(){vUV=aUV;vN=(uRot*vec4(aN,0.0)).xyz;gl_Position=uMVP*vec4(aPos,1.0);}'));\n    gl.attachShader(prog, shader(gl.FRAGMENT_SHADER,\n      'precision mediump float;varying vec2 vUV;varying vec3 vN;uniform sampler2D uTex;uniform float uFlat;uniform vec3 uColor;' +\n      'void main(){if(uFlat>0.5){gl_FragColor=vec4(uColor,1.0);return;}' +\n      'vec4 c=texture2D(uTex,vUV);' +\n      'float d=max(dot(normalize(vN),normalize(vec3(-0.4,0.5,0.8))),0.0);' +\n      'gl_FragColor=vec4(c.rgb*(0.8+0.3*d),1.0);}'));\n    gl.linkProgram(prog);\n    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;\n  } catch (e) { return; }\n  gl.useProgram(prog);\n\n  function buf(data) { var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW); return b; }\n  var bP = buf(MESH.p), bU = buf(MESH.u), bN = buf(MESH.n), count = MESH.p.length / 3;\n  var aPos = gl.getAttribLocation(prog, 'aPos'), aUV = gl.getAttribLocation(prog, 'aUV'), aN = gl.getAttribLocation(prog, 'aN');\n  var uMVP = gl.getUniformLocation(prog, 'uMVP'), uRot = gl.getUniformLocation(prog, 'uRot');\n  var uFlat = gl.getUniformLocation(prog, 'uFlat'), uColor = gl.getUniformLocation(prog, 'uColor');\n\n  function mul(a, b) {\n    var o = new Float32Array(16), r, c, k;\n    for (c = 0; c < 4; c++) for (r = 0; r < 4; r++) {\n      var s = 0; for (k = 0; k < 4; k++) s += a[k * 4 + r] * b[c * 4 + k]; o[c * 4 + r] = s;\n    }\n    return o;\n  }\n  function rotY(t) { var c = Math.cos(t), s = Math.sin(t); return new Float32Array([c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1]); }\n  function rotX(t) { var c = Math.cos(t), s = Math.sin(t); return new Float32Array([1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1]); }\n  function scaleM(s) { return new Float32Array([s, 0, 0, 0, 0, s, 0, 0, 0, 0, s, 0, 0, 0, 0, 1]); }\n  var fov = 34 * Math.PI / 180, f = 1 / Math.tan(fov / 2), nr = 1, fr = 10;\n  var proj = new Float32Array([f, 0, 0, 0, 0, f, 0, 0, 0, 0, (fr + nr) / (nr - fr), -1, 0, 0, 2 * fr * nr / (nr - fr), 0]);\n  var view = new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -5, 1]);\n  var base = rotY(__FACE__);\n\n  /* ---- page furniture: wrapper, pie menu, \"show head\" button ---- */\n  var wrap = document.createElement('div'); wrap.id = 'headwrap'; wrap.appendChild(canvas);\n  var menu = document.createElement('div'); menu.id = 'headmenu'; menu.hidden = true;\n  menu.innerHTML = '<div class=\"pie-ring\"><\/div>' +\n    '<button type=\"button\" class=\"pie-btn pie-a\" data-act=\"hide\">Hide Head<\/button>' +\n    '<button type=\"button\" class=\"pie-btn pie-b\" data-act=\"move\">Go Lower Left<\/button>' +\n    '<button type=\"button\" class=\"pie-btn pie-c\" data-act=\"cancel\">Cancel<\/button>';\n  var showBtn = document.createElement('button'); showBtn.type = 'button'; showBtn.id = 'showhead'; showBtn.textContent = 'Show head'; showBtn.hidden = true;\n  document.body.appendChild(wrap); document.body.appendChild(menu); document.body.appendChild(showBtn);\n\n  var moveBtn = menu.querySelector('.pie-b');\n  var dock = 'right';\n  try { if (localStorage.getItem('simsHeadSide') === 'left') dock = 'left'; } catch (e) {}\n  function place() {\n    var x = dock === 'right' ? document.documentElement.clientWidth - SIZE - 12 : 12;\n    wrap.style.transform = 'translateX(' + x + 'px)';\n    showBtn.style.left = dock === 'right' ? 'auto' : '12px';\n    showBtn.style.right = dock === 'right' ? '12px' : 'auto';\n    moveBtn.textContent = dock === 'right' ? 'Go Lower Left' : 'Go Lower Right';\n    menu.style.setProperty('--out', dock === 'right' ? -1 : 1);\n  }\n  function switchSide() {\n    dock = dock === 'right' ? 'left' : 'right';\n    try { localStorage.setItem('simsHeadSide', dock); } catch (e) {}\n    place();\n  }\n  place();\n  setTimeout(function () { wrap.classList.add('slide'); }, 60);\n  window.addEventListener('resize', place);\n\n  var hidden = false, hover = false, menuOpen = false;\n  try { hidden = localStorage.getItem(KEY) === '1'; } catch (e) {}\n  function applyHidden() {\n    wrap.style.display = hidden ? 'none' : '';\n    showBtn.hidden = !hidden;\n  }\n  function setHidden(h) {\n    hidden = h; applyHidden(); closeMenu(); setHover(false);\n    try { localStorage.setItem(KEY, h ? '1' : '0'); } catch (e) {}\n  }\n  function setHover(h) { hover = h; document.body.classList.toggle('over-head', h); }\n  function openMenu() {\n    var r = canvas.getBoundingClientRect();\n    menu.style.left = (r.left + r.width / 2) + 'px'; menu.style.top = (r.top + r.height / 2) + 'px';\n    menu.hidden = false; menuOpen = true;\n  }\n  function closeMenu() { menu.hidden = true; menuOpen = false; }\n  applyHidden();\n\n  menu.addEventListener('click', function (e) {\n    var b = e.target.closest ? e.target.closest('button') : null;\n    if (!b) return;\n    var act = b.getAttribute('data-act');\n    if (act === 'hide') setHidden(true);\n    else if (act === 'move') { closeMenu(); switchSide(); }\n    else closeMenu();\n  });\n  showBtn.addEventListener('click', function () { setHidden(false); });\n  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });\n\n  /* ---- hit test: is the pointer over the head's actual shape? ---- */\n  var scr = new Float32Array(count * 2), haveScr = false;\n  function project(m) {\n    var i, x, y, z, w;\n    for (i = 0; i < count; i++) {\n      x = MESH.p[i * 3]; y = MESH.p[i * 3 + 1]; z = MESH.p[i * 3 + 2];\n      w = m[3] * x + m[7] * y + m[11] * z + m[15];\n      scr[i * 2] = (m[0] * x + m[4] * y + m[8] * z + m[12]) / w;\n      scr[i * 2 + 1] = (m[1] * x + m[5] * y + m[9] * z + m[13]) / w;\n    }\n    haveScr = true;\n  }\n  function side(px, py, ax, ay, bx, by) { return (px - bx) * (ay - by) - (ax - bx) * (py - by); }\n  function hit(cx, cy) {\n    if (hidden || !haveScr) return false;\n    var r = canvas.getBoundingClientRect();\n    var px = ((cx - r.left) / r.width) * 2 - 1, py = 1 - ((cy - r.top) / r.height) * 2;\n    if (px < -1 || px > 1 || py < -1 || py > 1) return false;\n    for (var t = 0; t < count; t += 3) {\n      var ax = scr[t * 2], ay = scr[t * 2 + 1], bx = scr[t * 2 + 2], by = scr[t * 2 + 3], qx = scr[t * 2 + 4], qy = scr[t * 2 + 5];\n      var d1 = side(px, py, ax, ay, bx, by), d2 = side(px, py, bx, by, qx, qy), d3 = side(px, py, qx, qy, ax, ay);\n      var neg = d1 < 0 || d2 < 0 || d3 < 0, pos = d1 > 0 || d2 > 0 || d3 > 0;\n      if (!(neg && pos)) return true;\n    }\n    return false;\n  }\n\n  var mx = 0, my = 0, hasMouse = false, yaw = 0, pitch = 0;\n  window.addEventListener('pointermove', function (e) {\n    if (e.pointerType === 'touch') return;\n    mx = e.clientX; my = e.clientY; hasMouse = true;\n    var h = hit(mx, my); if (h !== hover) setHover(h);\n  });\n  document.documentElement.addEventListener('mouseleave', function () { hasMouse = false; setHover(false); });\n  window.addEventListener('click', function (e) {\n    if (menuOpen) { if (!menu.contains(e.target)) closeMenu(); return; }\n    if (hit(e.clientX, e.clientY)) { e.preventDefault(); e.stopPropagation(); openMenu(); }\n  }, true);\n\n  function clamp(n) { return Math.max(-1, Math.min(1, n)); }\n  function frame(ts) {\n    requestAnimationFrame(frame);\n    if (hidden) return;\n    var ty, tp, r = canvas.getBoundingClientRect();\n    if (hasMouse) {\n      ty = clamp((mx - (r.left + r.width / 2)) / 350) * 0.9;\n      tp = clamp((my - (r.top + r.height / 2)) / 300) * 0.5;\n    } else { ty = 0.35 * Math.sin(ts / 1100); tp = 0.07 * Math.sin(ts / 1500); }\n    yaw += (ty - yaw) * 0.12; pitch += (tp - pitch) * 0.12;\n    var rot = mul(rotX(pitch), mul(rotY(yaw), base));\n    var mvp = mul(proj, mul(view, rot));\n    project(mvp);\n    gl.viewport(0, 0, canvas.width, canvas.height);\n    gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);\n    gl.bindBuffer(gl.ARRAY_BUFFER, bP); gl.enableVertexAttribArray(aPos); gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 0, 0);\n    gl.bindBuffer(gl.ARRAY_BUFFER, bU); gl.enableVertexAttribArray(aUV); gl.vertexAttribPointer(aUV, 2, gl.FLOAT, false, 0, 0);\n    gl.bindBuffer(gl.ARRAY_BUFFER, bN); gl.enableVertexAttribArray(aN); gl.vertexAttribPointer(aN, 3, gl.FLOAT, false, 0, 0);\n    gl.uniformMatrix4fv(uRot, false, rot);\n    if (hover || menuOpen) {\n      gl.disable(gl.DEPTH_TEST);\n      gl.uniform1f(uFlat, 1);\n      gl.uniform3f(uColor, 0.12, 0.27, 0.47);\n      gl.uniformMatrix4fv(uMVP, false, mul(mvp, scaleM(1.1)));\n      gl.drawArrays(gl.TRIANGLES, 0, count);\n      gl.uniform3f(uColor, 1, 1, 1);\n      gl.uniformMatrix4fv(uMVP, false, mul(mvp, scaleM(1.055)));\n      gl.drawArrays(gl.TRIANGLES, 0, count);\n    }\n    gl.enable(gl.DEPTH_TEST);\n    gl.uniform1f(uFlat, 0);\n    gl.uniformMatrix4fv(uMVP, false, mvp);\n    gl.drawArrays(gl.TRIANGLES, 0, count);\n  }\n\n  var face = new Image();\n  face.onload = function () {\n    var t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);\n    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, face);\n    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);\n    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);\n    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);\n    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);\n    requestAnimationFrame(frame);\n  };\n  face.src = SRC;\n})();\n", CSS = "/* ---- 3D head, fixed to the lower right ---- */\n#headwrap{position:fixed;left:0;bottom:10px;z-index:40;pointer-events:none;line-height:0}\n#headwrap canvas{display:block}\n#headwrap.slide{transition:transform .45s cubic-bezier(.3,1.25,.5,1)}\nbody.over-head,body.over-head *{cursor:pointer!important}\n#headmenu{position:fixed;z-index:41;width:0;height:0;animation:pie .14s ease-out}\n#headmenu[hidden]{display:none}\n@keyframes pie{from{transform:scale(.5);opacity:0}}\n.pie-ring{position:absolute;left:-80px;top:-80px;width:160px;height:160px;border-radius:50%;box-sizing:border-box;\n  border:9px solid rgba(95,147,214,.6);outline:2px solid var(--dark);box-shadow:inset 0 0 0 2px #fff;pointer-events:none}\n.pie-btn{position:absolute;transform:translate(-50%,-50%);font:15px/1 var(--pix);color:#fff;white-space:nowrap;cursor:pointer;\n  background:linear-gradient(#5f93d6,var(--bar) 55%,#264f89);border:2px solid;border-color:#fff #17345c #17345c #fff;\n  outline:1px solid var(--dark);border-radius:14px;padding:7px 13px;text-shadow:1px 1px 0 #17345c}\n.pie-btn:hover,.pie-btn:focus-visible{background:linear-gradient(#8bd18f,#2f9a3a 55%,#1d6e28)}\n.pie-a{left:calc(var(--out,-1) * 106px);top:0}\n.pie-b{left:calc(var(--out,-1) * 75px);top:-75px}\n.pie-c{left:0;top:-106px}\n#showhead{position:fixed;right:12px;bottom:10px;z-index:40;font:14px/1 var(--pix);color:#fff;cursor:pointer;\n  background:linear-gradient(#5f93d6,var(--bar) 55%,#264f89);border:2px solid;border-color:#fff #17345c #17345c #fff;\n  outline:1px solid var(--dark);padding:6px 10px;text-shadow:1px 1px 0 #17345c}\n#showhead[hidden]{display:none}\n@media (prefers-reduced-motion:reduce){#headmenu{animation:none}#headwrap.slide{transition:none}}\n";
+  var THEMES = [
+    { id: 'blue',   name: 'Blue',   bg: '#2563eb', fg: '#ffffff', edge: 'rgba(255,255,255,.40)', hl: '#1e40af' },
+    { id: 'white',  name: 'White',  bg: '#ffffff', fg: '#111827', edge: 'rgba(0,0,0,.20)',       hl: '#111827' },
+    { id: 'black',  name: 'Black',  bg: '#111111', fg: '#ffffff', edge: 'rgba(255,255,255,.35)', hl: '#000000' },
+    { id: 'pink',   name: 'Pink',   bg: '#f472b6', fg: '#1f2937', edge: 'rgba(0,0,0,.18)',       hl: '#be185d' },
+    { id: 'green',  name: 'Green',  bg: '#15803d', fg: '#ffffff', edge: 'rgba(255,255,255,.40)', hl: '#14532d' },
+    { id: 'purple', name: 'Purple', bg: '#7c3aed', fg: '#ffffff', edge: 'rgba(255,255,255,.40)', hl: '#5b21b6' },
+    { id: 'orange', name: 'Orange', bg: '#f97316', fg: '#1f2937', edge: 'rgba(0,0,0,.18)',       hl: '#c2410c' },
+    { id: 'red',    name: 'Red',    bg: '#dc2626', fg: '#ffffff', edge: 'rgba(255,255,255,.40)', hl: '#991b1b' },
+    { id: 'yellow', name: 'Yellow', bg: '#facc15', fg: '#1f2937', edge: 'rgba(0,0,0,.20)',       hl: '#a16207' },
+    { id: 'teal',   name: 'Teal',   bg: '#0f766e', fg: '#ffffff', edge: 'rgba(255,255,255,.40)', hl: '#134e4a' }
+  ];
+  var TPL = document.getElementById('tpl').textContent;
   var $ = function (id) { return document.getElementById(id); };
-  var status = $('status');
+  var status = $('status'), state = null;
   function say(msg, cls) { status.textContent = msg; status.className = cls || ''; }
+
+  /* starting colour swatches */
+  THEMES.forEach(function (t, i) {
+    var l = document.createElement('label'); l.title = t.name;
+    var r = document.createElement('input'); r.type = 'radio'; r.name = 'mc'; r.value = t.id; r.checked = i === 0;
+    r.setAttribute('aria-label', t.name);
+    var s = document.createElement('span'); s.style.background = t.bg;
+    l.appendChild(r); l.appendChild(s); l.appendChild(document.createTextNode(t.name));
+    $('colors').appendChild(l);
+  });
+  function color() { var c = document.querySelector('input[name=mc]:checked'); return c ? c.value : 'blue'; }
+
+  /* platform tabs */
+  var tabs = document.querySelectorAll('.tab');
+  function pick(tab) {
+    Array.prototype.forEach.call(tabs, function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      $(t.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  Array.prototype.forEach.call(tabs, function (t, i) {
+    t.addEventListener('click', function () { pick(t); });
+    t.addEventListener('keydown', function (e) {
+      var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : -1;
+      if (j < 0) return;
+      var n = tabs[(j + tabs.length) % tabs.length]; pick(n); n.focus(); e.preventDefault();
+    });
+  });
 
   function readText(file) {
     return new Promise(function (ok, no) { var r = new FileReader(); r.onload = function () { ok(r.result); }; r.onerror = no; r.readAsText(file); });
@@ -221,29 +645,45 @@ details p{margin-top:6px}
     return { mesh: { p: P, u: U, n: N }, tris: tris, mats: mats };
   }
 
+  /* fill the template with the model, picture and options */
+  function compose(quiet) {
+    var body = TPL
+      .replace('__MESH__', function () { return JSON.stringify(state.mesh); })
+      .replace('__THEMES__', function () { return JSON.stringify(THEMES); })
+      .replace('__THEME__', function () { return color(); })
+      .replace('__FACE__', function () { return $('face').value; })
+      .replace('__SRC__', function () { return state.src; });
+    var snippet = '<!-- Head Kit by Arno (2024). Paste this just above the closing body tag. -->\n<script>' + body + '<\/script>';
+    var field = getComputedStyle(document.documentElement).getPropertyValue('--field').trim() || '#f1f3f6';
+    $('out').value = snippet;
+    $('prev').srcdoc = '<!doctype html><html><head><meta charset="utf-8"></head><body style="margin:0;height:100vh;background:' + field + '">' + snippet + '</body></html>';
+    $('result').hidden = false;
+    var kb = Math.round(snippet.length / 1024);
+    $('size').textContent = state.tris + ' triangles · ' + kb + ' KB';
+    if (quiet) { say('Updated. Copy the snippet again to use the new settings.', 'ok'); return; }
+    var extra = state.mats > 1 ? ' Note: this model uses ' + state.mats + ' pictures, and I can only use the one you chose.' : '';
+    var big = kb > 150 ? ' This snippet is quite large, and some site editors may refuse it. A simpler model would help.' : '';
+    say('Done! Check the preview, then copy your snippet.' + extra + big, 'ok');
+  }
+
   $('go').addEventListener('click', function () {
     var of = $('objf').files[0], tf = $('texf').files[0];
     if (!of || !tf) { say('Please choose both files: the .obj model and its picture.', 'err'); return; }
-    $('go').disabled = true; say('Building your theme…');
+    $('go').disabled = true; say('Building your snippet…');
     Promise.all([readText(of), readImage(tf)]).then(function (r) {
       var m = parseObj(r[0]);
       if (m.tris > 20000) throw new Error('This model has ' + m.tris + ' triangles, which is too heavy for a web page. Try a simpler model (under 5,000).');
-      var head = HEAD.replace('__MESH__', function () { return JSON.stringify(m.mesh); })
-                     .replace('__SRC__', function () { return r[1]; })
-                     .replace('__FACE__', $('face').value);
-      var theme = THEME.replace('/*HEAD*/', function () { return head; });
-      $('out').value = theme;
-      $('prev').srcdoc = '<!doctype html><html><head><style>:root{--dark:#1f4478;--bar:#2f5d9e;--pix:monospace}' + CSS + '</style></head><body style="margin:0;height:100vh;background:#b9d2ee"><script>' + head + '<\/script></body></html>';
-      $('result').hidden = false;
-      $('size').textContent = m.tris + ' triangles · ' + Math.round(theme.length / 1024) + ' KB';
-      var extra = m.mats > 1 ? ' Note: this model uses ' + m.mats + ' pictures, and I can only use the one you chose.' : '';
-      say('Done! Check the preview, then copy your theme code.' + extra, 'ok');
+      state = { mesh: m.mesh, tris: m.tris, mats: m.mats, src: r[1] };
+      compose(false);
     }).catch(function (e) { say(e && e.message ? e.message : 'Something went wrong. Please check your files.', 'err'); })
       .then(function () { $('go').disabled = false; });
   });
 
+  $('face').addEventListener('change', function () { if (state) compose(true); });
+  $('colors').addEventListener('change', function () { if (state) compose(true); });
+
   $('copy').addEventListener('click', function () {
-    var ta = $('out'), done = function () { say('Copied! Now paste it into Tumblr’s Edit HTML box (Step 3).', 'ok'); };
+    var ta = $('out'), done = function () { say('Copied! Now paste it just above the closing body tag (Step 3).', 'ok'); };
     ta.focus(); ta.select();
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(ta.value).then(done, function () { document.execCommand('copy'); done(); });
