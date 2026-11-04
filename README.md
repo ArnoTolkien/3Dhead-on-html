@@ -29,4 +29,7 @@ I'm keeping his work available here so others can still use it and appreciate wh
 
 This project is open source. Feel free to explore the code, reuse it, modify it, or build something of your own with it. You are welcome to use his work as a starting point for your own projects.
 
-Please keep Arno's original credit when
+Please keep Arno's original credit when reusing or sharing the code.
+
+**Original creator:** Arno Tolkien  
+**Created:** 2024
