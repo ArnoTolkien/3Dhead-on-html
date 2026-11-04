@@ -284,6 +284,7 @@ details.faq p{margin-top:8px;color:var(--muted)}
 <section class="card">
   <div class="step"><span class="num">?</span><h2>If something looks wrong</h2></div>
   <details class="faq"><summary>Nothing shows up on my site</summary><p>Check that the snippet sits above <code>&lt;/body&gt;</code> and that you pasted all of it, from <code>&lt;script&gt;</code> to <code>&lt;/script&gt;</code>. Make sure you used an HTML or code editor, not a visual one that strips scripts. If you hid the head earlier, look for the <b>Show head</b> button at the bottom of the page. Some sites, and some mobile apps, block custom scripts. Your browser also needs WebGL, which almost every current browser has.</p></details>
+  <details class="faq"><summary>The menu colour won’t change on my site</summary><p>Your site is probably still showing an older copy of the snippet, or an old page from its cache. The newest snippet now replaces older ones on its own, but an old copy can’t be fixed from outside, so build a fresh snippet and paste it in. It’s also worth deleting any old Head Kit snippets from your theme (they start with a <code>Head Kit by Arno</code> comment). Then save, open your live site, and do a hard refresh (<b>Ctrl+F5</b>, or <b>Cmd+Shift+R</b> on a Mac).</p></details>
   <details class="faq"><summary>The face is backwards or sideways</summary><p>Change <b>Which way does the head face?</b> in Step 2. The preview updates and the snippet is rewritten. Copy it again and replace the old one.</p></details>
   <details class="faq"><summary>It says my model has no UV map</summary><p>The model needs a UV map so the picture can wrap around it. In Blender, tick <b>UV</b> in the export settings, or check that the model has been unwrapped.</p></details>
   <details class="faq"><summary>The colours look wrong or the head is plain</summary><p>You may have picked a different picture than the one the model uses. If the model uses several pictures, this kit can only use one, so pick the main face picture.</p></details>
@@ -295,7 +296,7 @@ details.faq p{margin-top:8px;color:var(--muted)}
 
 <footer class="foot">
   <p class="by">Made by Arno, 2024.</p>
-  <p class="disclaimer"><b>Disclaimer:</b> Head Kit is an unofficial, fan-made tool provided “as is”, without warranty of any kind. It is not affiliated with, endorsed by, or sponsored by Tumblr, WordPress, Blogger, or any other platform, game, or brand mentioned here. All trademarks, models and textures belong to their respective owners. You are responsible for having the right to use any files you upload and for following the rules of the site where you add the snippet. Your files are processed in your browser and are not sent to any server.</p>
+  <p class="disclaimer"><b>Disclaimer:</b> Arno passed away in 2026, so any bugs or issues won’t be tested or fixed. You’re free to reuse, modify and share this however you like, just please credit Arno.</p>
 </footer>
 
 </div>
@@ -303,10 +304,19 @@ details.faq p{margin-top:8px;color:var(--muted)}
 <!-- Head Kit snippet template. The page fills in the placeholders below. -->
 <script type="text/plain" id="tpl">
 (function () {
-  if (window.__headKit) return;
-  window.__headKit = true;
-
   function start() {
+    /* If an older Head Kit is already on the page, the newest snippet takes over from it. */
+    var prev = window.__headKit;
+    if (prev && typeof prev.destroy === 'function') { try { prev.destroy(); } catch (e) {} }
+    else if (prev) {
+      ['hk-wrap', 'hk-menu', 'hk-show', 'hk-style'].forEach(function (id) { var o = document.getElementById(id); if (o && o.parentNode) o.parentNode.removeChild(o); });
+      document.body.classList.remove('hk-over');
+    }
+    var kit = { destroy: function () {} };
+    window.__headKit = kit;
+    var dead = false, rafId = 0, undo = [];
+    function on(t, ev, fn, o) { t.addEventListener(ev, fn, o); undo.push(function () { t.removeEventListener(ev, fn, o); }); }
+
     var MESH = __MESH__;
     var SRC = '__SRC__';
     var CFG = __CFG__;
@@ -497,7 +507,7 @@ details.faq p{margin-top:8px;color:var(--muted)}
     }
     place();
     setTimeout(function () { wrap.classList.add('hk-slide'); }, 60);
-    window.addEventListener('resize', place);
+    on(window, 'resize', place);
 
     var hidden = false, hover = false, menuOpen = false;
     try { hidden = localStorage.getItem(KEY) === '1'; } catch (e) {}
@@ -534,7 +544,7 @@ details.faq p{margin-top:8px;color:var(--muted)}
       else closeMenu();
     });
     showBtn.addEventListener('click', function () { setHidden(false); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+    on(document, 'keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
 
     /* ---- hit test: is the pointer over the head's actual shape? ---- */
     var scr = new Float32Array(count * 2), haveScr = false;
@@ -564,20 +574,21 @@ details.faq p{margin-top:8px;color:var(--muted)}
     }
 
     var mx = 0, my = 0, hasMouse = false, yaw = 0, pitch = 0;
-    window.addEventListener('pointermove', function (e) {
+    on(window, 'pointermove', function (e) {
       if (e.pointerType === 'touch') return;
       mx = e.clientX; my = e.clientY; hasMouse = true;
       var h = hit(mx, my); if (h !== hover) setHover(h);
     });
-    document.documentElement.addEventListener('mouseleave', function () { hasMouse = false; setHover(false); });
-    window.addEventListener('click', function (e) {
+    on(document.documentElement, 'mouseleave', function () { hasMouse = false; setHover(false); });
+    on(window, 'click', function (e) {
       if (menuOpen) { if (!menu.contains(e.target)) closeMenu(); return; }
       if (hit(e.clientX, e.clientY)) { e.preventDefault(); e.stopPropagation(); openMenu(); }
     }, true);
 
     function clamp(n) { return Math.max(-1, Math.min(1, n)); }
     function frame(ts) {
-      requestAnimationFrame(frame);
+      if (dead) return;
+      rafId = requestAnimationFrame(frame);
       if (hidden) return;
       var ty, tp, r = canvas.getBoundingClientRect();
       if (hasMouse) {
@@ -610,6 +621,13 @@ details.faq p{margin-top:8px;color:var(--muted)}
       gl.drawArrays(gl.TRIANGLES, 0, count);
     }
 
+    kit.destroy = function () {
+      dead = true; cancelAnimationFrame(rafId);
+      undo.forEach(function (u) { u(); });
+      [wrap, menu, showBtn, styleEl].forEach(function (o) { if (o && o.parentNode) o.parentNode.removeChild(o); });
+      document.body.classList.remove('hk-over');
+    };
+
     var face = new Image();
     face.onload = function () {
       var t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
@@ -618,7 +636,7 @@ details.faq p{margin-top:8px;color:var(--muted)}
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      requestAnimationFrame(frame);
+      rafId = requestAnimationFrame(frame);
     };
     face.src = SRC;
   }
