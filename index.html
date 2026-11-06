@@ -128,7 +128,7 @@ details.faq p{margin-top:8px;color:var(--muted)}
   <ul class="chips" aria-label="Works with">
     <li>Tumblr</li><li>WordPress</li><li>Blogger</li><li>Neocities</li><li>Plain HTML</li>
   </ul>
-  <p class="note" style="margin-top:14px"><b>Try it now:</b> the eyeball in the corner of this page is a Head Kit. Move your mouse near it, then click it to open the menu. This demo uses a yellow menu and this page’s font.</p>
+  <p class="note" style="margin-top:14px"><b>Try it now:</b> that eyeball in the corner of this page? It’s a Head Kit, and it’s judging you. Move your mouse near it, then click it to open the menu.</p>
 </header>
 
 <section class="card">
@@ -283,22 +283,22 @@ details.faq p{margin-top:8px;color:var(--muted)}
     <li><b>Hide Head</b> removes it, and a small <b>Show head</b> button appears to bring it back.</li>
     <li><b>Go Lower Left / Go Lower Right</b> sends it to the other corner.</li>
     <li><b>Cancel</b> or the <b>Esc</b> key closes the menu.</li>
-    <li><b>Kit by Arno</b> opens the Head Kit page in a new tab.</li>
+    <li><b>Kit by Arno</b> is the credit link. It opens the Head Kit page in a new tab, and it should stay in the menu as credit to Arno.</li>
   </ul>
   <p class="note">The menu’s colour, font and sizes come from the settings you chose in Step 2. A visitor’s choice to hide the head or move it is remembered in their own browser.</p>
 </section>
 
 <section class="card">
-  <div class="step"><span class="num">?</span><h2>If something looks wrong</h2></div>
-  <details class="faq"><summary>Nothing shows up on my site</summary><p>Check that the snippet sits above <code>&lt;/body&gt;</code> and that you pasted all of it, from <code>&lt;script&gt;</code> to <code>&lt;/script&gt;</code>. Make sure you used an HTML or code editor, not a visual one that strips scripts. If you hid the head earlier, look for the <b>Show head</b> button at the bottom of the page. Some sites, and some mobile apps, block custom scripts. Your browser also needs WebGL, which almost every current browser has.</p></details>
-  <details class="faq"><summary>The menu colour won’t change on my site</summary><p>Your site is probably still showing an older copy of the snippet, or an old page from its cache. The newest snippet now replaces older ones on its own, but an old copy can’t be fixed from outside, so build a fresh snippet and paste it in. It’s also worth deleting any old Head Kit snippets from your theme (they start with a <code>Head Kit by Arno</code> comment). Then save, open your live site, and do a hard refresh (<b>Ctrl+F5</b>, or <b>Cmd+Shift+R</b> on a Mac).</p></details>
-  <details class="faq"><summary>The face is backwards or sideways</summary><p>Change <b>Which way does the head face?</b> in Step 2. The preview updates and the snippet is rewritten. Copy it again and replace the old one.</p></details>
-  <details class="faq"><summary>It says my model has no UV map</summary><p>The model needs a UV map so the picture can wrap around it. In Blender, tick <b>UV</b> in the export settings, or check that the model has been unwrapped.</p></details>
-  <details class="faq"><summary>The colours look wrong or the head is plain</summary><p>You may have picked a different picture than the one the model uses. If the model uses several pictures, this kit can only use one, so pick the main face picture.</p></details>
-  <details class="faq"><summary>My site won’t accept the code, or loads slowly</summary><p>Very detailed models make the snippet large, and some editors limit how much code you can paste. Simple models with a few hundred triangles work best. Pictures are shrunk to 256 pixels wide automatically.</p></details>
-  <details class="faq"><summary>The head covers part of my page</summary><p>Visitors can hide it or move it from the menu. You can also make it smaller: open <b>Advanced settings</b> in Step 2, lower the head size, and copy the new snippet.</p></details>
-  <details class="faq"><summary>My font isn’t showing</summary><p>Fonts other than the system default are loaded from Google Fonts, so the visitor needs an internet connection. Check the name is spelled exactly as on fonts.google.com. Some strict sites block outside fonts, and then the menu uses a plain fallback font.</p></details>
-  <details class="faq"><summary>Can I use heads from a game?</summary><p>Fan sites do it all the time, but the models and pictures belong to the people who made them. If you plan to sell anything or run a bigger site, check the rules first.</p></details>
+  <div class="step"><span class="num">?</span><h2>When things go sideways</h2></div>
+  <details class="faq"><summary>Nothing shows up on my site</summary><p>Ugh, the worst. It’s usually a paste problem, and it’s very fixable. Check that the snippet sits above <code>&lt;/body&gt;</code> and that you pasted all of it, from <code>&lt;script&gt;</code> to <code>&lt;/script&gt;</code>. It’s a long snippet, so it’s easy to cut off, and half a snippet does absolutely nothing. Make sure you used an HTML or code editor, not a visual one that strips scripts. If you hid the head earlier, look for the <b>Show head</b> button at the bottom of the page. Some sites, and some mobile apps, block custom scripts. Your browser also needs WebGL, which almost every current browser has, so that’s probably not the culprit.</p></details>
+  <details class="faq"><summary>The menu colour won’t change on my site</summary><p>Plot twist: it’s probably not you, it’s an old copy. Your site is likely still showing an older version of the snippet, or an old page from its cache. The newest snippet now replaces older ones on its own, but an old copy can’t be fixed from outside, so build a fresh snippet and paste it in. While you’re in there, delete any old Head Kit snippets from your theme (they start with a <code>Head Kit by Arno</code> comment). Then save, open your live site, and do a hard refresh (<b>Ctrl+F5</b>, or <b>Cmd+Shift+R</b> on a Mac). Caches are stubborn like that, so don’t take it personally.</p></details>
+  <details class="faq"><summary>The head is facing the wrong way</summary><p>Very common, because every 3D program has its own opinion about which way is “front”. Change <b>Which way does the head face?</b> in Step 2. The preview updates and the snippet is rewritten. Copy it again and replace the old one.</p></details>
+  <details class="faq"><summary>It says my model has no UV map</summary><p>Common export hiccup, and an easy one. The model needs a UV map so the picture knows how to wrap around it. In Blender, tick <b>UV</b> in the export settings, or check that the model has been unwrapped. Without UVs the picture has no idea where to go, and honestly, can you blame it?</p></details>
+  <details class="faq"><summary>The colours look wrong or the head is plain</summary><p>Easy mix-up. You may have picked a different picture than the one the model uses. If the model uses several pictures, this kit can only use one, so pick the main face picture. The kit is clever, not psychic.</p></details>
+  <details class="faq"><summary>My site won’t accept the code, or loads slowly</summary><p>Very detailed models make the snippet huge, and some editors limit how much code you can paste (some are weirdly precious about it). Simple models with a few hundred triangles work best. Pictures are shrunk to 256 pixels wide automatically, so there’s no need to sweat over an 8K masterpiece. It gets shrunk anyway.</p></details>
+  <details class="faq"><summary>The head covers part of my page</summary><p>A big floating head will do that. Visitors can hide it or move it from the menu. You can also make it smaller: open <b>Advanced settings</b> in Step 2, lower the head size, and copy the new snippet.</p></details>
+  <details class="faq"><summary>My font isn’t showing</summary><p>Fonts other than the system default are loaded from Google Fonts, so the visitor needs an internet connection. Check that the name is spelled exactly as on fonts.google.com (one wrong letter and it gives up). Some strict sites block outside fonts, and then the menu uses a plain fallback font.</p></details>
+  <details class="faq"><summary>Can I use heads from a game?</summary><p>Fan sites do it all the time, but the models and pictures belong to the people who made them. If you plan to sell anything or run a bigger site, check the rules first. “Everyone does it” won’t help if someone complains, and we’d rather you didn’t have to find that out the hard way.</p></details>
 </section>
 
 <footer class="foot">
